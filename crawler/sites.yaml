@@ -1,0 +1,237 @@
+# CMTX AX Planner OS - 크롤링 대상 사이트 설정
+# enabled: true → 실행 / false → 건너뜀
+# login_required: true 인 경우 credentials 섹션에 환경변수 키 이름을 지정
+
+keywords: &keywords
+  - 반도체
+  - 메모리
+  - 팹리스
+  - 파운드리
+  - 설계
+  - 패키징
+  - HBM
+  - CXL
+  - 소부장
+  - 소재
+  - 부품
+  - 장비
+  - 세라믹
+  - 쿼츠
+  - R&D
+  - 기술개발
+  - AI
+  - 인공지능
+  - 머신러닝
+  - 디지털전환
+  - DX
+  - AX
+  - 스마트공장
+  - 스마트제조
+
+sites:
+
+  # ──────────────────────────────────────────
+  # Phase 1: 정부 지원사업 공고 (즉시 활성화)
+  # ──────────────────────────────────────────
+
+  - id: bizinfo
+    name: 기업마당
+    enabled: true
+    crawler: bizinfo
+    url: "https://www.bizinfo.go.kr/web/lay1/bbs/S1T122C128/AS/74/list.do?rows=20&cpage={page}"
+    login_required: false
+    frequency: daily
+    max_pages: 10
+    keywords: *keywords
+
+  - id: iris
+    name: IRIS 범부처통합연구지원시스템
+    enabled: true                 # 활성화
+    crawler: iris
+    url: "https://www.iris.go.kr/main.do"
+    login_required: false
+    frequency: daily
+    max_pages: 3
+    keywords: *keywords
+
+  - id: iitp
+    name: IITP 정보통신기획평가원
+    enabled: true
+    crawler: iitp
+    url: "https://www.iitp.kr/web/lay1/bbs/S1T12C37/A/7/list.do"
+    login_required: false
+    frequency: daily
+    max_pages: 5
+    keywords: *keywords
+
+  - id: keit
+    name: KEIT 한국산업기술기획평가원
+    enabled: true
+    crawler: keit
+    url: "https://srome.keit.re.kr/srome/biz/perform/opnnPrpsl/retrieveTaskAnncmListView.do?prgmId=XPG201040000"
+    login_required: false
+    frequency: daily
+    max_pages: 5
+    keywords: *keywords
+
+  - id: tipa
+    name: TIPA 중소기업기술정보진흥원
+    enabled: true
+    crawler: tipa
+    url: "https://www.smtech.go.kr/front/ifg/no/notice02_list.do"
+    login_required: false
+    frequency: daily
+    max_pages: 5
+    keywords: *keywords
+
+  - id: ntis
+    name: NTIS 국가과학기술지식정보서비스
+    enabled: true
+    crawler: ntis
+    url: "https://www.ntis.go.kr/rndgate/eg/un/ra/mng.do"
+    login_required: false          # 목록은 로그인 불필요
+    frequency: daily
+    max_pages: 5
+    keywords: *keywords
+
+  # ──────────────────────────────────────────
+  # Phase 3: 정책 모니터링 (보도자료/공지)
+  # ──────────────────────────────────────────
+
+  - id: motie
+    name: 산업통상자원부
+    enabled: false
+    crawler: motie
+    url: "https://www.motie.go.kr/motie/ne/presse/press2/bbs/bbsList.do?bbs_cd_n=81"
+    login_required: false
+    frequency: daily
+    max_pages: 3
+    keywords: *keywords
+
+  - id: mss
+    name: 중소벤처기업부
+    enabled: true
+    crawler: mss
+    url: "https://www.mss.go.kr/site/smba/ex/bbs/List.do?cbIdx=86"
+    login_required: false
+    frequency: daily
+    max_pages: 5
+    keywords: *keywords
+
+  - id: msit
+    name: 과학기술정보통신부
+    enabled: false
+    crawler: msit
+    url: "https://www.msit.go.kr/bbs/list.do?sCode=user&mPid=238&mId=239"
+    login_required: false
+    frequency: daily
+    max_pages: 3
+    keywords: *keywords
+
+  - id: kstartup
+    name: K-Startup
+    enabled: true
+    crawler: kstartup
+    url: "https://www.k-startup.go.kr/web/contents/bizpbanc-ongoing.do"
+    login_required: false
+    frequency: daily
+    max_pages: 5
+    keywords: *keywords
+
+  # ──────────────────────────────────────────
+  # Phase 3: AX / 스마트공장
+  # ──────────────────────────────────────────
+
+  - id: smartfactory
+    name: 스마트제조혁신추진단
+    enabled: false
+    crawler: smartfactory
+    url: "https://www.smart-factory.kr/page/business/notice"
+    login_required: false
+    frequency: weekly
+    max_pages: 3
+    keywords: *keywords
+
+  - id: kiat
+    name: KIAT 한국산업기술진흥원
+    enabled: true
+    crawler: kiat
+    url: "https://www.k-pass.kr/notice/ancList.do"
+    login_required: false
+    frequency: daily
+    max_pages: 5
+    keywords: *keywords
+
+  - id: krit
+    name: 국방기술진흥연구소
+    enabled: true
+    crawler: krit
+    url: "https://www.krit.re.kr/krit/bbs/notice_list.do?gotoMenuNo=05010000"
+    login_required: false
+    frequency: daily
+    max_pages: 5
+    keywords: *keywords
+
+  - id: spri
+    name: 소프트웨어정책연구소
+    enabled: true
+    crawler: spri
+    url: "https://spri.kr/posts?code=data_all&flg=1"
+    login_required: false
+    frequency: weekly
+    max_pages: 3
+    keywords: *keywords
+
+  # ──────────────────────────────────────────
+  # Phase 4: 산업 리서치 & 뉴스
+  # ──────────────────────────────────────────
+
+  - id: kotra
+    name: KOTRA 대한무역투자진흥공사
+    enabled: false
+    crawler: kotra
+    url: "https://www.kotra.or.kr/kh/main/KHMISC020M.html"
+    login_required: false
+    frequency: weekly
+    max_pages: 3
+    keywords: *keywords
+
+  - id: kiet
+    name: KIET 한국산업연구원
+    enabled: false
+    crawler: kiet
+    url: "https://www.kiet.re.kr/research/reportList"
+    login_required: false
+    frequency: weekly
+    max_pages: 3
+    keywords: *keywords
+
+  - id: keti
+    name: KETI 한국전자기술연구원
+    enabled: true
+    crawler: keti
+    url: "https://www.keti.re.kr/notice/notice.php?code=board1"
+    login_required: false
+    frequency: daily
+    max_pages: 5
+    keywords: *keywords
+
+  - id: etnews
+    name: 전자신문
+    enabled: false
+    crawler: etnews
+    url: "https://www.etnews.com/news/section.html?id1=01"
+    login_required: false
+    frequency: daily
+    max_pages: 3
+    keywords: *keywords
+
+  - id: zdnet
+    name: ZDNet Korea
+    enabled: false
+    crawler: zdnet
+    url: "https://zdnet.co.kr/news/?lstcode=0000"
+    login_required: false
+    frequency: daily
+    max_pages: 3
+    keywords: *keywords

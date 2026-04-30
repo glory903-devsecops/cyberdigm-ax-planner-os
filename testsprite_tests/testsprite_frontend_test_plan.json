@@ -1,0 +1,586 @@
+[
+  {
+    "id": "TC001",
+    "title": "Enable admin mode with valid local key",
+    "description": "Verifies a user can authenticate using a valid local admin key and sees an admin mode indicator in the sidebar.",
+    "category": "Admin Authentication (Local)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the admin login control in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the access key field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the authentication"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an admin mode indicator is visible in the sidebar"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Admin status remains consistent across core routes",
+    "description": "Verifies admin mode UI remains enabled and consistent when navigating across dashboard routes within the same session.",
+    "category": "Admin Authentication (Local)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the admin login control in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the access key field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the authentication"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to open the GR Hub"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to open the Automation Center"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to open the AX Planning page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an admin mode indicator is visible in the sidebar"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Create crawling target as admin and see it after page reload",
+    "description": "Verifies an admin can register a crawling target and it remains visible after reloading the page.",
+    "category": "Crawling Target Management (Automation Center)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the admin login control in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the access key field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the authentication"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to open the Automation Center"
+      },
+      {
+        "type": "action",
+        "description": "Start new target registration"
+      },
+      {
+        "type": "action",
+        "description": "Fill Admin Target A into the target name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid URL into the target URL field"
+      },
+      {
+        "type": "action",
+        "description": "Fill semiconductor, fab, equipment into the seed keywords field"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid target category"
+      },
+      {
+        "type": "action",
+        "description": "Submit registration"
+      },
+      {
+        "type": "action",
+        "description": "Press F5 to reload the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the registered crawling target is displayed in the targets list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Create a new AX project plan and see it listed",
+    "description": "Verifies a user can create a new AX project plan with a title and details, save it, and see the newly created plan appear in the planning list.",
+    "category": "AX Project Planning Center",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /ax-planning"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to start a new plan"
+      },
+      {
+        "type": "action",
+        "description": "Fill a unique plan title into the plan title field"
+      },
+      {
+        "type": "action",
+        "description": "Fill basic plan details into the plan details field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the plan save action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a success confirmation is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new plan appears in the plans list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Open GR Hub detail panel to view source link and AI summary",
+    "description": "Verifies selecting a GR Hub item opens a sliding detail panel that includes the original source link and an AI summary.",
+    "category": "Interactive Dashboard (GR Hub)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /gr-hub"
+      },
+      {
+        "type": "action",
+        "description": "Select an item from the grants or policies list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the detail panel is displayed with an original source link and an AI summary"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Create crawling target as guest and see simulation notice",
+    "description": "Verifies a guest can register a crawling target and sees a simulation notice indicating the target is session-only.",
+    "category": "Crawling Target Management (Automation Center)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /automation"
+      },
+      {
+        "type": "action",
+        "description": "Start new target registration"
+      },
+      {
+        "type": "action",
+        "description": "Fill Guest Target A into the target name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid URL into the target URL field"
+      },
+      {
+        "type": "action",
+        "description": "Fill grants, policy into the seed keywords field"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid target category"
+      },
+      {
+        "type": "action",
+        "description": "Submit registration"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a simulation notice is visible indicating the target is not persisted"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Open an existing AX plan and return to the planning dashboard",
+    "description": "Verifies a user can open a plan from the AX planning list, view its details, and return to the planning dashboard successfully.",
+    "category": "AX Project Planning Center",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /ax-planning"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to start a new plan"
+      },
+      {
+        "type": "action",
+        "description": "Fill a unique plan title into the plan title field"
+      },
+      {
+        "type": "action",
+        "description": "Fill basic plan details into the plan details field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the plan save action"
+      },
+      {
+        "type": "action",
+        "description": "Click the newly created plan in the plans list to open it"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the plan detail view is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to return to the planning dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the planning dashboard with the plans list is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Guest target is not persisted after reload",
+    "description": "Verifies a crawling target registered in guest mode does not persist after reloading the Automation Center.",
+    "category": "Crawling Target Management (Automation Center)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /automation"
+      },
+      {
+        "type": "action",
+        "description": "Start new target registration"
+      },
+      {
+        "type": "action",
+        "description": "Fill Guest Target Ephemeral into the target name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid URL into the target URL field"
+      },
+      {
+        "type": "action",
+        "description": "Fill temporary, session into the seed keywords field"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid target category"
+      },
+      {
+        "type": "action",
+        "description": "Submit registration"
+      },
+      {
+        "type": "action",
+        "description": "Press F5 to reload the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the previously registered guest target is not displayed in the targets list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Close GR Hub detail panel and return to list",
+    "description": "Verifies the user can close the GR Hub detail panel and return to the list view for continued browsing.",
+    "category": "Interactive Dashboard (GR Hub)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /gr-hub"
+      },
+      {
+        "type": "action",
+        "description": "Select an item from the grants or policies list"
+      },
+      {
+        "type": "action",
+        "description": "Close the detail panel"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is returned to the GR Hub list view with items available to select"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Sequentially inspect multiple GR Hub items without stale panel content",
+    "description": "Verifies opening and closing detail panels for multiple items in sequence works and the panel updates to the newly selected item.",
+    "category": "Interactive Dashboard (GR Hub)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /gr-hub"
+      },
+      {
+        "type": "action",
+        "description": "Select an item from the grants or policies list"
+      },
+      {
+        "type": "action",
+        "description": "Close the detail panel"
+      },
+      {
+        "type": "action",
+        "description": "Select a different item from the list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the detail panel is displayed for the newly selected item with an original source link and an AI summary"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC011",
+    "title": "Prevent saving a plan when required fields are empty",
+    "description": "Verifies the plan cannot be saved when required inputs are missing and the UI shows an in-form validation error.",
+    "category": "AX Project Planning Center",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /ax-planning"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to start a new plan"
+      },
+      {
+        "type": "action",
+        "description": "Clear the plan title field if it has a value"
+      },
+      {
+        "type": "action",
+        "description": "Submit the plan save action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user remains in the plan creation view"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC012",
+    "title": "Validate missing URL on crawling target registration",
+    "description": "Verifies the registration form blocks submission when the target URL is empty and shows a validation error.",
+    "category": "Crawling Target Management (Automation Center)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /automation"
+      },
+      {
+        "type": "action",
+        "description": "Start new target registration"
+      },
+      {
+        "type": "action",
+        "description": "Fill Missing URL Target into the target name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill keywords into the seed keywords field"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid target category"
+      },
+      {
+        "type": "action",
+        "description": "Submit registration"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a URL validation error is visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC013",
+    "title": "Discard plan creation and return to dashboard without saving",
+    "description": "Verifies a user can exit the new plan flow without saving and returns to the planning dashboard without adding a new plan.",
+    "category": "AX Project Planning Center",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /ax-planning"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to start a new plan"
+      },
+      {
+        "type": "action",
+        "description": "Fill a unique plan title into the plan title field"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to cancel or close plan creation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the planning dashboard with the plans list is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the unsaved plan does not appear in the plans list"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC014",
+    "title": "Reject invalid or empty admin key",
+    "description": "Verifies submitting an incorrect or empty admin key shows a validation message and does not enable admin mode.",
+    "category": "Admin Authentication (Local)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the admin login control in the sidebar"
+      },
+      {
+        "type": "action",
+        "description": "Fill invalid-key into the access key field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the authentication"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an access key validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an admin mode indicator is not visible in the sidebar"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC015",
+    "title": "Handle long plan title and details without breaking save flow",
+    "description": "Verifies a user can enter long text in plan title/details, save the plan, and the UI remains usable with the plan listed afterward.",
+    "category": "AX Project Planning Center",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /ax-planning"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to start a new plan"
+      },
+      {
+        "type": "action",
+        "description": "Fill a long unique plan title into the plan title field"
+      },
+      {
+        "type": "action",
+        "description": "Fill long plan details into the plan details field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the plan save action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a success confirmation is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new plan appears in the plans list"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC016",
+    "title": "Prevent duplicate save from rapid repeated submit",
+    "description": "Verifies rapidly submitting the save action does not create multiple duplicate plan entries and results in a single saved plan in the list.",
+    "category": "AX Project Planning Center",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /ax-planning"
+      },
+      {
+        "type": "action",
+        "description": "Click the control to start a new plan"
+      },
+      {
+        "type": "action",
+        "description": "Fill a unique plan title into the plan title field"
+      },
+      {
+        "type": "action",
+        "description": "Fill basic plan details into the plan details field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the plan save action"
+      },
+      {
+        "type": "action",
+        "description": "Immediately submit the plan save action again"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new plan appears only once in the plans list"
+      }
+    ],
+    "priority": "Low"
+  }
+]

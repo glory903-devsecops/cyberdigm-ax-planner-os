@@ -1,0 +1,80 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - Next.js (App Router)
+  - TailwindCSS
+  - Framer Motion
+  - Supabase
+routes:
+  - path: /
+    file: src/app/page.tsx
+    auth_required: false
+    description: Main dashboard overview
+  - path: /gr-hub
+    file: src/app/(dashboard)/gr-hub/page.tsx
+    auth_required: false
+    description: GR Hub overview with interactive cards
+  - path: /automation
+    file: src/app/(dashboard)/automation/page.tsx
+    auth_required: false
+    description: Automation Center for managing crawling targets
+  - path: /intelligence
+    file: src/app/(dashboard)/intelligence/page.tsx
+    auth_required: false
+    description: Industry and analysis dashboard
+  - path: /ax-planning
+    file: src/app/(dashboard)/ax-planning/page.tsx
+    auth_required: false
+    description: AX project planning center
+features:
+  - name: Admin Authentication
+    description: Local admin access via environment-based key
+    files:
+      - src/lib/auth-context.tsx
+      - src/components/layout/Sidebar.tsx
+    entry_route: /
+    user_interactions:
+      - Click 'Admin Login' button in sidebar
+      - Enter access key in modal
+      - Click 'Authenticate' button
+      - See admin status change in sidebar
+    api_calls: []
+    auth_required: false
+  - name: Crawling Target Management
+    description: Manage crawling targets with conditional persistence
+    files:
+      - src/app/(dashboard)/automation/page.tsx
+      - src/lib/data-service.ts
+    entry_route: /automation
+    user_interactions:
+      - Click '+' FAB button
+      - Fill target details (name, url, keywords)
+      - Select target menu (GR Hub, etc)
+      - Click 'Register' button
+      - See simulation alert for guests or real success for admins
+    api_calls:
+      - method: GET
+        endpoint: supabase.from('crawling_targets').select('*')
+      - method: POST
+        endpoint: supabase.from('crawling_targets').insert()
+    auth_required: false
+  - name: Interactive Dashboard
+    description: Individually clickable items with detail panels
+    files:
+      - src/app/(dashboard)/gr-hub/page.tsx
+      - src/components/common/DetailPanel.tsx
+    entry_route: /gr-hub
+    user_interactions:
+      - Hover over list items in Grant or Policy cards
+      - Click on a specific list item
+      - View detailed information in sliding side panel
+      - Close panel using 'X' or 'Close' button
+    api_calls:
+      - method: GET
+        endpoint: supabase.from('grants').select('*')
+    auth_required: false
+known_limitations:
+  - issue: Backend crawler engine linkage pending
+    location: crawler/run_all.py
+    impact: DB targets not yet automatically triggered for collection

@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+/* Explicitly tell Tailwind where to find classes to avoid skipping in sub-directory builds */
+@source "./app/**/*.{ts,tsx}";
+@source "./components/**/*.{ts,tsx}";
+
+:root {
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --cmtx-navy: #0F172A;
+  --cmtx-blue: #0047AB; /* Cyberdigm Deep Blue */
+  --cmtx-blue-light: #3B82F6;
+  --cmtx-blue-dark: #1E3A8A;
+  --cmtx-border: #E2E8F0;
+  --cmtx-text-secondary: #64748B;
+  
+  /* Strategic Accents */
+  --accent-emerald: #10B981;
+  --accent-rose: #F43F5E;
+  --accent-amber: #F59E0B;
+  --accent-violet: #8B5CF6;
+  --accent-orange: #F97316; /* Cyberdigm Accent */
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-cmtx-navy: var(--cmtx-navy);
+  --color-cmtx-blue: var(--cmtx-blue);
+  --color-cmtx-blue-light: var(--cmtx-blue-light);
+  --color-cmtx-blue-dark: var(--cmtx-blue-dark);
+  --color-cmtx-border: var(--cmtx-border);
+  --color-cmtx-secondary: var(--cmtx-text-secondary);
+
+  --color-accent-emerald: var(--accent-emerald);
+  --color-accent-rose: var(--accent-rose);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-violet: var(--accent-violet);
+  --color-accent-orange: var(--accent-orange);
+
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  
+  --shadow-subtle: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+  --shadow-premium: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-glow-blue: 0 0 20px -5px rgba(29, 78, 216, 0.3);
+
+  --animate-shimmer: shimmer 2s infinite;
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
+
+/* Base font size — all Tailwind rem units scale from this */
+html {
+  font-size: 17px;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.01em;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Utilities for Premium Look */
+.glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.gradient-strategic {
+  background: linear-gradient(135deg, var(--cmtx-navy) 0%, var(--cmtx-blue-dark) 100%);
+}
+
+.gradient-pulse {
+  background: linear-gradient(90deg, var(--cmtx-blue) 0%, var(--cmtx-blue-light) 50%, var(--cmtx-blue) 100%);
+  background-size: 200% 100%;
+  animation: pulse-bg 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-bg {
+  0% { background-position: 100% 0%; }
+  100% { background-position: -100% 0%; }
+}
+
+/* Optimized scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+

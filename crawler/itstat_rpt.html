@@ -1,0 +1,5325 @@
+
+
+
+
+
+
+<!-- security -->
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+	    <meta name="author" content="itstat.go.kr">
+	    <meta name="keywords" content="정보통신정책연구원 ITSTAT">
+	    <meta name="description" lang="ko" content="정보통신정책연구원 ITSTAT">
+	    <meta name="copyright" content="(27872) 충청북도 진천군 덕산읍 정통로 18 정보통신정책연구원">
+	    <script src="/itstat/js/jquery-3.4.1.js" charset="UTF-8"></script>
+		<script type="text/javascript" src="/itstat/js/viewport_n.js"></script>
+
+		<meta name="_csrf" content="f3a7c7fb-3b18-419f-872d-214e609ff4a1">
+		<meta name="_csrf_header" content="X-CSRF-TOKEN">
+
+		<title>ICT 통계포털(ITSTAT)</title>
+
+		<!-- css -->
+		<link rel="stylesheet" href="/itstat/css/sub.css" id="kor_ly_sub"/>
+		<link rel="stylesheet" href="/itstat/css/rsteam.css"/>
+		<link rel="stylesheet" href="/itstat/css/sub_mobile.css">
+		<link rel="stylesheet" href="/itstat/js/slick/slick.css" />
+		<link rel="stylesheet" href="/itstat/js/slick/slick-theme.css" />
+		<link rel="stylesheet" href="/itstat/css/jquery-ui.css">
+		<link rel="stylesheet" href="/itstat/css/fullpage/jquery.fullpage.min.css"></link>
+		<link rel="stylesheet" href="/itstat/js/swiper/swiper.css"></link>
+
+		<!-- favicon -->
+		<link rel="shortcut icon" href="/itstat/img/ict_favi_16.ico">
+		<link rel="icon" href="/itstat/img/ict_favi_16.ico">
+
+		<!--jquery  -->
+		<script src="/itstat/js/sub_layout.js"></script>
+		<script src="/itstat/js/accessibility.js"></script>
+		<script src="/itstat/js/slick/slick.js"></script>
+		<script src="/itstat/js/common.js"></script>
+		<script src="/itstat/js/jquery-ui.min.js"></script>
+		<script src="/itstat/js/datepicker/jquery-ui-1.10.4.custom.js"></script>
+		<script src="/itstat/js/fullpage/jquery.fullpage.min.js"></script>
+		<script src="/itstat/js/swiper/swiper.js"></script>
+		<script src="/itstat/js/lodash-4.17.21/lodash.min.js" charset="UTF-8"></script>
+		<script src="/itstat/js/sStorage.js"></script>
+
+		
+
+		<!-- 링크 공유하기 -->
+		
+		
+		
+		
+		
+
+		
+		
+
+		<style>
+			/*
+			#Progress_Loading { z-index: 999; position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; background: rgba(0,0,0,0.6); }
+			#Progress_Loading img{ width: 50px; height: 50px; position: absolute; left: 50%;  top: 50%; margin-top: -25px; margin-left: -25px; }
+			*/
+		</style>
+
+		<script>
+
+			var ctx = "/itstat";
+
+			$(function(){
+
+				let slideNum = $('.swiper-slide').length;
+				let loop_5 = true;
+				let loop_8 = true;
+				let loop_12 = true;
+
+				if (slideNum <= 4) {
+					loop_12 = false;
+				}
+				if (slideNum <= 3) {
+					loop_12 = false;
+					loop_8 = false;
+				}
+				if (slideNum <= 2) {
+					loop_12 = false;
+					loop_8 = false;
+					loop_5 = false;
+				}
+
+				// popup zone - 팝업창
+				$('.popup-zone-btn').on('click', function(){
+					$('.popup-zone').addClass('active');
+				});
+				$('.close_btn').on('click', function(){
+					$('.popup-zone').removeClass('active');
+				});
+
+				// popup zone - 팝업창
+				$('.popup_btn').on('click', function(){
+					$('.popup-zone').addClass('active');
+				});
+				$('.close_btn').on('click', function(){
+					$('.popup-zone').removeClass('active');
+				});
+
+				// popup zone - 팝업존 슬라이드
+				var popupZoneSwiper = new Swiper(".popup-zone .swiper-container", {
+					loop: false,
+					init: false,
+					autoplay: {
+						delay: 4000,
+						disableOnInteraction: false,
+					},
+					navigation: {
+						nextEl: ".popup-zone .swiper-button-next",
+						prevEl: ".popup-zone .swiper-button-prev",
+					},
+					breakpoints: {
+						500: {
+							slidesPerView: 2,
+							spaceBetween: 8,
+							loop: loop_5
+						},
+						850: {
+							slidesPerView: 3,
+							spaceBetween: 16,
+							loop: loop_8
+						},
+						1200: {
+							slidesPerView: 4,
+							spaceBetween: 24,
+							loop: loop_12
+						}
+					},
+				});
+
+				function slideResizing() {
+					let totalSlideNum = popupZoneSwiper.slides.length;
+					let slideWrapWidth = popupZoneSwiper.width;
+
+					const isEnable = {
+						case1: slideWrapWidth >= 1200 && totalSlideNum <= 4,
+						case2: slideWrapWidth >= 850 && totalSlideNum <= 3,
+						case3: slideWrapWidth >= 500 && totalSlideNum <= 2,
+						case4: slideWrapWidth < 500 && totalSlideNum <= 1
+					}
+					if ( isEnable.case1 || isEnable.case2 || isEnable.case3 || isEnable.case4 ) {
+						$(".popup-zone .swiper-wrapper").css("justify-content", "center");
+					}
+					else {
+						$(".popup-zone .swiper-wrapper").css("justify-content", "");
+					}
+
+					if( isEnable.case1 ) {
+						$(".popup-zone .swiper-wrapper").css("padding-left", "12px");
+					}
+					else if ( isEnable.case2 ) {
+						$(".popup-zone .swiper-wrapper").css("padding-left", "8px");
+					}
+					else if ( isEnable.case3 ) {
+						$(".popup-zone .swiper-wrapper").css("padding-left", "4px");
+					}
+					else {
+						$(".popup-zone .swiper-wrapper").css("padding-left", "");
+					}
+
+					if (isEnable.case1 || isEnable.case2 || isEnable.case3 || isEnable.case4) popupZoneSwiper.enable();
+				}
+
+				popupZoneSwiper.on('init', function(){
+					slideResizing();
+				});
+
+				popupZoneSwiper.on('resize', function(){
+					slideResizing();
+				});
+
+				popupZoneSwiper.init();
+
+				});
+
+			function zoomIn(state){
+				//글자크기 조절
+				var isMinus = $("body").attr("class").length > 11 ? true : false;
+				var num = ($("body").attr("class").substring(isMinus ? 11 : 10))*1;
+				var sub_path =  document.getElementById("kor_ly_sub");
+				if(state == "plus"){
+					if (!isMinus && num >= 1){
+						alert('최대 사이즈입니다.');
+						return;
+					}
+
+					if(isMinus && num == 1) {
+						$("body").removeClass().addClass("zoom_size");
+					} else {
+						$("body").removeClass().addClass("zoom_size_"+ (num+1));
+					}
+
+					if(!isMinus && num == 1) {
+						$("body").removeClass().addClass("zoom_size");
+					} else {
+						$("body").removeClass().addClass("zoom_size_"+ (num == 0 || (!isMinus && num >= 1) ? (num+1) : 'm' + (num-1)));
+					}
+
+					sub_path.href=('/itstat/css/sub.css');
+				} else if(state == "minus") {
+					if(isMinus && num >= 3) {
+						alert('최소 사이즈입니다.');
+						return;
+					}
+
+					if(!isMinus && num == 1) {
+						$("body").removeClass().addClass("zoom_size");
+					} else {
+						$("body").removeClass().addClass("zoom_size_"+ (num == 0 || (isMinus && num >= 1) ? 'm' + (num+1) : (num-1)));
+					}
+
+					sub_path.href=('/itstat/css/sub.css');
+				} else if(state == "init") {
+					$("body").removeClass().addClass("zoom_size");
+					sub_path.href=('/itstat/css/sub.css');
+				}
+				//zoom_firfx();
+
+				// 세션 저장
+				$.ajax({
+					type: "POST",
+					url: "/itstat/ZoomIn.html",
+					dataType:"json",
+					data:{"state_name": $("body").attr("class")},
+					error:function(request,status,error){
+						console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+					}
+				});
+			}
+		</script>
+	</head>
+
+	<body class="zoom_size" id="zoomContainer">
+		<div class="wrap">
+			<div id="skipnavi" tabindex="-1">
+				<a href="#sub_section" id="goSection" tabindex="1">본문 바로가기</a>
+				<a href="#header_tag" id="goHeader" tabindex="2">대메뉴 바로가기</a>
+			</div>
+
+			<!-- header : top_navi  -->
+			<header id="main_header">
+				
+
+
+
+
+<!-- security -->
+
+
+
+
+
+
+
+
+
+<script>
+	$(function() {
+
+		// 메뉴별 방문자 수 체크 통신 함수
+		fn_ajax_menuVisitCntChk();
+
+		$("#btnSearchKeyword").click(function() {
+			var form = $("#topfrm");
+
+			form.attr("action", "/itstat/kor/search/search.html");
+			form.submit();
+		});
+
+		$(".webzine_btn").click(function(){
+			var form = $("#topfrm");
+			form.attr("action", "/itstat/kor/webzine/subscribePage.html?menuId=2010134&rootId=2010001");
+			form.submit();
+		});
+
+		// 검색 키워드 이벤트
+		$("#search_kyword").keydown(function(key) {
+			if(key.keyCode == 13) {
+				$("#btnSearchKeyword").click();
+			}
+		});
+
+		//IE 브라우저 여부 확인
+		var agent = navigator.userAgent.toLowerCase();
+		if ("" == "" &&(navigator.appName == 'Netscape' && agent.indexOf('trident') != -1) || (agent.indexOf("msie") != -1)) {
+			// 세션 저장
+			$.ajax({
+				type: "POST",
+				url: "/itstat/IeYn.html",
+				dataType: "json",
+				data: {"ieYn" : "Y"},
+				error:function(request,status,error){
+					console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+				}
+			});
+
+			alert('Internet Explorer은 2021년 8월 17일 이후로 서비스 지원이 종료됩니다. \n서비스 지원이 중단 된 후에는 다양한 웹 서비스 사용이 제한되고, 악성코드 및 정보보안에 매우 취약해집니다.\n크롬, 파이어폭스 등 다른 브라우저를 사용을 권장합니다.');
+		}
+
+
+		// 240607 메가메뉴 스크립트
+		$("#main_header .navi ul > li > a").mouseenter(function(){
+			$("#main_header").addClass("gnb_opened");
+			// $("html").addClass("scrollFixed");
+		});
+
+		$("#main_header .navi").mouseleave(function(){
+			$("#main_header").removeClass("gnb_opened");
+			if (!$("#main_header").hasClass("search_opened")) {
+				//$("html").removeClass("scrollFixed");
+			}
+		});
+
+		//2025 마이스토리
+		$(".my_history_btn").click(function () {
+			$(".my_his_pop").addClass("active");
+			$(this).addClass("currentBtn");
+			setMyHstyList("myHstyTbl");
+			setMyHstyList("myHstyPdf");
+		});
+		$(".my_his_pop .close").click(function () {
+			$(".my_his_pop").removeClass("active");
+		});
+
+		$('.his_tab a').on('click', function (e) {
+			e.preventDefault();
+
+			const $tab = $(this);
+			const targetClass = $tab.attr('class');
+
+			$('.his_tab li').removeClass('on');
+			$tab.parent().addClass('on');
+
+			$('.data_list').hide();
+			$('.data_list.' + targetClass).show();
+		});
+	});
+
+	function moveSubMenu(menuUrl, menuId, rootId) {
+		var url = "/itstat" + menuUrl;
+
+		//저장권정책 예외
+		if (menuId == '2006103') {
+			url = menuUrl;
+
+			window.open(url, '_blank');
+			return false;
+		}
+
+		// 통계서비스(메인화면 바로가기와 구분하기 위함)
+		if (menuId == '2010126') {
+			$("#mainYN").val('N');
+		}
+
+		$("#menuId_top").val(menuId);
+		$("#rootId_top").val(rootId);
+
+		$("#topfrm").attr("action", url);
+		$("#topfrm").submit();
+	}
+
+	// 메뉴별 방문자 수 체크 통신 함수
+	function fn_ajax_menuVisitCntChk(){
+		var form = $("#topfrm");
+		var domain = window.document.location.protocol + "//" + window.document.location.host;
+		var uri = window.document.location.href;
+		var currUri = "";
+		var currUri2 = uri.replace(domain, '');
+		var menuid = "";
+		if (currUri2 != "" && currUri2 != null) {
+
+			if (currUri2.indexOf("/main.html") > -1) { 	//메인
+				currUri += "/main.html";
+				menuid = '2010101';
+			} else {										//서브
+				var currUriArr = currUri2.split("/");
+
+				for (var i = 2; i < currUriArr.length; i++) {
+					currUri += "/" + currUriArr[i];
+				}
+
+				menuid = $("#menuId").val();
+			}
+
+			$.ajax({
+				url : "/itstat/sysUseStat/insertMenuPageView.html",
+// 				url : "../../sysUseStat/insertMenuPageView.html",
+				type : "post",
+				data : {
+					'currUri'  : currUri,
+					'currUri2' : currUri2,
+					'menu_id'  : menuid
+				},
+				success : function(data){
+					if(data != null){
+						if(data.isTrue == "false"){
+							console.log("MenuPageViewChk error");
+						}
+					}
+				},
+				error: function(request, status, error){
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+
+		}
+	}
+
+	
+	addEventListener("focusin",(e) => {
+		const target = e.target;
+		const clientRect = target.getBoundingClientRect();
+		const relativeTop = clientRect.top;
+		const menuHeight = document.getElementById("topfrm").clientHeight+30;
+
+		if (target.closest("#mdl_p")) {
+		} else if ($(".main_popup").is(":visible")){
+			const barHeight = document.getElementById('barfrm').clientHeight;
+			const totalHeight = menuHeight + barHeight;
+			if(relativeTop <= totalHeight){
+				window.scrollBy(0, relativeTop-(totalHeight+20));
+			}
+		} else {
+			if(relativeTop <= menuHeight){
+				window.scrollBy(0, relativeTop-(menuHeight+20));
+			}
+		}
+	});
+
+</script>
+
+<form name="topfrm" id="topfrm" method="post" >
+	<input type="hidden" name="_csrf" value="f3a7c7fb-3b18-419f-872d-214e609ff4a1" />
+	<input type="hidden" id="menuId_top" name="menuId" value="" />
+	<input type="hidden" id="rootId_top" name="rootId" value="" />
+	<input type="hidden" id="ieYn" name="ieYn" value="" />
+	<input type="hidden" id="mainYN" name="mainYN" value="" />
+
+	<div class="center">
+		<h1>
+			<a href="/itstat/main.html" class="top_logo">
+				<img src="/itstat/img/sub/logo.svg" alt="ITSTAT ICT통계포털">
+			</a>
+		</h1>
+		<nav class="navi">
+			<!-- 240607 변경된 메뉴 -->
+			<div class="menu_bg"></div>
+			<h2 class="txt_blind">대메뉴</h2>
+			<ul>
+				
+					
+					
+					
+
+					
+					
+						
+					
+					<li>
+						
+						
+							
+								<a href="javascript:void(0);" class="top_navi "  id="header_tag" onclick="moveSubMenu('/kor/tblInfo/TblInfoList.html?vw_cd=MT_ATITLE', '2010126', '2010002');  return false;" >
+									<div><span>통계서비스</span></div>
+								</a>
+							
+							
+						
+
+						<ul>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/tblInfo/TblInfoList.html?vw_cd=MT_ATITLE', '2010126', '2010002'); return false;">
+											주제별
+										</a>
+									
+								
+								</li>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/tblInfo/TblInfoList.html?vw_cd=MT_DTITLE', '2010127', '2010002'); return false;">
+											출처별
+										</a>
+									
+								
+								</li>
+							
+						</ul>
+					</li>
+				
+					
+					
+					
+
+					
+						
+					
+					
+					<li>
+						
+						
+							
+							
+								<a href="javascript:void(0);" class="top_navi " onclick="moveSubMenu('/kor/stat/newStat.html', '2010135', '2010003');  return false;" >
+									<div><span>테마통계</span></div>
+								</a>
+							
+						
+
+						<ul>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/stat/newStat.html', '2010135', '2010003'); return false;">
+											최신통계
+										</a>
+									
+								
+								</li>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/stat/PopularityStat.html', '2010133', '2010003'); return false;">
+											인기통계
+										</a>
+									
+								
+								</li>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/stat/StatList.html', '2010128', '2010003'); return false;">
+											주요지표
+										</a>
+									
+								
+								</li>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD26', '2010129', '2010003'); return false;">
+											인포그래픽
+										</a>
+									
+								
+								</li>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/labor/Labor.html', '2010132', '2010003'); return false;">
+											온라인 노동지수
+										</a>
+									
+								
+								</li>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/economic/economicList.html', '2010136', '2010003'); return false;">
+											뉴스경기지수
+										</a>
+									
+								
+								</li>
+							
+								
+									
+										<li class="pc_only">
+									
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD27', '2010131', '2010003'); return false;">
+											이슈 포커스
+										</a>
+									
+								
+								</li>
+							
+						</ul>
+					</li>
+				
+					
+					
+					
+
+					
+						
+					
+					
+					<li>
+						
+						
+							
+							
+								<a href="javascript:void(0);" class="top_navi " onclick="moveSubMenu('/kor/webzine/WebzineList.html', '2010134', '2010001');  return false;" >
+									<div><span>정보</span></div>
+								</a>
+							
+						
+
+						<ul>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/webzine/WebzineList.html', '2010134', '2010001'); return false;">
+											뉴스레터
+										</a>
+									
+								
+								</li>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD06', '2010116', '2010001'); return false;">
+											통계자료실
+										</a>
+									
+								
+								</li>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD05', '2010115', '2010001'); return false;">
+											ICT통계분석
+										</a>
+									
+								
+								</li>
+							
+								
+									
+										<li class="pc_only">
+									
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/contents/ContentsList.html', '2010117', '2010001'); return false;">
+											마이크로데이터
+										</a>
+									
+								
+								</li>
+							
+						</ul>
+					</li>
+				
+					
+					
+					
+
+					
+					
+						
+					
+					<li>
+						
+						
+							
+							
+								<a href="javascript:void(0);" class="top_navi " onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD02', '2006102', '2006000');  return false;" >
+									<div><span>알림</span></div>
+								</a>
+							
+						
+
+						<ul>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD02', '2006102', '2006000'); return false;">
+											공지사항
+										</a>
+									
+								
+								</li>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/event/EventList.html', '2006105', '2006000'); return false;">
+											퀴즈이벤트
+										</a>
+									
+								
+								</li>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/privacy/privacy.html', '2006104', '2006000'); return false;">
+											개인정보처리방침
+										</a>
+									
+								
+								</li>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('https://www.kisdi.re.kr/content.do?key=m2102243307344', '2006103', '2006000'); return false;" title="새창열림">
+											저작권정책
+										</a>
+									
+									
+								
+								</li>
+							
+						</ul>
+					</li>
+				
+					
+					
+					
+
+					
+						
+					
+					
+					<li>
+						
+						
+							
+							
+								<a href="javascript:void(0);" class="top_navi " onclick="moveSubMenu('/kor/introduce/introduce.html', '2007103', '2007000');  return false;" >
+									<div><span>소개</span></div>
+								</a>
+							
+						
+
+						<ul>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/introduce/introduce.html', '2007103', '2007000'); return false;">
+											ITSTAT이용안내
+										</a>
+									
+								
+								</li>
+							
+								
+									
+									
+										<li>
+									
+								
+								
+									
+									
+										<a class="h_cir" href="javascript:void(0);" onclick="moveSubMenu('/kor/brmp/BrmpList.html', '2007102', '2007000'); return false;">
+											ICT산업분류체계
+										</a>
+									
+								
+								</li>
+							
+						</ul>
+					</li>
+				
+			</ul>
+
+			<!-- 240607 메가 메뉴로 변경을 위해 기존 메뉴 임시 주석처리 -->
+			<!-- <h2 class="txt_blind">대메뉴</h2>
+			<ul>
+				
+					
+					
+					
+
+					
+					
+						
+					
+
+					대메뉴
+					<li class="top_navi_li">
+						
+						
+							
+								<a href="javascript:void(0);" class="top_navi "  id="header_tag" onclick="moveSubMenu('/kor/tblInfo/TblInfoList.html?vw_cd=MT_ATITLE', '2010126', '2010002');  return false;" >
+									<div><span>통계서비스</span></div>
+								</a>
+							
+							
+						
+
+
+		  				소메뉴
+						<ul class="sub_navi">
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/tblInfo/TblInfoList.html?vw_cd=MT_ATITLE', '2010126', '2010002'); return false;">
+												주제별
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/tblInfo/TblInfoList.html?vw_cd=MT_DTITLE', '2010127', '2010002'); return false;">
+												출처별
+											</a>
+										
+									
+								</li>
+							
+						</ul>
+
+					</li>
+				
+					
+					
+					
+
+					
+						
+					
+					
+
+					대메뉴
+					<li class="top_navi_li">
+						
+						
+							
+							
+								<a href="javascript:void(0);" class="top_navi " onclick="moveSubMenu('/kor/stat/newStat.html', '2010135', '2010003');  return false;" >
+									<div><span>테마통계</span></div>
+								</a>
+							
+						
+
+
+		  				소메뉴
+						<ul class="sub_navi">
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/stat/newStat.html', '2010135', '2010003'); return false;">
+												최신통계
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/stat/PopularityStat.html', '2010133', '2010003'); return false;">
+												인기통계
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/stat/StatList.html', '2010128', '2010003'); return false;">
+												주요지표
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD26', '2010129', '2010003'); return false;">
+												인포그래픽
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/labor/Labor.html', '2010132', '2010003'); return false;">
+												온라인 노동지수
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/economic/economicList.html', '2010136', '2010003'); return false;">
+												뉴스경기지수
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD27', '2010131', '2010003'); return false;">
+												이슈 포커스
+											</a>
+										
+									
+								</li>
+							
+						</ul>
+
+					</li>
+				
+					
+					
+					
+
+					
+						
+					
+					
+
+					대메뉴
+					<li class="top_navi_li">
+						
+						
+							
+							
+								<a href="javascript:void(0);" class="top_navi " onclick="moveSubMenu('/kor/webzine/WebzineList.html', '2010134', '2010001');  return false;" >
+									<div><span>정보</span></div>
+								</a>
+							
+						
+
+
+		  				소메뉴
+						<ul class="sub_navi">
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/webzine/WebzineList.html', '2010134', '2010001'); return false;">
+												뉴스레터
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD06', '2010116', '2010001'); return false;">
+												통계자료실
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD05', '2010115', '2010001'); return false;">
+												ICT통계분석
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/contents/ContentsList.html', '2010117', '2010001'); return false;">
+												마이크로데이터
+											</a>
+										
+									
+								</li>
+							
+						</ul>
+
+					</li>
+				
+					
+					
+					
+
+					
+					
+						
+					
+
+					대메뉴
+					<li class="top_navi_li">
+						
+						
+							
+							
+								<a href="javascript:void(0);" class="top_navi " onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD02', '2006102', '2006000');  return false;" >
+									<div><span>알림</span></div>
+								</a>
+							
+						
+
+
+		  				소메뉴
+						<ul class="sub_navi">
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD02', '2006102', '2006000'); return false;">
+												공지사항
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/event/EventList.html', '2006105', '2006000'); return false;">
+												퀴즈이벤트
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/privacy/privacy.html', '2006104', '2006000'); return false;">
+												개인정보처리방침
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('https://www.kisdi.re.kr/content.do?key=m2102243307344', '2006103', '2006000'); return false;" title="새창열림">
+												저작권정책
+											</a>
+										
+										
+									
+								</li>
+							
+						</ul>
+
+					</li>
+				
+					
+					
+					
+
+					
+						
+					
+					
+
+					대메뉴
+					<li class="top_navi_li">
+						
+						
+							
+							
+								<a href="javascript:void(0);" class="top_navi " onclick="moveSubMenu('/kor/introduce/introduce.html', '2007103', '2007000');  return false;" >
+									<div><span>소개</span></div>
+								</a>
+							
+						
+
+
+		  				소메뉴
+						<ul class="sub_navi">
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/introduce/introduce.html', '2007103', '2007000'); return false;">
+												ITSTAT이용안내
+											</a>
+										
+									
+								</li>
+							
+								<li>
+									
+										
+										
+											<a href="javascript:void(0);" class="sub_navi_a" onclick="moveSubMenu('/kor/brmp/BrmpList.html', '2007102', '2007000'); return false;">
+												ICT산업분류체계
+											</a>
+										
+									
+								</li>
+							
+						</ul>
+
+					</li>
+				
+			</ul> -->
+		</nav>
+		<!--top_navi_end-->
+
+		<div class="header_right_icon">
+			<!-- 
+			<button type="button" class="webzine_btn">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M21.1064 16.3392L19.0594 12.5599V8.625C19.0594 4.69627 15.8631 1.5 11.9344 1.5C8.00565 1.5 4.80939 4.69627 4.80939 8.625V12.5599L2.76226 16.3391C2.66943 16.5105 2.6227 16.703 2.62667 16.8979C2.63063 17.0927 2.68515 17.2832 2.78488 17.4507C2.88461 17.6181 3.02613 17.7568 3.19557 17.8531C3.36502 17.9494 3.55657 18 3.75146 18H7.82654C7.81518 18.1247 7.80944 18.2498 7.80934 18.375C7.80934 19.469 8.24394 20.5182 9.01752 21.2918C9.79111 22.0654 10.8403 22.5 11.9343 22.5C13.0284 22.5 14.0776 22.0654 14.8512 21.2918C15.6247 20.5182 16.0593 19.469 16.0593 18.375C16.0593 18.2484 16.0533 18.1236 16.0421 18H20.1172C20.3121 18 20.5036 17.9493 20.673 17.853C20.8425 17.7567 20.9839 17.6181 21.0837 17.4506C21.1834 17.2832 21.2379 17.0927 21.2418 16.8979C21.2458 16.7031 21.1991 16.5105 21.1063 16.3392H21.1064ZM14.5594 18.375C14.5597 18.7357 14.4856 19.0927 14.3418 19.4235C14.198 19.7543 13.9876 20.052 13.7236 20.2979C13.4597 20.5438 13.1479 20.7326 12.8077 20.8526C12.4675 20.9726 12.1062 21.0212 11.7464 20.9954C11.3866 20.9696 11.036 20.8698 10.7164 20.7025C10.3968 20.5351 10.1152 20.3036 9.8891 20.0226C9.66297 19.7415 9.49721 19.4168 9.40216 19.0688C9.3071 18.7208 9.28479 18.357 9.33662 18H14.5321C14.5501 18.1242 14.5592 18.2495 14.5594 18.375ZM4.38104 16.5L6.30939 12.9401V8.625C6.30939 7.13316 6.90202 5.70242 7.95691 4.64752C9.0118 3.59263 10.4425 3 11.9344 3C13.4262 3 14.857 3.59263 15.9119 4.64752C16.9668 5.70242 17.5594 7.13316 17.5594 8.625V12.9401L19.4876 16.5H4.38104Z" fill="white"/>
+				</svg>
+				웹진구독
+			</button> -->
+			<!-- 팝업존 popup zone - 버튼 -->
+			<button type="button" class="popup_btn bd_btn" onfocus="this.blur();">
+				<span>POPUP</span>
+			</button>
+			<button type="button" class="newsl_btn bd_btn" onclick="moveSubMenu('/kor/webzine/WebzineList.html', '2010001', '2010134');  return false;">
+				<span>뉴스레터</span>
+			</button>
+			<!-- 팝업존 popup zone - 버튼 // -->
+			<div class="main_search" id="visibleDiv">
+				<div class="center">
+					<div class="title">
+						<h2>통합검색</h2>
+						<!-- <p class="desc">ICT통계포털 통합검색을 이용해 보세요.</p> -->
+					</div>
+					<div class="main_search_input_box">
+						<input type="text" class="search_input" title="검색어" id="search_kyword" name="srchwrd" placeholder="검색어를 입력해주세요.">
+						<button type="submit" id="btnSearchKeyword" class="search_btn">
+							<span class="txt_blind">검색하기</span>
+						</button>
+					</div>
+					<button type="button" class="search_close_btn header"><span class="txt_blind">통합검색닫기</span></button>
+				</div>
+			</div>
+			<div class="sitemap_btn" id="sitemapDiv">
+				<button type="button" class="hm_btn" id="sitemapBtn" onfocus="this.blur();">
+					<span class="txt_blind">사이트맵</span>
+				</button>
+			</div>
+		</div>
+	</div><!-- center_end-->
+
+	<!-- My history 창 -->
+	<div class="my_his_pop">
+		<div class="popup_box">
+			<div class="top_tit">
+				<p class="tit">My history</p>
+				<button type="button" class="close">
+					<span class="txt_blind">닫기</span>
+				</button>
+			</div>
+			<div class="tab_list">
+				<ul class="his_tab">
+					<li class="on">
+						<a href="#" class="stat">
+							<span>통계서비스</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="info">
+							<span>정보</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="data_list stat">
+				<ul class="his_list" id="his_list_tbl">
+				</ul>
+			</div>
+			<div class="data_list info" style="display:none;">
+				<ul class="his_list" id="his_list_pdf">
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div class="gnb_bg f_s_0"></div> -->
+
+	<div class="modal modal_sitemap" id="modalPopup">
+		<div class="modal_div">
+			<button type="button" class="modal_close" id="closeModal" onfocus="this.blur();">
+				<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M5.91016 5.91016L23.7292 23.7292" stroke="#666666" stroke-width="2.07529" stroke-linecap="round"/>
+					<path d="M23.7344 5.91016L5.91528 23.7292" stroke="#666666" stroke-width="2.07529" stroke-linecap="round"/>
+				</svg>
+				<span class="txt_blind">사이트맵닫기</span>
+			</button>
+			<div class="site_map_box">
+				<h2>사이트맵</h2>
+				<ul>
+					
+					<li>
+						<a href="#" id="menu_li_0"  class="li_title" onclick="moveSubMenu('/kor/tblInfo/TblInfoList.html?vw_cd=MT_ATITLE', '2010126', '2010002');  return false;">통계서비스</a>
+
+						
+							
+						
+						
+						
+						
+						
+
+						
+						
+						
+						
+						
+
+						<ul class="sub_ul">
+							
+								
+									<li>
+										<a href="#" class="h_cir" onclick="moveSubMenu('/kor/tblInfo/TblInfoList.html?vw_cd=MT_ATITLE', '2010126', '2010002'); return false;">
+											<span>주제별</span>
+										</a>
+									</li>
+								
+									<li>
+										<a href="#" class="h_cir" onclick="moveSubMenu('/kor/tblInfo/TblInfoList.html?vw_cd=MT_DTITLE', '2010127', '2010002'); return false;">
+											<span>출처별</span>
+										</a>
+									</li>
+								
+							
+							
+							
+							
+							
+						</ul>
+					</li>
+				
+					<li>
+						<a href="#"  class="li_title" onclick="moveSubMenu('/kor/stat/newStat.html', '2010135', '2010003');  return false;">테마통계</a>
+
+						
+						
+							
+						
+						
+						
+						
+
+						
+						
+						
+						
+						
+
+						<ul class="sub_ul">
+							
+							
+								
+									
+										
+										
+											<li>
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/stat/newStat.html', '2010135', '2010003'); return false;">
+													<span>최신통계</span>
+												</a>
+											</li>
+										
+									
+								
+									
+										
+										
+											<li>
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/stat/PopularityStat.html', '2010133', '2010003'); return false;">
+													<span>인기통계</span>
+												</a>
+											</li>
+										
+									
+								
+									
+										
+										
+											<li>
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/stat/StatList.html', '2010128', '2010003'); return false;">
+													<span>주요지표</span>
+												</a>
+											</li>
+										
+									
+								
+									
+										
+										
+											<li>
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD26', '2010129', '2010003'); return false;">
+													<span>인포그래픽</span>
+												</a>
+											</li>
+										
+									
+								
+									
+										
+										
+											<li>
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/labor/Labor.html', '2010132', '2010003'); return false;">
+													<span>온라인 노동지수</span>
+												</a>
+											</li>
+										
+									
+								
+									
+										
+										
+											<li>
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/economic/economicList.html', '2010136', '2010003'); return false;">
+													<span>뉴스경기지수</span>
+												</a>
+											</li>
+										
+									
+								
+									
+										
+											<li class="pc_only">
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD27', '2010131', '2010003'); return false;">
+													<span>이슈 포커스</span>
+												</a>
+											</li>
+										
+										
+									
+								
+							
+							
+							
+							
+						</ul>
+					</li>
+				
+					<li>
+						<a href="#"  class="li_title" onclick="moveSubMenu('/kor/webzine/WebzineList.html', '2010134', '2010001');  return false;">정보</a>
+
+						
+						
+						
+							
+						
+						
+						
+
+						
+						
+						
+						
+						
+
+						<ul class="sub_ul">
+							
+							
+							
+								
+									
+										
+										
+											<li>
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/webzine/WebzineList.html', '2010134', '2010001'); return false;">
+													<span>뉴스레터</span>
+												</a>
+											</li>
+										
+									
+								
+									
+										
+										
+											<li>
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD06', '2010116', '2010001'); return false;">
+													<span>통계자료실</span>
+												</a>
+											</li>
+										
+									
+								
+									
+										
+										
+											<li>
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD05', '2010115', '2010001'); return false;">
+													<span>ICT통계분석</span>
+												</a>
+											</li>
+										
+									
+								
+									
+										
+											<li class="pc_only">
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/contents/ContentsList.html', '2010117', '2010001'); return false;">
+													<span>마이크로데이터</span>
+												</a>
+											</li>
+										
+										
+									
+								
+							
+							
+							
+						</ul>
+					</li>
+				
+					<li>
+						<a href="#"  class="li_title" onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD02', '2006102', '2006000');  return false;">알림</a>
+
+						
+						
+						
+						
+							
+						
+						
+
+						
+						
+						
+						
+						
+
+						<ul class="sub_ul">
+							
+							
+							
+							
+								
+									<li>
+										<a href="javascript:;" class="h_cir"  onclick="moveSubMenu('/kor/board/BoardList.html?board_class=BOARD02', '2006102', '2006000'); return false;">
+											<span>공지사항</span>
+										</a>
+									</li>
+								
+									<li>
+										<a href="javascript:;" class="h_cir"  onclick="moveSubMenu('/kor/event/EventList.html', '2006105', '2006000'); return false;">
+											<span>퀴즈이벤트</span>
+										</a>
+									</li>
+								
+									<li>
+										<a href="javascript:;" class="h_cir"  onclick="moveSubMenu('/kor/privacy/privacy.html', '2006104', '2006000'); return false;">
+											<span>개인정보처리방침</span>
+										</a>
+									</li>
+								
+									<li>
+										<a href="javascript:;" class="h_cir"  title="새창열림"  onclick="moveSubMenu('https://www.kisdi.re.kr/content.do?key=m2102243307344', '2006103', '2006000'); return false;">
+											<span>저작권정책</span>
+										</a>
+									</li>
+								
+							
+							
+						</ul>
+					</li>
+				
+					<li>
+						<a href="#"  class="li_title" onclick="moveSubMenu('/kor/introduce/introduce.html', '2007103', '2007000');  return false;">소개</a>
+
+						
+						
+						
+						
+						
+							
+						
+
+						
+						
+						
+						
+						
+
+						<ul class="sub_ul">
+							
+							
+							
+							
+							
+								
+									
+										
+										
+											<li>
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/introduce/introduce.html', '2007103', '2007000'); return false;">
+													<span>ITSTAT이용안내</span>
+												</a>
+											</li>
+										
+									
+								
+									
+										
+											<!-- <li class="pc_only"> -->
+											<li class="">
+												<a href="javascript:;" class="h_cir" onclick="moveSubMenu('/kor/brmp/BrmpList.html', '2007102', '2007000'); return false;">
+													<span>ICT산업분류체계</span>
+												</a>
+											</li>
+										
+										
+									
+								
+							
+						</ul>
+					</li>
+				
+				</ul>
+			</div>
+		</div>
+	</div>
+</form>
+			</header>
+
+			<div class="right_quick"><!-- 오른쪽 퀵메뉴 -->
+				<button type="button" class="my_history_btn">
+					<span>내가 본 통계표</span>
+				</button>
+				<button type="button" class="search_btn header" id="searchBtn" onfocus="this.blur();">
+					<span>통합검색</span>
+				</button>
+				<div class="font-controls">
+					<button class="increase" onclick="zoomIn('plus'); return false;"><span>화면크기확대</span></button>
+					<button class="decrease" onclick="zoomIn('minus'); return false;"><span>화면크기축소</span></button>
+					<button class="reset" onclick="zoomIn('init'); return false;"><span>초기화</span></button>
+				</div>
+			</div>
+
+			<!-- 팝업존 popup zone - 모달 레이어 -->
+			
+			<div class="popup-zone overlay">
+				<div class="popup__layer">
+					<div class="info">
+						<div class="title">
+							<strong>POPUP ZONE</strong>
+						</div>
+						<div class="total-count">
+							<span>팝업 개수 : </span>
+							<b>1</b>
+							<span>건</span>
+						</div>
+					</div>
+					<div class="con-wrap">
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+								
+									<div class="swiper-slide">
+										<div class="thumbnail">
+											<a href="https://www.itstat.go.kr/itstat/kor/board/BoardDetail.html?board_seq=12329&rootId=2006000&pageUnit=10&firstIndex=0&pageIndex=1&board_class=BOARD02&menuId=2006102&lastIndex=10" target="_self">
+												<img src="/nrams/upload/thumbnail/6e7f87947c9c4eaa95cd2c46f37af098.jpg" alt="팝업이미지" />
+											</a>
+										</div>
+									</div>
+								
+							</div>
+							<div class="swiper-button-prev"></div>
+							<div class="swiper-button-next"></div>
+						</div>
+					</div>
+					<div class="btn-area">
+						<button type="button" class="close_btn today">오늘 하루 열지않기 <i class="ico-close"><span class="txt_blind">오늘 하루 열지않기</span></i></button>
+						<button type="button" class="close_btn close">닫기 <i class="ico-close"><span class="txt_blind">닫기</span></i></button>
+					</div>
+				</div>
+			</div>
+			
+			<!-- popup-zone end -->
+
+			<!-- mobile header-->
+			
+
+			<!-- 로딩바 -->
+			<!-- <div id="Progress_Loading">
+				<img src="/itstat/img/loading.gif" alt="loading"/>
+			</div> -->
+
+			
+
+			
+				
+				
+					
+				
+			
+
+			<!-- float_menu - 우측 고정 메뉴 -->
+			<div class="float_menu">
+				<button type="button" class="float_search_btn">
+					<img src="/itstat/img/icon/ico-search.svg" alt="image">
+					<div>검색</div>
+				</button>
+				<button type="button" id="scrollTopBtn">
+					<img src="/itstat/img/icon/ico-arrow-top-white.svg" alt="image">
+				</button>
+			</div>
+
+			<!-- container  -->
+		  	<div id="container" class="">
+				<div class="sub-container">
+		 			<!-- side navigation menu bar -->
+		 			
+
+
+
+
+<!-- security -->
+
+
+
+
+
+
+
+
+
+<script>
+</script>
+
+<div id="snb">
+	<div class="category-title">
+		<h2></h2>
+	</div>
+
+	<div class="menu-group">
+		<ul>
+			
+		</ul>
+	</div>
+</div>
+	    	  		<!-- content -->
+	    	  		
+						
+						
+							<div class="content">
+						
+					
+	    				<div class="contents clearfix" id="contents_body">
+	    					<form id="bodyForm" name="bodyForm" method="post">
+		   						<input type="hidden" id="menuId" name="menuId" value="" />
+								<input type="hidden" id="rootId" name="rootId" value="" />
+								<input type="hidden" name="_csrf" value="f3a7c7fb-3b18-419f-872d-214e609ff4a1" />
+								
+									
+									
+									
+										<div class="cont_box">
+											
+
+
+
+
+<!-- security -->
+
+
+
+
+
+
+
+
+
+
+<script>
+/** 통계DB */
+var tblCnt = 5;
+var tabCnt = 0;
+var form = $("#bodyForm");
+var statList = [{"stat_year":"2020","stat_nm":"ICT실태조사","stat_cnt":119,"stat_id":"E00620200825141408","cont_seq":"1221"},{"stat_year":"2019","stat_nm":"ICT실태조사","stat_cnt":119,"stat_id":"E00620200825141408","cont_seq":"1199"},{"stat_year":"2018","stat_nm":"ICT실태조사","stat_cnt":119,"stat_id":"E00620200825141408","cont_seq":"1177"},{"stat_year":"2017","stat_nm":"ICT실태조사","stat_cnt":119,"stat_id":"E00620200825141408","cont_seq":"1162"},{"stat_year":"2023","stat_nm":"(부가) ICT실태조사 SW(광의)부문","stat_cnt":119,"stat_id":"E00620200911091841","cont_seq":"1366"},{"stat_year":"2022","stat_nm":"(부가) ICT실태조사 SW(광의)부문","stat_cnt":119,"stat_id":"E00620200911091841","cont_seq":"1322"},{"stat_year":"2021","stat_nm":"(부가) ICT실태조사 SW(광의)부문","stat_cnt":119,"stat_id":"E00620200911091841","cont_seq":"1300"},{"stat_year":"2020","stat_nm":"(부가) ICT실태조사 SW(광의)부문","stat_cnt":119,"stat_id":"E00620200911091841","cont_seq":"1222"},{"stat_year":"2019","stat_nm":"(부가) ICT실태조사 SW(광의)부문","stat_cnt":119,"stat_id":"E00620200911091841","cont_seq":"1200"},{"stat_year":"2018","stat_nm":"(부가) ICT실태조사 SW(광의)부문","stat_cnt":119,"stat_id":"E00620200911091841","cont_seq":"1178"},{"stat_year":"2017","stat_nm":"(부가) ICT실태조사 SW(광의)부문","stat_cnt":119,"stat_id":"E00620200911091841","cont_seq":"1163"},{"stat_year":"2020","stat_nm":"ICT기업경기조사","stat_cnt":119,"stat_id":"E00620200825141315","cont_seq":"1224"},{"stat_year":"2019","stat_nm":"ICT기업경기조사","stat_cnt":119,"stat_id":"E00620200825141315","cont_seq":"1202"},{"stat_year":"2018","stat_nm":"ICT기업경기조사","stat_cnt":119,"stat_id":"E00620200825141315","cont_seq":"1180"},{"stat_year":"2017","stat_nm":"ICT기업경기조사","stat_cnt":119,"stat_id":"E00620200825141315","cont_seq":"1165"},{"stat_year":"2018","stat_nm":"국내기업 IT·SW 활용조사","stat_cnt":119,"stat_id":"E00620201116111311","cont_seq":"1182"},{"stat_year":"2017","stat_nm":"국내기업 IT·SW 활용조사","stat_cnt":119,"stat_id":"E00620201116111311","cont_seq":"1167"},{"stat_year":"2023","stat_nm":"데이터산업현황조사","stat_cnt":119,"stat_id":"E00620200911110024","cont_seq":"1370"},{"stat_year":"2022","stat_nm":"데이터산업현황조사","stat_cnt":119,"stat_id":"E00620200911110024","cont_seq":"1323"},{"stat_year":"2021","stat_nm":"데이터산업현황조사","stat_cnt":119,"stat_id":"E00620200911110024","cont_seq":"1285"},{"stat_year":"2020","stat_nm":"데이터산업현황조사","stat_cnt":119,"stat_id":"E00620200911110024","cont_seq":"1262"},{"stat_year":"2019","stat_nm":"데이터산업현황조사","stat_cnt":119,"stat_id":"E00620200911110024","cont_seq":"1204"},{"stat_year":"2018","stat_nm":"데이터산업현황조사","stat_cnt":119,"stat_id":"E00620200911110024","cont_seq":"1183"},{"stat_year":"2017","stat_nm":"데이터산업현황조사","stat_cnt":119,"stat_id":"E00620200911110024","cont_seq":"1168"},{"stat_year":"2023","stat_nm":"디지털정보격차실태조사","stat_cnt":119,"stat_id":"E00620200911110045","cont_seq":"1371"},{"stat_year":"2022","stat_nm":"디지털정보격차실태조사","stat_cnt":119,"stat_id":"E00620200911110045","cont_seq":"1324"},{"stat_year":"2021","stat_nm":"디지털정보격차실태조사","stat_cnt":119,"stat_id":"E00620200911110045","cont_seq":"1286"},{"stat_year":"2020","stat_nm":"디지털정보격차실태조사","stat_cnt":119,"stat_id":"E00620200911110045","cont_seq":"1227"},{"stat_year":"2019","stat_nm":"디지털정보격차실태조사","stat_cnt":119,"stat_id":"E00620200911110045","cont_seq":"1196"},{"stat_year":"2018","stat_nm":"디지털정보격차실태조사","stat_cnt":119,"stat_id":"E00620200911110045","cont_seq":"1193"},{"stat_year":"2017","stat_nm":"디지털정보격차실태조사","stat_cnt":119,"stat_id":"E00620200911110045","cont_seq":"1169"},{"stat_year":"2023","stat_nm":"방송산업실태조사","stat_cnt":119,"stat_id":"E00620200911110247","cont_seq":"1372"},{"stat_year":"2022","stat_nm":"방송산업실태조사","stat_cnt":119,"stat_id":"E00620200911110247","cont_seq":"1325"},{"stat_year":"2021","stat_nm":"방송산업실태조사","stat_cnt":119,"stat_id":"E00620200911110247","cont_seq":"1287"},{"stat_year":"2020","stat_nm":"방송산업실태조사","stat_cnt":119,"stat_id":"E00620200911110247","cont_seq":"1228"},{"stat_year":"2019","stat_nm":"방송산업실태조사","stat_cnt":119,"stat_id":"E00620200911110247","cont_seq":"1205"},{"stat_year":"2018","stat_nm":"방송산업실태조사","stat_cnt":119,"stat_id":"E00620200911110247","cont_seq":"1184"},{"stat_year":"2017","stat_nm":"방송산업실태조사","stat_cnt":119,"stat_id":"E00620200911110247","cont_seq":"1170"},{"stat_year":"2023","stat_nm":"사물인터넷산업실태조사","stat_cnt":119,"stat_id":"E00620200911110418","cont_seq":"1373"},{"stat_year":"2022","stat_nm":"사물인터넷산업실태조사","stat_cnt":119,"stat_id":"E00620200911110418","cont_seq":"1326"},{"stat_year":"2021","stat_nm":"사물인터넷산업실태조사","stat_cnt":119,"stat_id":"E00620200911110418","cont_seq":"1288"},{"stat_year":"2020","stat_nm":"사물인터넷산업실태조사","stat_cnt":119,"stat_id":"E00620200911110418","cont_seq":"1229"},{"stat_year":"2019","stat_nm":"사물인터넷산업실태조사","stat_cnt":119,"stat_id":"E00620200911110418","cont_seq":"1206"},{"stat_year":"2018","stat_nm":"사물인터넷산업실태조사","stat_cnt":119,"stat_id":"E00620200911110418","cont_seq":"1185"},{"stat_year":"2017","stat_nm":"사물인터넷산업실태조사","stat_cnt":119,"stat_id":"E00620200911110418","cont_seq":"1171"},{"stat_year":"2023","stat_nm":"스마트폰 과의존 실태조사","stat_cnt":119,"stat_id":"E00620201012161255","cont_seq":"1375"},{"stat_year":"2022","stat_nm":"스마트폰 과의존 실태조사","stat_cnt":119,"stat_id":"E00620201012161255","cont_seq":"1374"},{"stat_year":"2021","stat_nm":"스마트폰 과의존 실태조사","stat_cnt":119,"stat_id":"E00620201012161255","cont_seq":"1289"},{"stat_year":"2020","stat_nm":"스마트폰 과의존 실태조사","stat_cnt":119,"stat_id":"E00620201012161255","cont_seq":"1230"},{"stat_year":"2019","stat_nm":"스마트폰 과의존 실태조사","stat_cnt":119,"stat_id":"E00620201012161255","cont_seq":"1207"},{"stat_year":"2018","stat_nm":"스마트폰 과의존 실태조사","stat_cnt":119,"stat_id":"E00620201012161255","cont_seq":"1186"},{"stat_year":"2017","stat_nm":"스마트폰 과의존 실태조사","stat_cnt":119,"stat_id":"E00620201012161255","cont_seq":"1172"},{"stat_year":"2023","stat_nm":"인터넷이용실태조사","stat_cnt":119,"stat_id":"E00620200911111007","cont_seq":"1376"},{"stat_year":"2022","stat_nm":"인터넷이용실태조사","stat_cnt":119,"stat_id":"E00620200911111007","cont_seq":"1327"},{"stat_year":"2021","stat_nm":"인터넷이용실태조사","stat_cnt":119,"stat_id":"E00620200911111007","cont_seq":"1290"},{"stat_year":"2020","stat_nm":"인터넷이용실태조사","stat_cnt":119,"stat_id":"E00620200911111007","cont_seq":"1231"},{"stat_year":"2019","stat_nm":"인터넷이용실태조사","stat_cnt":119,"stat_id":"E00620200911111007","cont_seq":"1197"},{"stat_year":"2018","stat_nm":"인터넷이용실태조사","stat_cnt":119,"stat_id":"E00620200911111007","cont_seq":"1194"},{"stat_year":"2017","stat_nm":"인터넷이용실태조사","stat_cnt":119,"stat_id":"E00620200911111007","cont_seq":"1173"},{"stat_year":"2023","stat_nm":"정보보호실태조사","stat_cnt":119,"stat_id":"E00620201012161546","cont_seq":"1378"},{"stat_year":"2022","stat_nm":"정보보호실태조사","stat_cnt":119,"stat_id":"E00620201012161546","cont_seq":"1328"},{"stat_year":"2021","stat_nm":"정보보호실태조사","stat_cnt":119,"stat_id":"E00620201012161546","cont_seq":"1321"},{"stat_year":"2020","stat_nm":"정보보호실태조사","stat_cnt":119,"stat_id":"E00620201012161546","cont_seq":"1232"},{"stat_year":"2019","stat_nm":"정보보호실태조사","stat_cnt":119,"stat_id":"E00620201012161546","cont_seq":"1198"},{"stat_year":"2018","stat_nm":"정보보호실태조사","stat_cnt":119,"stat_id":"E00620201012161546","cont_seq":"1195"},{"stat_year":"2017","stat_nm":"정보보호실태조사","stat_cnt":119,"stat_id":"E00620201012161546","cont_seq":"1174"},{"stat_year":"2023","stat_nm":"기업정보화통계조사","stat_cnt":119,"stat_id":"E00620201012161630","cont_seq":"1379"},{"stat_year":"2022","stat_nm":"기업정보화통계조사","stat_cnt":119,"stat_id":"E00620201012161630","cont_seq":"1329"},{"stat_year":"2021","stat_nm":"기업정보화통계조사","stat_cnt":119,"stat_id":"E00620201012161630","cont_seq":"1291"},{"stat_year":"2020","stat_nm":"기업정보화통계조사","stat_cnt":119,"stat_id":"E00620201012161630","cont_seq":"1233"},{"stat_year":"2019","stat_nm":"기업정보화통계조사","stat_cnt":119,"stat_id":"E00620201012161630","cont_seq":"1208"},{"stat_year":"2018","stat_nm":"기업정보화통계조사","stat_cnt":119,"stat_id":"E00620201012161630","cont_seq":"1187"},{"stat_year":"2017","stat_nm":"기업정보화통계조사","stat_cnt":119,"stat_id":"E00620201012161630","cont_seq":"1175"},{"stat_year":"2023","stat_nm":"ICT전문인력수급실태조사","stat_cnt":119,"stat_id":"E00620200911105742","cont_seq":"1383"},{"stat_year":"2022","stat_nm":"ICT전문인력수급실태조사","stat_cnt":119,"stat_id":"E00620200911105742","cont_seq":"1382"},{"stat_year":"2021","stat_nm":"ICT전문인력수급실태조사","stat_cnt":119,"stat_id":"E00620200911105742","cont_seq":"1381"},{"stat_year":"2020","stat_nm":"ICT전문인력수급실태조사","stat_cnt":119,"stat_id":"E00620200911105742","cont_seq":"1234"},{"stat_year":"2023","stat_nm":"클라우드산업실태조사","stat_cnt":119,"stat_id":"E00620201012161656","cont_seq":"1384"},{"stat_year":"2022","stat_nm":"클라우드산업실태조사","stat_cnt":119,"stat_id":"E00620201012161656","cont_seq":"1330"},{"stat_year":"2021","stat_nm":"클라우드산업실태조사","stat_cnt":119,"stat_id":"E00620201012161656","cont_seq":"1292"},{"stat_year":"2020","stat_nm":"클라우드산업실태조사","stat_cnt":119,"stat_id":"E00620201012161656","cont_seq":"1235"},{"stat_year":"2019","stat_nm":"클라우드산업실태조사","stat_cnt":119,"stat_id":"E00620201012161656","cont_seq":"1210"},{"stat_year":"2018","stat_nm":"클라우드산업실태조사","stat_cnt":119,"stat_id":"E00620201012161656","cont_seq":"1189"},{"stat_year":"2019","stat_nm":"정보보호산업실태조사","stat_cnt":119,"stat_id":"E00620201012161524","cont_seq":"1211"},{"stat_year":"2018","stat_nm":"정보보호산업실태조사","stat_cnt":119,"stat_id":"E00620201012161524","cont_seq":"1190"},{"stat_year":"2023","stat_nm":"ICT중소기업실태조사","stat_cnt":119,"stat_id":"E00620200911105821","cont_seq":"1385"},{"stat_year":"2022","stat_nm":"ICT중소기업실태조사","stat_cnt":119,"stat_id":"E00620200911105821","cont_seq":"1331"},{"stat_year":"2021","stat_nm":"ICT중소기업실태조사","stat_cnt":119,"stat_id":"E00620200911105821","cont_seq":"1293"},{"stat_year":"2020","stat_nm":"ICT중소기업실태조사","stat_cnt":119,"stat_id":"E00620200911105821","cont_seq":"1237"},{"stat_year":"2019","stat_nm":"ICT중소기업실태조사","stat_cnt":119,"stat_id":"E00620200911105821","cont_seq":"1212"},{"stat_year":"2018","stat_nm":"ICT중소기업실태조사","stat_cnt":119,"stat_id":"E00620200911105821","cont_seq":"1191"},{"stat_year":"2018","stat_nm":"웹접근성실태조사","stat_cnt":119,"stat_id":"E00620200911110800","cont_seq":"1192"},{"stat_year":"2019","stat_nm":"방송통신광고비조사","stat_cnt":119,"stat_id":"E00620200911110351","cont_seq":"1214"},{"stat_year":"2022","stat_nm":"스마트미디어산업실태조사","stat_cnt":119,"stat_id":"E00620200911110446","cont_seq":"1387"},{"stat_year":"2021","stat_nm":"스마트미디어산업실태조사","stat_cnt":119,"stat_id":"E00620200911110446","cont_seq":"1294"},{"stat_year":"2020","stat_nm":"스마트미디어산업실태조사","stat_cnt":119,"stat_id":"E00620200911110446","cont_seq":"1282"},{"stat_year":"2019","stat_nm":"스마트미디어산업실태조사","stat_cnt":119,"stat_id":"E00620200911110446","cont_seq":"1215"},{"stat_year":"2023","stat_nm":"전자문서산업실태조사","stat_cnt":119,"stat_id":"E00620200911112308","cont_seq":"1388"},{"stat_year":"2022","stat_nm":"전자문서산업실태조사","stat_cnt":119,"stat_id":"E00620200911112308","cont_seq":"1332"},{"stat_year":"2021","stat_nm":"전자문서산업실태조사","stat_cnt":119,"stat_id":"E00620200911112308","cont_seq":"1336"},{"stat_year":"2020","stat_nm":"전자문서산업실태조사","stat_cnt":119,"stat_id":"E00620200911112308","cont_seq":"1241"},{"stat_year":"2019","stat_nm":"전자문서산업실태조사","stat_cnt":119,"stat_id":"E00620200911112308","cont_seq":"1216"},{"stat_year":"2023","stat_nm":"SW융합실태조사","stat_cnt":119,"stat_id":"E00620230719103131","cont_seq":"1389"},{"stat_year":"2022","stat_nm":"SW융합실태조사","stat_cnt":119,"stat_id":"E00620230719103131","cont_seq":"1333"},{"stat_year":"2021","stat_nm":"SW융합실태조사","stat_cnt":119,"stat_id":"E00620230719103131","cont_seq":"1295"},{"stat_year":"2020","stat_nm":"SW융합실태조사","stat_cnt":119,"stat_id":"E00620230719103131","cont_seq":"1283"},{"stat_year":"2023","stat_nm":"블록체인산업실태조사","stat_cnt":119,"stat_id":"E00620210903133059","cont_seq":"1390"},{"stat_year":"2022","stat_nm":"블록체인산업실태조사","stat_cnt":119,"stat_id":"E00620210903133059","cont_seq":"1334"},{"stat_year":"2021","stat_nm":"블록체인산업실태조사","stat_cnt":119,"stat_id":"E00620210903133059","cont_seq":"1296"},{"stat_year":"2020","stat_nm":"블록체인산업실태조사","stat_cnt":119,"stat_id":"E00620210903133059","cont_seq":"1245"},{"stat_year":"2023","stat_nm":"가상증강현실(VR·AR)산업실태조사","stat_cnt":119,"stat_id":"E00620230719112323","cont_seq":"1391"},{"stat_year":"2022","stat_nm":"가상증강현실(VR·AR)산업실태조사","stat_cnt":119,"stat_id":"E00620230719112323","cont_seq":"1335"},{"stat_year":"2021","stat_nm":"가상증강현실(VR·AR)산업실태조사","stat_cnt":119,"stat_id":"E00620230719112323","cont_seq":"1301"},{"stat_year":"2021","stat_nm":"온라인및오프라인결합서비스산업조사","stat_cnt":119,"stat_id":"E00620210902172656","cont_seq":"1298"},{"stat_year":"2020","stat_nm":"온라인및오프라인결합서비스산업조사","stat_cnt":119,"stat_id":"E00620210902172656","cont_seq":"1261"},{"stat_year":"2023","stat_nm":"인공지능산업실태조사","stat_cnt":119,"stat_id":"E00620200911110909","cont_seq":"1393"},{"stat_year":"2022","stat_nm":"인공지능산업실태조사","stat_cnt":119,"stat_id":"E00620200911110909","cont_seq":"1392"},{"stat_year":"2021","stat_nm":"인공지능산업실태조사","stat_cnt":119,"stat_id":"E00620200911110909","cont_seq":"1299"},{"stat_year":"2023","stat_nm":"디지털크리에이터미디어산업실태조사","stat_cnt":119,"stat_id":"E00620240712105135","cont_seq":"1395"}];
+
+$(document).ready(function() {
+
+	// 신청서 내역조회 > 신청자 확인 모달팝업
+	$("#modalUserChk").click(function() {
+		$("#req_state_flag").val("REQ0002");
+		$(".pass_img").next(".pass_notice").html("<span class='txt_red'>승인이 완료된 내역</span>만 조회됩니다.<br>신청 시 입력한 이메일, 비밀번호가 필요합니다.<br>");
+		$(".password_bg").removeClass("dis_n");
+		$("#user_email").focus();
+		focusControl($(".password_wrap"));
+		$(this).addClass("currentBtn");
+	});
+	
+	//마이크로데이터 신청버튼
+	$("#btnMicroReq").click(function() {
+		$("#tbl_list").show();						//신청 리스트 보임
+		$("#modalUserChk").show();				//승인내역조회 버튼 보임
+		$("#tContReqList").addClass("dis_n");	//승인내역 리스트 숨김
+		$("#btnMicroReq").addClass("dis_n");	//마이크로데이터신청 버튼 숨김
+		$("#modalAppForm").show();				//신청서 작성 버튼 보임
+		$("#modalUdtForm").show();				//신청서 수정 버튼 보임
+		$(".flow").removeClass("flow_on");
+		$(".micro_flow_box").children().eq(1).addClass("flow_on");
+		$("#fldList_ul").focus();
+	});
+	
+	// 신청서작성 버튼
+	$("#modalAppForm").click(function() {
+		var chkYn = "Y";
+		//통계명 선택여부 체크
+		var tblCnt = $("#tblList > li").length;
+		//var chkCnt = $(".DB_in_item >input[class='micro_check']:checked").length;
+		if (tblCnt < 1) {
+			alert("선택된 통계명이 없습니다.");
+			return false;
+		}
+		// 항목명 선택여부 체크
+		$("a[name=btnItmNm]").each(function() {
+			if ($(this).attr("data-chk") == "") {
+				chkYn = "N";
+				alert($(this).prev().text()+"년 "+$(this).prev().prev().text()+"의 선택된 항목명이 없습니다.\n신청하지 않을 통계명은 체크하여 삭제해주세요.");
+			}
+			
+			if (chkYn == "N") { return false; }
+		});
+		
+		if (chkYn == "Y") {
+			var cnt = $("a[name=btnItmNm]").length;
+			var cont_seq = "";	var cont_seq1 = "";	//cont_seq
+			var stat_year = "";	var stat_year1 = "";	//stat_year
+			
+			if(cnt >= 0) {
+				// 리스트 생성
+				var reqDataList = new Array();
+				 
+				for (var i = 0; i < cnt; i++) {
+					cont_seq1 = $("a[name=btnItmNm]").eq(i).attr("data-d");
+					if(cont_seq1 != "") { cont_seq += cont_seq1+","; }
+					
+					//json 데이터 생성
+					var data = new Object();
+					 
+					data.stat_id = $("a[name=btnItmNm]").eq(i).attr("data-a");
+					data.stat_seq = $("a[name=btnItmNm]").eq(i).attr("data-chk");
+					data.cont_seq = $("a[name=btnItmNm]").eq(i).attr("data-d");
+					data.stat_year = $("a[name=btnItmNm]").eq(i).attr("data-b");
+					data.stat_nm = $("a[name=btnItmNm]").eq(i).attr("data-e");
+					// 리스트에 생성된 객체 삽입
+					reqDataList.push(data);
+				 }
+
+				cont_seq = cont_seq.substr(0, cont_seq.length -1);
+				$("#cont_seq").val(cont_seq);
+				
+				// String 형태로 변환
+		        var jsonData = JSON.stringify(reqDataList);
+		        
+				$(".apply_modal_wrap").removeClass("dis_n");
+				focusControl($(".apply_modal_pop"));
+				$(this).addClass("currentBtn");
+				fn_writeReqInfo(jsonData);
+				
+			}else{
+				alert("선택된 항목이 없습니다.");
+				return false;
+			}
+		}
+	});
+	
+	//통계명 클릭
+	$("#fldList").on("click", "li a", function() {
+		$("#fldList >li").each(function() {
+			$(this).attr('class', 'DB_box_li');
+		});
+		$(this).closest("li").attr('class', 'DB_box_li tab_on');
+
+		$("#fldDtList").html(createHtml(statList, $(this).attr("data-a")));
+		$("#fldDtList_ul").focus();
+		$("#fldDtList").scrollTop(0);
+		
+		//스크롤바 생성
+		var fldDtListLen = $("#fldDtList").children().length;
+		if (fldDtListLen > 8) {
+			$("#fldDtList").addClass("scroll");
+		} 
+	});
+	
+	// 제공년도 클릭
+	$("#fldDtList").on("click", "li a", function() {
+		var classNm = $(this).closest("li").attr("class");
+
+		if (classNm.indexOf("tab_on") >= 0) {
+			$(this).closest("li").attr('class', 'DB_box_li');
+		}else{
+			$(this).closest("li").attr('class', 'DB_box_li tab_on');
+		}
+	});
+	
+	//제공년도 > 통계명으로 탭 이동 시
+	$("#fldDtList_ul").on('focus', function(){
+		$("#fldDtList_ul").keydown(function(e){
+			if( e.which === 9 && e.shiftKey ) { 
+				if($(':focus').attr('data-c') == $("#fldDtList li > a:first").attr('data-c')){
+					event.preventDefault();
+					$("#fldList li a[title='선택됨']").focus();
+				}
+				if($(':focus').attr('id') == 'fldDtList_ul'){
+					event.preventDefault();
+					$("#fldList li a[title='선택됨']").focus();
+				}
+			}
+		})
+	});
+	
+	//추가버튼 클릭
+	$("#btn_add").on("click", function () {
+		var html = "";  
+		var msg = "";
+		var tblListCnt = $("#tblList >li").length;
+		var chkLen = $("#fldDtList .tab_on").length;
+		var dupCnt = 0;
+		
+		if (chkLen == 0) {
+			alert("추가할 제공 년도를 선택해주세요.");
+		};
+		
+		$("#fldDtList .tab_on").each(function(index) {
+			var stat_id = $(this).find("a").attr("data-a");
+			var stat_nm = $(this).find("a").attr("data-b");
+			var stat_year = $(this).find("a").attr("data-c");
+			var cont_seq = $(this).find("a").attr("data-d");
+
+			if (tblListCnt > 0) {
+				var exYn = false;
+					$("#tblList >li").each(function() {
+						var tbl_stat_id = $(this).find("a").attr("data-a");
+						var tbl_stat_year = $(this).find("a").attr("data-b");
+						
+						if (tbl_stat_id == stat_id) {
+							if (tbl_stat_year == stat_year) {
+								exYn = true;
+								dupCnt = dupCnt+1;
+								return;
+							}
+						}
+					});
+					
+					if (dupCnt == 0) {
+						msg = "";
+					}else if (chkLen == dupCnt){
+						msg = "이미 추가된 통계표입니다.";
+					}else if (chkLen > dupCnt){
+						msg = "중복된 년도는 제외하고 추가되었습니다.";
+					}
+					
+					if (exYn == false) {
+						if ((chkLen-1) == index && msg != "") { alert(msg);}
+						createTblList(stat_id, stat_nm, stat_year, cont_seq);
+					}else if ((chkLen-1) == index && exYn == true) {
+						alert(msg);
+					}
+					
+			}else{
+				createTblList(stat_id, stat_nm, stat_year, cont_seq);
+			}
+		});
+		
+		$("#fldDtList >li").attr('class', 'DB_box_li');
+		$("#fldDtList >li >a").removeAttr('title');
+	});
+	
+	//삭제버튼 클릭
+	$("#btn_del").on("click", function () {
+		var totalLen = $("#tblList").children().length;
+		var chkLen = $("#tblList >li .micro_check:checked").length;
+		var allchkYn = $("#list_allchk").is(":checked");
+		
+		//체크된 항목 없을 때
+		if (chkLen == 0) { alert("삭제할 항목이 없습니다."); };
+		//전체삭제 일 때
+		if (totalLen == chkLen || allchkYn == true) {
+			$("#tblList").removeClass("dis_block");
+		}
+		
+		//체크된 항목 삭제
+		$("#tblList >li .micro_check:checked").each(function() {
+			var chkYn = $(this).prop("checked");
+			if (chkYn == true) {
+				$(this).closest("li").remove();
+				$("#list_allchk").prop("checked", false);
+			}
+		});
+		
+		//스크롤바 삭제
+		if (totalLen < 9) {$("#tblList").removeClass("scroll");} 
+	});
+	
+	// 리스트에서 체크박스 클릭 시 
+	$("#tblList").on("click", "div input", function () {
+		var chkYn = $(this).prop('checked');
+		
+		if(chkYn == true) {
+			var liCnt = $("#tblList").children().length;
+			var chkCnt = $("input:checkbox[name='tblList_chk']:checked").length;
+			if(liCnt == chkCnt){$("#list_allchk").prop("checked", true);}
+		}else{
+			//전체선택 체크박스 해제
+			$("#list_allchk").prop("checked", false);
+		}
+	});
+	
+	//선택된 통계명 전체선택
+	$("#list_allchk").on("click", function () {
+		var chkYn = $(this).prop('checked');
+		if (chkYn == true) {
+			$(this).prop("checked", true);
+			$("#tblList").find("input").prop("checked", true);
+		}else{
+			$(this).prop("checked", false);
+			$("#tblList").find("input").prop("checked", false);
+		}
+	});
+	
+	//신청서 수정
+	$("#modalUdtForm").click(function() {
+		$("#req_state_flag").val("REQ0003");
+		$(".pass_img").next(".pass_notice").html("<span class='txt_red'>가장 최근 보완처리된 내역</span>이 조회됩니다.<br>신청 시 입력한 이메일, 비밀번호가 필요합니다.<br>");
+		$(".password_bg").removeClass("dis_n");
+		$("#user_email").focus();
+		focusControl($(".password_wrap"));
+		$(this).addClass("currentBtn");
+	});
+	
+});
+
+//선택된 통계명 생성
+function createTblList(stat_id, stat_nm, stat_year, cont_seq) {
+	var html = "";
+		
+	html += "<li class='DB_box_meta_li'>";
+	html += "	<div class='DB_in_item over_h'>";
+	html += "		<label class='f_s_0 dis_n' for='"+stat_id+stat_year+"'>"+stat_nm + stat_year +"선택</label>";
+	html += "		<input class='micro_check DB_in_item_check f_l' type='checkbox' id='"+stat_id+stat_year+"' name='tblList_chk' data-a='"+stat_nm+"' data-b='"+stat_year+ "' title='"+stat_nm+" "+ stat_year+" 선택'>"+"<p class='DB_in_item_text f_l'>"+ stat_nm +"</p>"+"<p class='DB_in_item_year f_l'>"+ stat_year+"</p>";
+	html += "		<a href='javascript:void(0);' class='basic-btn f_r DB_in_item_btn' title='"+stat_nm+" "+stat_year+" 항목명보기' name='btnItmNm' data-a='"+stat_id+"' data-b='"+stat_year+"' data-d='"+cont_seq+"' data-nm='"+stat_nm+"' data-chk='' onclick='fn_btnItmNm(this)'>";
+	html += "			<span class='txt_blind'>"+stat_nm+" "+stat_year+"</span>항목명보기";
+	html += "		</a>";
+	html += "	</div>";
+	html += "</li>";
+	
+	$("#tblList").addClass("dis_block");
+	$("#tblList").append(html);
+	
+	//스크롤바 생성
+	var tblListLen = $("#tblList").children().length;
+	if (tblListLen > 8) {
+		$("#tblList").addClass("scroll");
+	} 
+}
+
+//제공년도 리스트 생성
+function createHtml(list, stat_id) {
+	var html = "";
+
+	if(list.length > 0) {
+		for(var i in list) {
+			if (list[i].stat_id == stat_id) {
+				html += "<li class='DB_box_li'>";
+				html += "	<a class='DB_in_item fld_year' href='javascript:void(0);' data-a='" + list[i].stat_id + "' data-b='" + list[i].stat_nm +"' data-c='" + list[i].stat_year +"' data-d='"+list[i].cont_seq+"'>";
+				html += "		<svg xmlns='http://www.w3.org/2000/svg' width='25' height='24' viewBox='0 0 25 24' fill='none'><path d='M5 12L10 17L20 7' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>";
+				html += "		<div class='in_item_title'>";
+				html += "			<p>" + list[i].stat_year +"</p><span class='txt_blind'>제공년도 선택</span>";
+				html += "		</div>";
+				html += "	</a>";
+				html += "</li>";
+			}
+		}
+	}
+	return html;
+}
+
+//항목명 보기 팝업 함수
+function fn_btnItmNm(obj) {
+	var stat_id = $(obj).attr("data-a");
+	var stat_seq = $(obj).attr("data-chk");
+	var stat_year = $(obj).attr("data-b");
+	var stat_nm =  $(obj).attr("data-nm")
+	
+	$(".modal_wrap").removeClass("dis_n");
+	$("#tbody_valItmList").empty();
+	$(".DB_in_item_btn").addClass("currentBtn");
+	focusControl($(".modal_pop"));
+	fn_selValItmList(stat_id, stat_year, stat_seq, stat_nm);
+	$("#allCheck").focus();
+}
+
+// 항목명 선택 후 함수
+function fn_chkValItm(stat_seq, stat_id, stat_year) {
+	$("a[data-a="+stat_id+"][data-b="+stat_year+"]").attr({
+		"data-chk":stat_seq,
+		"style":"color:#fff; background-color: #002D57; border-color: #002D57;"
+	});
+	$("a[data-a="+stat_id+"][data-b="+stat_year+"]").focus();
+}
+
+</script>
+
+
+<input type="hidden" id="project_div" name="project_div" value="I" />
+<input type="hidden" id="req_stat_id" name="req_stat_id" value="" />
+<input type="hidden" id="req_stat_val" name="req_stat_val" value="" />
+<input type="hidden" id="req_work_name" name="req_work_name" value="" />
+<input type="hidden" id="req_seq" name="req_seq" value="" />
+<input type="hidden" id="cont_seq" name="cont_seq" value="" />
+
+<input type="hidden" id="file_yn" name="file_yn" value="N" />
+<input type="hidden" id="file_seq" name="file_seq" value="" />
+<input type="hidden" id="real_name" name="real_name" value="" />
+<input type="hidden" id="file_name" name="file_name" value="" />
+<input type="hidden" id="delete_fileSeq" name="delete_fileSeq" value="" />
+
+<input type="hidden" id="req_email" name="req_email" value="">
+<input type="hidden" id="extention" name="extention" value="">
+<input type="hidden" id="fileExtn" name="fileExtn" value="">
+<input type="hidden" id="req_state_flag" name="req_state_flag" value="REQ0002">
+
+
+<!-- 링크 공유하기 -->
+
+
+
+	
+		
+			
+        	
+        	
+			
+		
+	
+	
+
+
+
+<div class="cont_box micro_wrap">
+	<div class="micro_top over_h">
+	<!-- 웹접근 수정 :  구조추가 div 'top_wrapper', MDIS홈페이지 바로가기 버튼 공유하기 버튼 상단으로 이동 221215 SY Edit -->
+		<div class="top_wrapper">
+			<a href="javascript:;" onclick="window.open('https://mdis.kostat.go.kr/index.do', '_blank')" class="micro_mdis" title="새창열림">
+				<span>MDIS 홈페이지 바로가기</span>
+			</a>
+	
+			<!-- <div class="cm_share_btn">
+				<button type="button" class="hover_box share" id="shareBtn1">
+					<span class="hover_tooltip">공유하기</span>
+				</button>
+			</div> -->
+	
+			<!-- 공유하기 팝업창 -->
+			<div class="cm_share_popup" id="copyPopup">
+				<div class="popup_box">
+					<div class="top_area">
+						<div class="popup_title">
+							<strong>링크 공유하기</strong>
+							<p>해당 URL을 복사 후 사용하실 수 있습니다.</p>
+						</div>
+						<button type="button" class="close mid_x" id="copyPopupCloseBtn"><span class="txt_blind">닫기</span></button>
+					</div>
+					<div class="btm_area">
+						
+						
+						<div class="link_txt" id="linkResultDiv">https://www.itstat.go.kr/itstat/kor/contents/ContentsList.html?cate_cd=RPT</div>
+						<input type="hidden" id="menuVal" value="https://www.itstat.go.kr/itstat/kor/contents/ContentsList.html?cate_cd=RPT" />
+					</div>
+					<div class="btn_area">
+						<button type="button" class="btn btn_primary w100pct" id="copyBtn" onclick="copyClipboard();">복사하기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>   
+
+	<!-- 마이크로데이터 메뉴상세설명 -->
+	<div class="smmary">
+		<p>※  ICT 통계의 마이크로데이터는 통계청 마이크로데이터 통합서비스(MDIS)를 통해 다운로드 받으시기 바랍니다.</p>
+		<p>※ MDIS 홈페이지에서 제공하고 있지 않은 통계의 경우에는 아래의 신청 절차에 따라 마이크로데이터를 신청하여 주시기 바랍니다.</p>
+		<p>※ ITSTAT 사이트에서 제공해 드리는 ICT통계 마이크로데이터의 경우 통계작성기관의 요청 및 필요에 따라 제공 이후에도 일부 수정이 될 수도 있음을 알려드립니다.</p>
+	</div>
+
+	<!--마이크로데이터 흐름도-->
+	<div class="micro_flow_box">
+		<span class="txt_blind">마이크로데이터 흐름도</span>
+		
+		<!-- flow_on 클래스를 넣으면 진행 순서대로 색상 삽입-->
+		<div class="flow flow_on">
+			<div class="flow_icon">	<span class="txt_blind">1단계</span></div>
+			<p class="flow_txt">마이크로데이터<br>이용을 위한 신청서 작성</p>
+			<input type="button" class="btn btn_sm btn_bordered_b dis_n" value="마이크로데이터 신청" id="btnMicroReq">
+		</div>
+		<div class="flow">
+			<div class="flow_icon"><span class="txt_blind">2단계</span></div>
+			<p class="flow_txt">신청자와 담당자에게<br>E-MAIL 전송</p>
+		</div>
+		<div class="flow">
+			<div class="flow_icon"><span class="txt_blind">3단계</span></div>
+			<p class="flow_txt">자료제공심의회 심의 후<br>마이크로데이터 제공</p>
+			
+		</div>
+		<div class="flow">
+			<div class="flow_icon"><span class="txt_blind">4단계</span></div>
+			<p class="flow_txt">자료신청 데이터를<br>다운로드 받음</p>
+			<input type="button" class="btn btn_sm btn_primary" title="승인내역조회" value="승인내역조회" id="modalUserChk">
+		</div>
+	</div>
+
+	<!-- 다중년도 선택 -->
+	<div id="tbl_list" class="stat_DB_content m_b_0">
+		<!-- *YP (접근성) focus 이동 순서
+				1. .DB_box(ex.level_1) 의 리스트 .DB_in_item 선택시, 
+					해당 .DB_in_item > .in_item_mark 내부에 <span class="txt_blind">선택</span> 태그 추가
+					↓
+					다음단계인 .DB_box(ex.level_2)로 focus 이동
+				2. Tab키 역이동시, 위의 반대가 되어야함.
+		-->
+		
+		<!-- 통계명 -->
+		<ul class="DB_box" tabindex="-1" id="fldList_ul">
+			<li class="DB_box_title">통계명</li>
+			<li>
+            	<ul id="fldList" class="DB_box_in scroll">
+                 	
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200825141408" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">ICT실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911091841" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">(부가) ICT실태조사 SW(광의)부문</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200825141315" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">ICT기업경기조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620201116111311" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">국내기업 IT·SW 활용조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911110024" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">데이터산업현황조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911110045" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">디지털정보격차실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911110247" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">방송산업실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911110418" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">사물인터넷산업실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620201012161255" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">스마트폰 과의존 실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911111007" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">인터넷이용실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620201012161546" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">정보보호실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620201012161630" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">기업정보화통계조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911105742" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">ICT전문인력수급실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620201012161656" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">클라우드산업실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620201012161524" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">정보보호산업실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911105821" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">ICT중소기업실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911110800" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">웹접근성실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911110351" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">방송통신광고비조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911110446" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">스마트미디어산업실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911112308" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">전자문서산업실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620230719103131" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">SW융합실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620210903133059" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">블록체인산업실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620230719112323" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">가상증강현실(VR·AR)산업실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620210902172656" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">온라인및오프라인결합서비스산업조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620200911110909" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">인공지능산업실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 		
+                   			
+                   			
+                   			
+                 				<li class="DB_box_li">
+                        			<a href="javascript:void(0);" class="DB_in_item" data-a="E00620240712105135" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+											<path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+                        				<div class="in_item_title w245">
+                        					<p class="item_title_width">디지털크리에이터미디어산업실태조사</p>
+                        					<span class="txt_blind">통계명 선택</span>
+                        				</div>
+                        			</a>
+                        		</li>
+                    		
+                 		
+                 	
+                </ul>
+	        </li>
+		</ul>
+		
+		<!-- 제공년도 -->
+		<ul class="DB_box" tabindex="-1"  id="fldDtList_ul">
+			<li class="DB_box_title">제공년도</li>
+			<li><ul id="fldDtList" class="DB_box_in"></ul></li>
+		</ul>
+		
+		<!-- 자료추가/삭제 버튼 -->
+		<div class="f_l microAddExp" tabindex="-1"  id="addDel_btn">
+			<button type="button" class="micro_addition" title="자료 추가하기" id="btn_add"><span class="txt_blind">자료 추가하기</span></button>
+			<button type="button" class="micro_expunge" title="선택한 자료 제외하기" id="btn_del"><span class="txt_blind">선택한 자료 제외하기</span></button>
+		</div>
+		
+		<!-- 선택된 통계명 -->
+		<ul class="DB_box">
+			<li class="DB_box_title">
+				선택된 통계명
+				<label class="txt_blind" for="list_allchk">추가한 자료 전체선택하기</label>
+				<input class="micro_check DB_in_item_check f_l" type="checkbox" id="list_allchk" title="추가한 자료 전체선택하기">
+			</li>
+			<li>
+				<ul id="tblList" class="DB_box_in"></ul>
+			</li>
+		</ul>
+	</div>
+
+	<!-- 마이크로데이터 리스트 -->
+	<div class="microdata_list">
+		<!-- 승인내역 리스트 -->
+		<table class="statGrid dis_n" id="tContReqList">
+			<caption>마이크로데이터 신청내역 목록조회 리스트</caption>
+			<colgroup>
+				<col class="w9pct">
+				<col class="w40pct">
+				<col class="w12pct">
+				<col class="w12pct">
+				<col class="w12pct">
+				<col class="w15pct">
+		   	</colgroup>
+		   	<thead>
+				<tr class="statGridTr">
+                    <td class="title01" colspan="1">번호</td>
+                    <td class="title01" colspan="1">통계명</td>
+                    <td class="title01" colspan="1">신청일</td>
+                    <td class="title01" colspan="1">승인일</td>
+                    <td class="title01" colspan="1">다운마감일</td>
+                    <td class="title01" colspan="1">다운로드</td>
+                </tr>
+		   	</thead>
+		   	<tbody id="tbodyReq" tabindex="-1" ></tbody>
+		</table>
+	</div>
+
+	<div class="f_r m_t_20 m_b_25">
+		<button type="button" class="btn btn_primary f_r" title="신청서 작성" id="modalAppForm">신청서 작성</button>
+		<button type="button" class="btn btn_bordered f_r m_r_8" title="신청서 수정" id="modalUdtForm">신청서 수정</button>
+	</div>
+
+	<!--1. 신청자 내역 > 신청자확인 -->
+	
+
+
+
+
+<!-- security -->
+
+
+
+
+
+
+
+
+
+<script>
+$(document).ready(function() {
+	
+	//모달팝업 X버튼
+	$(".close_link").on('click', function() {
+		if($("#modalUdtForm").hasClass("currentBtn") === true){
+			$(".password_bg").addClass("dis_n");
+			$("#modalUdtForm").removeClass("currentBtn");
+			$("#modalUdtForm").focus();
+		} else{
+			$(".password_bg").addClass("dis_n");
+			$("#modalUserChk").focus();
+			$(".currentBtn").removeClass("currentBtn");
+		}
+	});
+	
+	// 엔터 이벤트
+	$("#req_pw1").keydown(function (key) {
+	    if(key.keyCode == 13) {
+	    	fn_userChk();
+	    }
+	});
+	
+	//이메일 도메인 선택시
+	$("#user_email_sel").change(function() {
+		$("#user_email1").val($("#user_email_sel").val());
+		if ($("#user_email_sel").val() != "") {
+			$("#user_email1").attr("readonly", true);	
+		}else{
+			$("#user_email1").attr("readonly", false);
+		}
+	});
+	
+	//확인버튼
+	$("#btnUserChk").on('click', function() { 
+		fn_userChk();
+	});
+	
+	//비밀번호 찾기버튼
+	$("#btnSerchPw").on('click', function() { 
+		//이메일
+		if(isStringNullOrEmpty($("#user_email").val())||isStringNullOrEmpty($("#user_email1").val())) {
+		alert("이메일 을(를) 입력 해주세요.");
+		$("#user_email").focus();
+		return false;
+	}
+		if($("#user_email_sel").val() == "") {
+			$("#req_email").val($("#user_email").val() + "@" + $("#user_email1").val());
+		} else {
+			$("#req_email").val($("#user_email").val() + "@" + $("#user_email1").val());	
+		}
+		
+		var msg = "입력하신 이메일로 임시 비밀번호가 전송됩니다.";
+		
+		if(confirm(msg)){
+			fn_findPw();
+		}
+	});
+});
+
+//유저체크
+function fn_userChk() {
+	//이메일
+	if(isStringNullOrEmpty($("#user_email").val())||isStringNullOrEmpty($("#user_email1").val())) {
+		alert("이메일 을(를) 입력 해주세요.");
+		$("#user_email").focus();
+		return false;
+	}
+	if($("#user_email_sel").val() == "" ) {
+		$("#req_email").val($("#user_email").val() + "@" + $("#user_email1").val());
+	} else {
+		$("#req_email").val($("#user_email").val() + "@" + $("#user_email1").val());	
+	}
+	
+	//비밀번호
+	if(isStringNullOrEmpty($("#req_pw1").val())) {
+		alert("비밀번호 을(를) 입력 해주세요.");
+		$("#req_pw1").focus();
+		return false;
+	}
+	
+	$.ajax({ 
+		url:"ChkReqUser.html",
+		type: "POST",
+		async:true,
+		data:{
+			req_email : $("#req_email").val(),
+			req_pw1 : $("#req_pw1").val(),
+			req_state_flag : $("#req_state_flag").val()
+		},
+		dataType: "json",
+		traditional: true,
+		success:function(data){
+			var html;
+			var htmlYn;
+			
+			//오늘날짜 구하기
+			var date = new Date(); 
+			var year = date.getFullYear(); 
+			var month = new String(date.getMonth()+1); 
+			var day = new String(date.getDate()); 
+			
+			if(month.length == 1){   month = "0" + month;	} 
+			if(day.length == 1){  day = "0" + day;	} 
+
+			var today = year+month+day;
+			
+			if(data.contReqList != null && data.contReqList != "" && data.contReqList != 'undefined' ) {
+				$("#tbl_list").hide();
+				$("#req_seq").val(data.contReqList[0].req_seq);
+				//승인
+				if (data.contReqList[0].req_state == "REQ0002") {
+					$("#tbodyReq tr.creatTr").remove();
+					$.each(data.contReqList, function(i, item) {
+						//리스트 변경, 승인내역조회, 신청서작성.수정 버튼 숨김, 마이크로데이터 신청 버튼 보이기
+						$("#tContList").addClass("dis_n");
+						$("#tContReqList").removeClass("dis_n");
+						$("#modalUserChk").hide();
+						$("#btnMicroReq").removeClass("dis_n");
+						$("#modalAppForm").hide();
+						$("#modalUdtForm").hide();
+						$(".flow").removeClass("flow_on");
+						$(".micro_flow_box").children().eq(4).addClass("flow_on");
+						
+						html = "";
+						htmlYn = "N";
+						
+						html += "<tr class='statGridTr creatTr' id='"+item.req_seq+"'>";
+						html += "<td class='statGridTd' colspan='1'>"+item.num+"</td>";
+						html += "<td class='statGridTd' colspan='1'>"+item.req_state_nm+"</td>";
+						html += "<td class='statGridTd' colspan='1'>"+item.req_date+"</td>";
+						html += "<td class='statGridTd' colspan='1'>"+item.app_date+"</td>";
+						
+						var down_date = item.down_date;
+						down_date = down_date.split(".").join("");
+						
+						var dataFileSeq = "";
+						if (today > down_date) {
+							html += "<td class='statGridTd' colspan='1'>"+item.down_date+"</td>";
+							html += "<td class='statGridTd' colspan='1'><span class='txt_blind'>"+item.req_state_nm+"</span>다운기간 만료</td>"
+						}else{
+							$.each(data.fileList, function(j, file) {
+								if (file.project_div == "R") {									
+									if (item.req_seq == file.cont_seq) {
+										if (htmlYn == "N") {
+											html += "<td class='statGridTd' colspan='1'>"+item.down_date+"</td>";
+											html += "<td class='statGridTd' colspan='1'>"
+											html += "<a href='javascript:void(0);' class='btn_base' data-reqSeq='"+item.req_seq+"' data-fileSeq='' onclick='fn_fileDown(this); return false;'>";
+											html += "	<span class='txt_blind'>"+item.req_state_nm+"</span>";
+											html += "	다운로드";
+											html += "</a>";
+											
+											dataFileSeq += file.file_seq;
+											htmlYn = "Y";
+											
+										}else{
+											dataFileSeq += "," + file.file_seq;
+										}
+									}
+								}
+								
+								if (j == (parseInt(data.fileList.length)-1) && htmlYn == "N") {
+									html += "<td class='statGridTd' colspan='1'> - </td>";
+									html += "<td class='statGridTd' colspan='1'><span class='txt_blind'>"+item.req_state_nm+"</span>첨부파일 없음</td>";
+								}
+							});
+						}
+						html += "</tr>";
+						
+						$(".password_bg").addClass("dis_n");
+						$("#tbodyReq").append(html);
+						$("a[data-reqSeq="+item.req_seq+"]").attr("data-fileSeq",dataFileSeq);
+					});
+					
+					$("#btnMicroReq").focus();
+					
+				//보완
+				}else{
+					updateModalForm(data);
+				}
+			}else{
+				if (data.reqStateFlag == "REQ0003") {
+					alert("마이크로데이터 제공 및 관리 심의회를 통해 신청해주신 마이크로데이터 승인 여부를 검토하고 있습니다.\n마이크로데이터 승인 여부는 신청해주신 메일로 전송되며, 보완요청 메일을 받으신 후 신청서 수정이 가능합니다.\n\n* 보완요청 메일을 받으셨다면 이메일, 비밀번호를 다시 한번 확인해주세요.\n* 비밀번호를 잊으셨다면 비밀번호 찾기를 이용해주세요\n* 해당 내용이 지속될 경우 관리자에게 문의해주세요.");
+				}else{
+					alert("마이크로데이터 제공 및 관리 심의회를 통해 신청해주신 마이크로데이터 승인 여부를 검토하고 있습니다.\n마이크로데이터 승인 여부는 신청해주신 메일로 전송되며, 그 이후에 승인내역조회가 가능합니다.\n\n* 승인완료 메일을 받으셨다면 이메일, 비밀번호를 다시 한번 확인해주세요.\n* 비밀번호를 잊으셨다면 비밀번호 찾기를 이용해주세요.\n* 해당 내용이 지속될 경우 관리자에게 문의해주세요.");
+				}
+				$("#req_email").focus();
+			}
+			$("#btnMicroReq").focus();
+		}
+		
+		
+	});
+	return false;
+}
+
+//비밀번호 찾기
+function fn_findPw() {
+	
+	$.ajax({
+		url:"FindUserPw.html",
+		type: "POST",
+		async:true,
+		data:{
+			req_email : $("#req_email").val(),
+			req_pw : $("#req_pw1").val()
+		},
+		dataType: "json",
+		traditional: true,
+		success:function(data){
+			if(data.result == true ) {
+				alert("변경된 임시 비밀번호가 전송되었습니다.\n메일을 확인해주세요.");
+				$(".password_bg").addClass("dis_n");
+			}else{
+				alert("이메일을 다시 확인해주세요.");
+				$("#req_email").focus();
+			}
+		}
+	});
+	return false;
+}
+
+//신청서 수정
+function updateModalForm(data) {
+	$(".password_bg").addClass("dis_n");
+	$(".apply_modal_wrap").removeClass("dis_n");
+	
+	$.each(data.contReqList, function(i, item) {
+		$(".modal_tab_btn_1 select").attr("disabled", true);
+		$(".modal_tab_btn_1 input").attr("readonly", true);
+		$(".apply_modal_content label").attr("style", "display:none");
+		$("label[for*='agree']").attr("style", "");
+		$("label[for^='file']").attr("style", "");
+		$("label[for*='req_contentAgr']").attr("style", "");
+		$("label[for*='pledgeAgr']").attr("style", "");
+
+		//신청자 기본정보
+		$("input[id^=req_name]").val(item.req_name);
+		$("#req_pw").val(item.req_pw);
+		$("input[id^=req_org]").val(item.req_org);
+		$("input[id^=req_position]").val(item.req_position);
+		var email = item.req_email.split("@");
+		$("#req_email1").val(email[0]);
+		$("#req_email2").val(email[1]);
+		if (null != item.req_type_etc) {
+			var phone = item.req_type_etc.split("-");
+			$("#phone0").val(phone[0]);
+			$("#phone1").val(phone[1]);
+			$("#phone2").val(phone[2]);
+		}
+		$("input[name^=phone]").attr("readonly", false);
+		$("#cont_seq").val(item.cont_seq);
+		
+		//이용신청서, 서약서
+		$("input[id^=req_name]").attr("readonly", true);
+		$("input[id^=req_org]").attr("readonly", true);
+		$("input[id^=req_position]").attr("readonly", true);
+		$("input[id^=req_purpose]").val(item.req_purpose);
+		$("input[id^=src_st_dt]").val(item.req_use_st_dt);
+		$("input[id^=src_ed_dt]").val(item.req_use_ed_dt);
+		$("#req_use_st_dt").val(item.req_use_st_dt);
+		$("#req_use_ed_dt").val(item.req_use_ed_dt);
+		$("#req_type").val(item.req_type);
+		if (item.req_type == null) { $("label[for^=req_type]").attr("style", ""); }
+		$("#req_content_detail").val(item.req_content_detail);
+		$("label[for^=req_content_detail]").attr("style", "display:none");
+		
+		//공동사용자(이용신청서/서약서)
+		for (var i = 1; i <= 10; i++) {
+			var org = "req_content_member_org"+i;
+			var position = "req_content_member_position"+i;
+			var member = "req_content_member"+i;
+			var Porg = "pldgUser_org"+i;
+			var Pposition = "pldgUser_position"+i;
+			var Pmember = "pldgUser_member"+i;
+			var last = $("input[id^='req_contentAgr']").length;
+			
+			if (item[org] != null && item[position] != null && item[member] != null) {
+				var html = "";
+				if (i == 1) {
+					$("#"+org).val(item[org]);
+					$("#"+position).val(item[position]);
+					$("#"+member).val(item[member]);
+					
+					$("#"+Porg).val(item[org]);
+					$("#"+Pposition).val(item[position]);
+					$("#"+Pmember).val(item[member]);
+				}else{
+					html += "<div class='pledge_wrap joinUser_2' id='joinUser"+i+"'>";
+					html += "	<p class='f_l pledge_title'><span class='point_star' title='자료이용자(자료열람자 전원)'>*</span>자료이용자(자료열람자 전원)</p>";
+					html += "	<div class='plus_btn_wrap f_r'>";
+					html += "		<a href='javascript:void(0);' class='plus_btn' onclick='fn_delJoinUser(this); return false;' title='삭제'>";
+					html += "			<p class='plus_line_2 f_s_0'>삭제</p>";
+					html += "		</a>";
+					html += "	</div>";
+					html += "	<div class='pledge_box f_r'>";
+					html += "		<div class='name_input'>";
+					html += "			<label for='"+org+"' style='display:none'><span class='txt_point'>소속</span></label>";
+					html += "			<input type='text' id='"+org+"' name='"+org+"' class='w130 l_h_21' value='"+item[org]+"' title='소속' onfocus='fn_labelOff(this); return false;' onblur='fn_labelOn(this); return false;'>";
+					html += "		</div>";
+					html += "		<div class='name_input'>";
+					html += "			<label for='"+position+"' style='display:none'><span class='txt_point'>직위</span></label>";
+					html += "			<input type='text' id='"+position+"' name='"+position+"' class='w100 m_l_3 l_h_21' value='"+item[position]+"' title='직위' onfocus='fn_labelOff(this); return false;' onblur='fn_labelOn(this); return false;'>";
+					html += "		</div>";
+					html += "		<div class='name_input'>";
+					html += "			<label for='"+member+"' style='display:none'><span class='txt_point'>자료이용자명</span></label>";
+					html += "			<input type='text' id='"+member+"' name='"+member+"' class='w110 m_l_3 l_h_21' value='"+item[member]+"' title='자료이용자명' onfocus='fn_labelOff(this); return false;' onblur='fn_labelOn(this); return false;'>";
+					html += "		</div>";
+					html += "		<div class='agree_checkbox'>";
+					html += "			<input class='micro_check' type='checkbox' id='req_contentAgr"+i+"' name='chkcontentAgr' class='m_l_5' title='체크박스'>";
+					html += "			<label for='req_contentAgr"+i+"'> 동의</label>";
+					html += "		</div>";
+					html += "</div>";
+					$("#joinUser" + last).after(html);
+					
+					//서약자
+					html = "";
+					html += "<div class='pledge_wrap pldgUser_2' id='pldgUser"+i+"'>";
+					html += "	<p class='f_l pledge_title'>○ 서약자</p>";
+					html += "	<div class='pledge_box f_l'>";
+					html += "		<div class='name_input'>";
+					html += "			<label for='"+Porg+"' style='display:none'><span class='txt_point'>소속</span></label>";
+					html += "			<input type='text' id='"+Porg+"' name="+Porg+"' class='w170 l_h_21'  value='"+item[org]+"' title='소속' readonly='readonly'>";
+					html += "		</div>";
+					html += "		<div class='name_input'>";
+					html += "			<label for='"+Pposition+"' style='display:none'><span class='txt_point'>직위</span></label>";
+					html += "			<input type='text' id='"+Pposition+"' name='"+Pposition+"' class='w150 m_l_3 l_h_21' value='"+item[position]+"' title='직위' readonly='readonly'>";
+					html += "		</div>";
+					html += "		<div class='name_input'>";
+					html += "			<label for='"+Pmember+"' style='display:none'><span class='txt_point'>자료이용자명</span></label>";
+					html += "			<input type='text' id='"+Pmember+"' name='"+Pmember+"' class='w150 m_l_3 l_h_21' value='"+item[member]+"' title='자료이용자명' readonly='readonly'>";
+					html += "		</div>";
+					html += "		<div class='agree_checkbox'>";
+					html += "			<input class='micro_check' type='checkbox' id='pledgeAgr"+i+"' name='chkPledgeAgr' class='m_l_5' checked='checked' title='체크박스' disabled='disabled'>";
+					html += "			<label for='pledgeAgr"+i+"'> 동의</label>";
+					html += "		</div>";
+					html += "</div>";
+					$("#pldgUser" + last).after(html);
+				}
+			}
+		}
+		$("#stat_nm").val(item.req_state_nm);
+		
+		//연구계획서
+		$("#req_content").html(item.req_content);
+	});
+
+	//신청항목명 조회
+	var Idcnt = 0;
+	$.each(data.contReqValList, function(i2, itemVal) {
+		var html = "";
+		var style = "";
+		
+		if(i2 == 0){
+			style = "style='display:block;'";
+			html +="<tr class='statGridTr index_check' id='index_chklist"+Idcnt+"' data-contseq='"+itemVal.cont_seq+"' data-statid='"+itemVal.stat_id+"' data-statyear='"+itemVal.cont_year+"'>";
+			html +="	<td colspan='2' class='stat_title " + (i2 == "chklist0" ? "micro_listUp" : "micro_listDown") + "'>";
+			html +="		<span class='stat_title_on'>"+itemVal.cont_year+"년 "+itemVal.stat_nm+"(<span id='list_cnt'>"+itemVal.cnt+"</span>개)</span>";
+			html += "		<a class='" + (i2 == "0" ? "stat_btn_listUp" : "stat_btn_listDown") + "' title='리스트 올리기' onclick='return false;'"+style+">&nbsp;</a>";
+			html +="	</td>";
+			html +="</tr>";
+			html +="<tr class='statGridTr indexRow index_chklist"+Idcnt+"' id='tr1_"+itemVal.req_stat_val+"' "+style+">";
+			html +="	<td class='statGridTd add_border_right'>"+itemVal.stat_val_nm+"</td>";
+			html +="		<td class='statGridTd'>";
+			html +="			<span class='item_name'>"+itemVal.stat_itm_nm+"</span>";
+			html +="				<a class='delete_btn' title='삭제' data-a='"+itemVal.req_stat_val+"' onclick='fn_deleteVal(this); return false;'>";
+			html +="				<div class='rotate_line_wrap'>";
+			html +="					<p class='rotate_line_1 f_s_0'>bar</p>";
+			html +="					<p class='rotate_line_2 f_s_0'>bar</p>";
+			html +="			</div>";
+			html +="		</a>";
+			html +="	</td>";
+			html +="</tr>";
+		}else{
+			var prvIdx = i2-1;
+			if (itemVal.stat_id == data.contReqValList[prvIdx].stat_id) {
+				if (itemVal.cont_year == data.contReqValList[prvIdx].cont_year) {
+					if (Idcnt == 0) { style = "style='display:block;'";}
+					html +="<tr class='statGridTr indexRow index_chklist"+Idcnt+"' id='tr_"+itemVal.req_stat_val+"'"+style+">";
+					html +="	<td class='statGridTd add_border_right'>"+itemVal.stat_val_nm+"</td>";
+					html +="		<td class='statGridTd'>";
+					html +="			<span class='item_name'>"+itemVal.stat_itm_nm+"</span>";
+					html +="				<a class='delete_btn' title='삭제' data-a='"+itemVal.req_stat_val+"' onclick='fn_deleteVal(this); return false;'>";
+					html +="				<div class='rotate_line_wrap'>";
+					html +="					<p class='rotate_line_1 f_s_0'>bar</p>";
+					html +="					<p class='rotate_line_2 f_s_0'>bar</p>";
+					html +="			</div>";
+					html +="		</a>";
+					html +="	</td>";
+					html +="</tr>";
+				}else{
+					Idcnt = Idcnt+1;
+					html +="<tr class='statGridTr index_check' id='index_chklist"+Idcnt+"' data-contseq='"+itemVal.cont_seq+"' data-statid='"+itemVal.stat_id+"' data-statyear='"+itemVal.cont_year+"'>";
+					html +="	<td colspan='2' class='stat_title " + (i2 == "chklist0" ? "micro_listUp" : "micro_listDown") + "'>";
+					html +="		<span class='stat_title_on'>"+itemVal.cont_year+"년 "+itemVal.stat_nm+"(<span id='list_cnt'>"+itemVal.cnt+"</span>개)</span>";
+					html += "		<a class='" + (i2 == "0" ? "stat_btn_listUp" : "stat_btn_listDown") + "' title='리스트 올리기' onclick='return false;'"+style+">&nbsp;</a>";
+					html +="	</td>";
+					html +="</tr>";
+					html +="<tr class='statGridTr indexRow index_chklist"+Idcnt+"' id='tr1_"+itemVal.req_stat_val+"' "+style+">";
+					html +="	<td class='statGridTd add_border_right'>"+itemVal.stat_val_nm+"</td>";
+					html +="		<td class='statGridTd'>";
+					html +="			<span class='item_name'>"+itemVal.stat_itm_nm+"</span>";
+					html +="				<a class='delete_btn' title='삭제' data-a='"+itemVal.req_stat_val+"' onclick='fn_deleteVal(this); return false;'>";
+					html +="				<div class='rotate_line_wrap'>";
+					html +="					<p class='rotate_line_1 f_s_0'>bar</p>";
+					html +="					<p class='rotate_line_2 f_s_0'>bar</p>";
+					html +="			</div>";
+					html +="		</a>";
+					html +="	</td>";
+					html +="</tr>";
+				}
+			}else{
+				
+				Idcnt = Idcnt+1;
+				html +="<tr class='statGridTr index_check' id='index_chklist"+Idcnt+"' data-contseq='"+itemVal.cont_seq+"' data-statid='"+itemVal.stat_id+"' data-statyear='"+itemVal.cont_year+"'>";
+				html +="	<td colspan='2' class='stat_title " + (i2 == "chklist0" ? "micro_listUp" : "micro_listDown") + "'>";
+				html +="		<span class='stat_title_on'>"+itemVal.cont_year+"년 "+itemVal.stat_nm+"(<span id='list_cnt'>"+itemVal.cnt+"</span>개)</span>";
+				html += "		<a class='" + (i2 == "0" ? "stat_btn_listUp" : "stat_btn_listDown") + "' title='리스트 올리기' onclick='return false;'"+style+">&nbsp;</a>";
+				html +="	</td>";
+				html +="</tr>";
+				html +="<tr class='statGridTr indexRow index_chklist"+Idcnt+"' id='tr1_"+itemVal.req_stat_val+"' "+style+">";
+				html +="	<td class='statGridTd add_border_right'>"+itemVal.stat_val_nm+"</td>";
+				html +="		<td class='statGridTd'>";
+				html +="			<span class='item_name'>"+itemVal.stat_itm_nm+"</span>";
+				html +="				<a class='delete_btn' title='삭제' data-a='"+itemVal.req_stat_val+"' onclick='fn_deleteVal(this); return false;'>";
+				html +="				<div class='rotate_line_wrap'>";
+				html +="					<p class='rotate_line_1 f_s_0'>bar</p>";
+				html +="					<p class='rotate_line_2 f_s_0'>bar</p>";
+				html +="			</div>";
+				html +="		</a>";
+				html +="	</td>";
+				html +="</tr>";
+			}
+		}
+		$(".choice_data_list").append(html);
+	});
+	
+	//첨부파일 조회
+	$.each(data.fileList, function(i3, itemFile) {
+		var html = ""; var style = "";
+		var cnt = itemFile.project_div.charAt(itemFile.project_div.length-1);
+
+		if (itemFile.project_div == "R1" || itemFile.project_div == "R2" || itemFile.project_div == "R3") {
+			if (itemFile.project_div == "R3") {style = "m_l_80";}
+
+			html = "<a class='file_txt_blue m_t_5 "+style+"' href='javascript:void(0);' id='fileDown"+cnt+"' data-fileseq='"+itemFile.file_seq+"' data-filenm='"+itemFile.file_name+"' data-realnm='"+itemFile.real_name+"' title='"+itemFile.file_name+"' onclick='fn_fileDown(this); return false;'>"+itemFile.file_name+"</a>";
+			$("#file"+cnt).attr("data-fileseq", itemFile.file_seq);
+		}else {
+			html = "<div class='file text_box w100pct p_5px'>";
+			html += "		<label class='m_r_10 m_l_5' for='file"+cnt+"'>첨부파일</label> ";
+			html += "		<input class='w70pct' type='file' id='file"+cnt+"' data-fileSeq='"+itemFile.file_seq+"' name='down'  title='파일선택'/> ";
+			html += "		<a class='file_txt_blue m_t_5 m_l_80' href='javascript:void(0);' id='fileDown"+cnt+"' data-fileseq='"+itemFile.file_seq+"' data-filenm='"+itemFile.file_name+"' data-realnm='"+itemFile.real_name+"' title='"+itemFile.file_name+"' onclick='fn_fileDown(this); return false;'>"+itemFile.file_name+"</a>";
+			html += "		<div class='plus_del f_r'>";
+			html += "			<div class='del'><label class='f_s_0 dis_n' for='btn_DelFile" +cnt+ "'>삭제</label><input type='button' value='삭제' class='in_del' id='btn_DelFile" +cnt+ "' data-fileSeq='"+itemFile.file_seq+"' data-downYn='N' title='삭제' /></div>";
+			html += "		</div>";
+			html += "</div>";
+		}
+		
+		if (cnt > 3) {
+			$("div .file").last().after(html);
+		}else if(cnt == 3){
+			$(".plus_del").after(html);
+		}else{
+			$("#file"+cnt).after(html);	
+		}
+	});
+	
+	// 첨부파일 변경
+	$(".apply_modal_content").on("change", "input[name='down']", function() {
+		$("#file_yn").val("Y");
+		
+		//첨부파일 변경 시 해당 다운로드 파일 번호 담기
+		if ($(this).attr("data-fileseq") != "" && $(this).attr("data-fileseq") != null && $(this).attr("data-fileseq") != undefined) {
+			array_seq.push($(this).attr("data-fileseq"));
+			$("#delete_fileSeq").val(array_seq);
+		}
+	});
+
+	// 첨부파일 등록 행 삭제
+	$(".apply_modal_content").on("click", ".file .plus_del input[id^='btn_DelFile']", function() {
+		var fileSeq;
+		
+		// 1개뿐인 경우 삭제 안되어야 함(파일 다운로드와 같이 있는 경우에는 다운로드만 제거)
+		if($(".file").length <= 1) {				
+			if($(".file .file_down").length == 1){
+				fileSeq = $(this).attr("data-fileseq");
+				array_seq.push(fileSeq);
+				$("#delete_fileSeq").val(array_seq);
+				$(this).closest(".plus_del").prev(".file_down").remove();
+			}
+			return;
+		}
+		
+		fileSeq = $(this).attr("data-fileSeq");
+		array_seq.push(fileSeq);
+		$("#delete_fileSeq").val(array_seq);
+		$(this).closest(".file").remove();
+		
+		$('.plus').next(".file").addClass("m_t_50");
+	});
+}
+
+function fn_fileDown(obj) {
+	//var form = $("#bodyForm");
+	//fn_download(form, $(obj).attr("data-fileseq"), $(obj).attr("data-filenm"), $(obj).attr("data-realnm"));
+	$("#cont_seq").val($(obj).attr("data-fileseq"));
+	
+	$("#bodyForm").attr("action", "/itstat/kor/contents/downLoadMicroData.html");
+	$("#bodyForm").submit();
+}
+
+function closeFuc(){
+	window.self.close();
+}
+	
+</script>
+
+ <!-- 신청서 내역조회 > 사용자확인 모달팝업창 -->
+<div class="password_bg dis_n" >
+	<input type="hidden" id="req_file" name="req_file" value="Y" />
+     <div class="password_wrap">
+     	<div class="pass_img"></div>
+     	<p class="pass_notice"></p>
+     	
+     	<!-- 이메일 입력 -->
+     	<div class="password_box p_b_0px">
+			<span>이메일</span>
+			<!-- <span class="">:</span> -->
+			<input type="text" class="data_lookup_pass" id="user_email" name="user_email" title="이메일ID" placeholder="이메일ID 입력">
+			<span>@</span>
+			<input type="text" class="data_lookup_pass" id="user_email1" name="user_email1" title="이메일도메인" placeholder="도메인 입력">
+			<label for="user_email_sel" class="visually-hidden">도메인선택</label>
+			<select class="mail_site" id="user_email_sel" name="user_email_sel">
+				<option value="">직접입력</option>
+				<option value="naver.com">naver.com</option>
+				<option value="nate.com">nate.com</option>
+				<option value="yahoo.co.kr">yahoo.co.kr</option>
+				<option value="gmail.com">gmail.com</option>
+				<option value="hanmail.net">hanmail.net</option>
+			</select>
+		</div>
+		<!-- 패스워드 입력 -->
+		<div class="password_box p_t_10px">
+			<span>비밀번호</span>
+			<!-- <span class="">:</span> -->
+			<input type="password" class="data_lookup_pass" id="req_pw1" name="req_pw1" title="비밀번호" placeholder="비밀번호 입력">
+		</div>
+		
+		<div class="btn_wrap">
+			<button type="button" class="btn btn_bordered" id="btnSerchPw" title="비밀번호 찾기">비밀번호 찾기</button>
+			<button type="button" class="btn btn_primary" id="btnUserChk" title="확인">확인</button>
+		</div>
+
+		<div class="password_close">
+			<button type="button" title="닫기" class="close_link">
+				<span class="txt_blind">닫기</span>
+			</button>
+		</div>			
+     </div>
+</div>
+
+	
+	<!--2. 항목명 보기 -->
+	
+
+
+
+
+<!-- security -->
+
+
+
+
+
+
+
+
+<script>	
+	$(document).ready(function() {
+		//모달팝업 취소 버튼
+		$("#btnCancel1").on('click', function() { 
+			var stat_id = $(this).attr("data-a");
+			var stat_year =  $(this).attr("data-b");
+			
+			$(".modal_wrap").addClass("dis_n");
+			$("a[data-a="+stat_id+"][data-b="+stat_year+"]").focus();
+			$(".currentBtn").removeClass("currentBtn");
+		});
+		
+		//모달팝업 선택 버튼
+		$("#btnSelect").on('click', function() {
+			var stat_seq = "";
+			var stat_id = "";
+			var stat_year = "";
+			
+			var chkCnt = $("input[name=chkVal]:checked").length;
+			var cnt = parseInt($("#max_cnt").val());
+			
+			if (chkCnt < cnt) {
+				$("input[name=chkVal]:checked").each(function() {
+					stat_seq += $(this).val() + ",";
+					stat_year = $(this).attr("data-b");
+							
+					if(stat_id.indexOf($(this).attr("data-a")) != -1) {
+						stat_id = stat_id.replace(stat_id, stat_id);
+					}else{
+						stat_id += $(this).attr("data-a") + ",";
+					}
+				});
+
+				stat_seq = stat_seq.substr(0, stat_seq.length -1);
+				stat_id = stat_id.substr(0, stat_id.length -1);
+				
+			}else if(chkCnt == cnt){
+				stat_seq = "allChk";
+				stat_id = $("input[name=chkVal]:checked").eq(0).attr("data-a");
+				stat_year = $("input[name=chkVal]:checked").eq(0).attr("data-b");
+			}
+			
+			if(stat_seq == "") {
+				alert("선택된 항목이 없습니다.");
+				return;
+			}
+			
+			// 체크리스트 모달팝업 숨김
+			$(".modal_wrap").addClass("dis_n");
+			fn_chkValItm(stat_seq, stat_id, stat_year);
+		});
+		
+	});
+	
+	//통계원시자료 항목명조회
+	function fn_selValItmList(stat_id, stat_year, stat_seq, stat_name) {
+		var title_nm = stat_name;
+		var title_year = stat_year;
+		var stat_year_nm = title_year +" "+ title_nm;
+		$("#stat_year_nm").html(stat_year_nm);
+		
+		$.ajax({
+			url:"/itstat/kor/contents/SelValItmList.html",
+			data : {
+				"stat_id" : stat_id,
+				"stat_year": stat_year,
+			},
+			 beforeSend : function(xhr){ /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+                 xhr.setRequestHeader("X-CSRF-TOKEN", "f3a7c7fb-3b18-419f-872d-214e609ff4a1");
+			 },
+			dataType:"json",
+			type:"POST",
+			async:false,
+			success : function(data) {
+				var html = "";
+				if(data != null && data != "" && data != 'undefined' ) {
+					//리스트 개수
+					$("#max_cnt").val(data.selValItmList[0].max_cnt);
+					$.each(data.selValItmList, function(i, item) {
+						html = "";
+						if(item.stat_val_nm == null) { item.stat_val_nm = "-"};
+						if(item.stat_itm_nm == null) { item.stat_itm_nm = ""};
+						
+						html = "<tr class='statGridTr'>";
+						html += "	<td class='statGridTd' colspan='1'>";
+						html += "		<label class='f_s_0 dis_n' for='chkVal_"+item.stat_seq+"'>"+item.stat_val_nm+" 선택하기</label>";
+						html += "		<input class='micro_check' type='checkbox' id='chkVal_"+item.stat_seq+"' name='chkVal' value='" + item.stat_seq + "' data-a='"+item.stat_id+"' data-b='"+item.stat_year+"' title='항목 선택'/>";
+						html += "	</td>";
+						html += "	<td class='statGridTd' colspan='1'>" + item.stat_val_nm + "</td>";
+						html += "	<td class='statGridTd t_a_l' colspan='1'><label for='chkVal_"+item.stat_seq+"'>" + item.stat_itm_nm + "</label></td>";
+						html += "</tr>";
+						
+						$("#tbody_valItmList").append(html);
+						$("#tbody_valItmList").scrollTop(0);
+						
+						if (i == 0) {
+							$("#btnCancel1").attr("data-a", item.stat_id);
+							$("#btnCancel1").attr("data-b", item.stat_year);
+						}
+					}); 
+		      	}
+				
+				//체크값 있으면 뿌리기
+				if(stat_seq != null && stat_seq != "") {
+					var arr = stat_seq.split(",");
+					var cnt = $("#tbody_valItmList tr").length
+					$("input[name=chkVal]").attr("checked", false);
+
+					for (var i = 0; i < cnt; i++) {
+						for (var i2 = 0; i2 < arr.length; i2++) {
+							if($("#chkVal_"+arr[i2]).val() == arr[i2]) {
+								$("#chkVal_"+arr[i2]).prop("checked", true);
+								$("#chkVal_"+arr[i2]).parents(".statGridTr").addClass("micro_checked_color");
+							}
+						}
+					}
+					
+					// 해당되는 체크값 없을 때 > 다른년도 선택할 경우(전체선택)
+					if($("input[name=chkVal]:checked").length < 1) {
+						 $(".pop_all_check").prop("checked", true);
+						 $(".pop_list .statGridTd input:checkbox").prop("checked", true);
+				         $(".pop_list .statGridTr").addClass("micro_checked_color");
+					}
+					
+				}else{
+					$(".pop_all_check").prop("checked", true);
+					$(".pop_list .statGridTr").addClass("micro_checked_color");
+					$("input[name=chkVal]").prop("checked", true);
+				}
+				
+				$("#contVal_tb").focus();
+			}
+		});
+	}
+	
+</script>
+
+
+<!-- STEP1 : 체크리스트 확인 -->
+<input type="hidden" id="stat_seq" name="stat_seq" value="" />
+<input type="hidden" id="max_cnt" value="" />
+<input type="hidden" id="stat_name" value="" />
+<input type="hidden" id="stat_year" value="" />
+
+<div class="modal_wrap dis_n">
+  <div class="modal_pop" id="mdl_p">
+      <div class="popup_title">
+		<strong>선택 통계 항목보기</strong>
+		<p>요청하실 마이크로데이터 통계 항목을 선택해주세요.</p>
+	  </div>
+      <div class="pop_list">
+          <table class="statGrid" tabindex="-1" id="contVal_tb" >
+              <caption id="stat_year_nm"></caption>
+              <colgroup style="">
+                  <col class="w5pct">
+                  <col class="w30pct">
+                  <col class="w65pct">
+              </colgroup>
+              <thead>
+                  <tr class="modal_list_top title01">
+                      <th scope="colgroup" class="mo_top_1">
+                          <input type="checkbox" class="pop_all_check micro_check" id="allCheck" title="항목 전체선택" checked="checked">
+                      </th>
+                      <th scope="col" class="mo_top_2">변수명</th>
+                      <th scope="col" class="mo_top_3">항목명</th>
+                  </tr>
+              </thead>
+              <tbody id="tbody_valItmList"></tbody>
+          </table>
+      </div>
+      <!--pop_list-->
+      <div class="save_btn">
+          <button type="button" class="btn btn_bordered" title="취소" id="btnCancel1">취소</button>
+          <button type="button" class="btn btn_primary" title="선택 " id="btnSelect">선택 </button>
+      </div>
+  </div>
+  <!--modal_pop-end-->
+</div>
+
+
+	
+	<!--3. 신청서 작성 -->
+	
+
+
+
+
+<!-- security -->
+
+
+
+
+
+
+
+
+
+	
+
+<script>	
+var array_seq = [];
+
+$(document).ready(function() {
+	
+
+	var formData = ""; 
+	var form = $("#bodyForm");
+	
+	//캡챠 리로드
+	fn_CaptchaReload();
+	
+	//모달팝업 취소 버튼
+	$("#btnCancel2").on('click', function() { 
+        //신청서작성 취소 시 리로드
+       	if (
+       		$("#req_state_flag").val() == "REQ0003") {location.reload(true);
+       	}else{
+       		$(".apply_modal_wrap").addClass("dis_n");
+    		$(".choice_data_list > tr").remove();       		
+       	}
+		$(".currentBtn").removeClass("currentBtn");
+       	$("#modalAppForm").focus();
+	});
+	
+	//이메일 도메인 선택시
+	$("#email_sel").change(function() {
+		$("#req_email2").val($("#email_sel").val());
+		if ($("#email_sel").val() != "") {
+			$("#req_email2").attr("readonly", true);	
+		}else{
+			$("#req_email2").attr("readonly", false);
+		}
+	});
+	
+	// [신청자기본정보, 이용신청서] 소속, 직위, 신청자 명 입력시 가져오기
+	$("input[id^=req_org]").on("input",function(e){
+	    //$("label[for^=req_org]").hide();
+	    $("input[id^=req_org]").prop("value", $(this).val());
+	    //$("input[id^=req_org]").prop("title", $(this).val());
+	});
+	$("input[id^=req_position]").on("input",function(e){
+	    //$("label[for^=req_position]").hide();
+	    $("input[id^=req_position]").prop("value", $(this).val());
+	    //$("input[id^=req_position]").prop("title", $(this).val());
+	});
+	$("input[id^=req_name]").on("input",function(e){
+		//$("label[for^=req_name]").hide(); 
+		$("input[id^=req_name]").prop("value", $(this).val());
+		//$("input[id^=req_name]").prop("title", $(this).val());
+	});
+	
+	
+	// [이용신청서, 자료이용서약서] 이용목적, 이용기간 입력시 가져오기
+	$("input[id^=req_purpose]").on("input",function(e){
+		//입력값 빈값일 경우 라벨값 보이기
+		if($(this).val() != "") { 
+			$("label[for^=req_purpose]").hide(); 
+		}else{	
+			$("label[for^=req_purpose]").show(); 
+		}
+		$("input[id^=req_purpose]").prop("value", $(this).val());	
+	});
+	$("input[id^=src_st_dt]").change(function() {
+	    $("input[id^=src_st_dt]").prop("value", $(this).val());
+	    $("#req_use_st_dt").val($(this).val().replaceAll('.',''));
+	});
+	$("input[id^=src_ed_dt]").change(function() {
+	    $("input[id^=src_ed_dt]").prop("value", $(this).val());
+	    $("#req_use_ed_dt").val($(this).val().replaceAll('.',''));
+	    $("#req_content_detail").focus();
+	});
+	
+	//저장버튼 클릭
+	$("#btnSave").on('click', function() {
+		//이메일
+		if($("#email_sel").val() == "") {
+			$("#req_email").val($("#req_email1").val() + "@" + $("#req_email2").val());
+		} else {
+			$("#req_email").val($("#req_email1").val() + "@" + $("#req_email2").val());	
+		}
+		//첨부파일여부
+		var extn = "";  var fileExtn = "";
+		var fileLen = $("input[name=down]").length;
+		for (var i = 1; i <= 7 ; i++) {
+			if (($("#file"+i).val() != null && $("#file"+i).val() != "") || ($("#fileDown"+i).attr("data-fileseq") != null && $("#fileDown"+i).attr("data-fileseq") != "")) {
+				extn += i + ",";
+			}
+			
+			if ($("#req_state_flag").val() == "REQ0003") {
+				if ($("#file"+i).val() != null && $("#file"+i).val() != "") {
+					fileExtn += i + ",";
+				}
+			}
+		}
+		extn = extn.substr(0, extn.length -1);
+		fileExtn = fileExtn.substr(0, fileExtn.length -1);
+		$("#extention").val(extn);
+		$("#fileExtn").val(fileExtn);
+		
+		//연구계획서
+		if(isStringNullOrEmpty($("#req_content").val())) {
+			alert("연구계획서 을(를) 입력 해주세요.");
+			$("#req_content").focus();
+			return false;
+		}
+		
+		if($("#answer_captcha").val() == "") {
+			alert("자동등록방지 글자 을(를) 입력 해주세요.");
+			$("#answer_captcha").focus();
+			return false;
+		}
+		
+		//선택한 항목명 json데이터 만들기
+		var tr = $(".index_check");
+		var reqDataList = new Array(); // 리스트 생성
+
+		//값 세팅
+		for (var i = 0; i < tr.length; i++) {
+			var trID = tr.eq(i).attr("id");
+			var val = $("."+trID);
+			
+			for (var i2 = 0; i2 < val.length; i2++) {
+				//json 오브젝트 초기화
+				var data = new Object();
+				
+				data.cont_seq = tr.eq(i).attr("data-contseq");
+				data.cont_year = tr.eq(i).attr("data-statyear");
+				data.req_stat_id = tr.eq(i).attr("data-statid");
+				
+				var value = val.eq(i2).attr("id").split("_");
+				data.req_stat_val = value[1];
+				
+				// 리스트에 생성된 객체 삽입
+				reqDataList.push(data);
+			}
+		}
+		
+		//req_seq 얻어오기 
+		if($("#req_seq").val() == "") {
+			if(!getContReqSeq("등록에 실패했습니다.")) {
+				return false;
+			}
+		}	
+		
+		var msg = "선택한 마이크로데이터 자료를 신청 하시겠습니까?";
+		if(confirm(msg)){
+			formData = new FormData($('#bodyForm')[0]);
+
+			$.ajax({
+				type: "POST",
+				url : "/itstat/kor/contents/captchaAnswer.html",
+				dataType:'json',
+				async: true,
+				data: formData,
+				processData: false,	// 필수
+				contentType: false,	// 필수
+				success : function(data) {
+					if(data != null && data != "'" && data != 'undefined' ) {
+						if(data.msg == "success"){
+							$.ajax({//첨부파일 먼저 저장
+								type: "POST",
+								enctype: 'multipart/form-data',	// 필수
+								url: "/itstat/fileUpload.html",
+								dataType: "json",
+								async: false,
+								data: formData,		// 필수
+								processData: false,	// 필수
+								contentType: false,	// 필수
+								cache: false,
+								success: function (result) {	//첨부파일 저장 성공 시 게시판 저장
+									//form.attr("action", "/itstat/kor/contents/InsReqMicrodata.html");
+									//form.submit(); 									
+									formData.append("jsonData",encodeURIComponent(JSON.stringify(reqDataList)));
+									
+									$.ajax({
+										type: "POST",
+										url: "/itstat/kor/contents/InsReqMicrodata.html",
+										dataType: "json",
+										async: false,
+										data: formData,		
+										processData: false,	// 필수
+										contentType: false,	// 필수
+										cache: false,
+										success: function (data) {
+											if (data.result == "false") {
+												alert("일시적인 오류로 인해 마이크로데이터 신청에 실패하였습니다. \n다시 한번 신청하여 주시기 바랍니다.");
+											}else if (data.result == "true") {
+												alert("신청이 완료되었습니다.");
+											}else{
+												alert("정상적으로 신청 되었으나 신청완료 알림 메일발송에 실패했습니다.\n관리자에게 문의하세요.\n\n이메일 : microdata@kisdi.re.kr\n전화 : 043-531-4269 / 043-531-4293");
+											}
+											
+											//리스트 페이지로 이동
+											location.href="ContentsList.html?project_div=I";
+										},
+										error:function(request, status, error) {
+									   	console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+									   }
+									});
+								},
+								error:function(request, status, error) {
+							   		console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+							   }
+							}); 
+						}else{
+							alert(data.msg);
+							$("#kaptcha").val("");
+							$("#kaptcha").focus();
+							return false;
+						}
+					}
+				}, error:function(request,status,error){
+					console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+				}
+			});  	
+			
+			return false;
+		}
+	});
+
+	// 첨부파일 등록 행 추가
+	//$(".cont_box").on("click", ".file .plus_del input[id^='btn_AddFile']", function() {
+	$("#btn_AddFile3").on("click", function() {
+		var maxFileLen = parseInt("5");
+		var index = $(this).attr("id").replace("btn_AddFile", "");
+		var nexMaxFileLen = parseInt("5") + parseInt(index);
+		var nexIdx = parseInt(index) + 1;
+		
+		$("#file_yn").val("Y");
+
+		if($("input[id^='btn_DelFile']").length >= maxFileLen-1) {
+			alert(""+ maxFileLen +"개 이상 추가 할 수 없습니다.");
+			return;
+		}
+		
+		for(var i = nexIdx; i < nexMaxFileLen; i++) {
+			if($("#file" + i).html() == undefined) {
+				var html = '';
+				html += '<div class="file text_box w100pct m_b_8">';
+				html +=	 '	<label class="m_r_10" for="file' + i + '">첨부파일</label> ';
+				html +=	 '	<input class="w80pct" type="file" id="file' + i + '" data-fileSeq="" name="down"  title="파일선택"/> ';
+				html +=	 '	<div class="plus_del ">';
+				html +=	 '		<div class="del"><label class="f_s_0 dis_n" for="btn_DelFile' + i + '">삭제</label><input type="button" value="삭제" class="btn btn_sm btn_bordered_b" id="btn_DelFile' + i + '" data-fileSeq="" data-downYn="N" title="삭제" /></div>';
+				html +=	 '	</div>';
+				html +=	'</div>';
+				
+				$("#file" + (parseInt(i)-1)).closest(".file").after(html);
+				break;
+			}
+		}
+	});
+	
+	// 첨부파일 변경
+	$(".cont_box").on("change", ".file .text_box input[type='file']", function() {
+		$("#file_yn").val("Y");
+		
+		//첨부파일 변경 시 해당 다운로드 파일 번호 담기
+		var fileSeq = $(this).attr("data-fileSeq");
+		array_seq.push(fileSeq);
+		$("#delete_fileSeq").val(array_seq);
+	});
+	
+	// 첨부파일 등록 행 삭제
+	$(".cont_box").on("click", ".file .plus_del input[id^='btn_DelFile']", function() {
+		var fileSeq;
+		// 1개뿐인 경우 삭제 안되어야 함(파일 다운로드와 같이 있는 경우에는 다운로드만 제거)
+		if($(".file").length <= 1) {				
+			if($(".file").length == 1){
+				fileSeq = $(this).attr("data-fileSeq");
+				array_seq.push(fileSeq);
+				$("#delete_fileSeq").val(array_seq);
+			}
+			return;
+		}
+		
+		if (($(this).parents("div .file").find("input").val() != null && $(this).parents("div .file").find("input").val() != "") || ($(this).attr("data-fileseq") != null && $(this).attr("data-fileseq") != "")) {
+			fileSeq = $(this).attr("data-fileSeq");
+			array_seq.push(fileSeq);
+			$("#delete_fileSeq").val(array_seq);
+		}
+		
+		$(this).closest(".file").remove();
+	});
+	
+	// 이미지 새로고침 클릭
+	$("#reload_kaptcha").click(function(){
+		// 이미지(자동등록방지) 새로고침 함수
+		fn_CaptchaReload();		
+	});
+	
+	//연구계획서 샘플 다운로드
+	$("#btn_downSample").click(function(){
+		$("#bodyForm").attr("action", "/itstat/am/contents/ContsSampleDown.html");
+		$("#bodyForm").submit();
+	});
+});
+
+// [공통] 신청서 작성 폼
+function fn_writeReqInfo(jsonData){
+	$.ajax({
+		url:"/itstat/kor/contents/SelAppForm1.html",
+		data : jsonData,
+		async:true,
+		contentType: "application/json" ,
+		dataType:"json",
+		type:"POST",
+		success : function(data) {
+			if(data != null && data != "" && data != 'undefined' ) {
+				var stat_nm = "";
+				$.each(data.result, function(i, item) {
+					html = "";
+
+					//신청항목 리스트
+					$.each(item, function(i2, item2) {
+						var style = '';
+						if (i == "chklist0") { style = "style='display:block;'";}
+
+						if(i2 == 0) {
+							//신청 통계명
+							stat_nm += "(" + item2.stat_year + ")" + item2.stat_nm +",";
+							
+							//상단 통계명
+							html = "<tr class='statGridTr index_check' id='index_"+i+"' data-contseq='"+item2.cont_seq+"' data-statid='"+item2.stat_id+"' data-statyear='"+item2.stat_year+"'>";
+							html += "	<td colspan='2' class='stat_title " + (i == "chklist0" ? "micro_listUp" : "micro_listDown") + "'>";
+							html += "		<span class='stat_title_on'>"+ item2.stat_year +"년 "+ item2.stat_nm+"(<span id='list_cnt'>"+item2.cnt+"</span>개)</span>";
+							html += "		<button class='" + (i == "chklist0" ? "stat_btn_listUp" : "stat_btn_listDown") + "' title='" + (i == "chklist0" ? "목록 접기" : "목록 펼치기") + "' onclick='return false;'>";
+							html += "			<span class='txt_blind'>마이크로데이터 신청자료 목록</span>";
+							html += "		</button>";
+							//html += "		<a class='" + (i == "chklist0" ? "stat_btn_listUp" : "stat_btn_listDown") + "' title='리스트 올리기' onclick='return false;'"+style+">&nbsp;</a>";
+							html += "	 </td>";
+							html += "</tr>";
+							//첫번째 항목명 리스트
+							html += "<tr class='statGridTr indexRow index_"+i+"' id='tr1_"+item2.stat_seq+"'"+style+">";
+							html += "	<td class='statGridTd add_border_right' >" + item2.stat_val_nm + "</td>";
+							html += "	<td class='statGridTd' ><span class='item_name'>" + item2.stat_itm_nm + "</span>";
+							html += "		<button class='delete_btn' title='삭제' data-a='"+item2.stat_seq+"' onclick='fn_deleteVal(this); return false;'>";
+							html += "			<span class='txt_blind'>삭제</span>";
+							html += "		</button>";
+							//html += "	<a class='delete_btn' title='삭제' data-a='"+item2.stat_seq+"' onclick='fn_deleteVal(this); return false;'><div class='rotate_line_wrap'>";
+							//html += "	<p class='rotate_line_1 f_s_0'>bar</p><p class='rotate_line_2 f_s_0'>bar</p></div></a>";
+							html += "	</td></tr>";
+							html += "</tr>";
+						}else if(i2 > 0){	
+							//항목명 리스트
+							html += "<tr class='statGridTr indexRow index_"+i+"' id='tr_"+item2.stat_seq+"'"+style+">";
+							html += "	<td class='statGridTd add_border_right' >" + item2.stat_val_nm + "</td>";
+							html += "	<td class='statGridTd' ><span class='item_name'>" + item2.stat_itm_nm + "</span>";
+							html += "		<button class='delete_btn' title='삭제' data-a='"+item2.stat_seq+"' onclick='fn_deleteVal(this); return false;'>";
+							html += "			<span class='txt_blind'>삭제</span>";
+							html += "		</button>";
+							//html += "<a class='delete_btn' title='삭제' data-a='"+item2.stat_seq+"' onclick='fn_deleteVal(this); return false;'><div class='rotate_line_wrap'>";
+							//html += "<p class='rotate_line_1 f_s_0'>bar</p><p class='rotate_line_2 f_s_0'>bar</p></div></a>";
+							html += "	</td></tr>";
+							html += "</tr>";
+						}
+					});
+					$(".choice_data_list").append(html);
+				});
+				stat_nm = stat_nm.substr(0, stat_nm.length -1);
+				$("#stat_nm").attr("value", stat_nm);
+			}
+			$("#req_name").focus();
+			$("#req_purpose").focus();
+			$("#stat_nm").focus();
+			$("#req_content").focus();
+		}
+	});
+	return false;
+}
+
+// [신청자기본정보] 항목명 삭제 (X버튼) 
+function fn_deleteVal(obj) {
+	var chk_list = $("#req_stat_val").val();
+	var trId = $(obj).parents(".statGridTr").attr("id");
+	var thId = $(obj).parents(".statGridTr").prev(".index_check").attr("id");
+	var thLeng = $("." +thId).length;
+	var stat_seq = $(obj).attr("data-a");
+	var list_cnt = parseInt($(obj).parents("tr").prevAll(".index_check").eq(0).find("#list_cnt").text())-1;
+	
+	if (thLeng == 1) {
+		alert("선택항목이 최소 1개이상은 있어야 합니다.");
+		return false;
+	}else{
+		//체크리스트 개수 변경 > 삭제
+		$(obj).parents("tr").prevAll(".index_check").eq(0).find("#list_cnt").text(list_cnt);
+		$("#"+trId).remove();
+	}
+
+	//체크리스트에서 체크값 삭제
+	stat_seq = stat_seq+",";
+	chk_list = chk_list.replace(stat_seq, "");
+	$("#req_stat_val").val(chk_list);
+}
+
+// [공통] 라벨on.off
+// [이용신청서, 자료이용서약서] 자료이용자, 서약자 입력시 가져오기
+function fn_labelOff(obj) {
+	//$(obj).siblings("label").fadeOut("fast");
+}
+function fn_labelOn(obj) {
+	var id = $(obj).attr("id");
+	var lastId = id.split("_").reverse()[0];
+	/* if($(obj).val() == ""){
+		$("label[for$="+lastId+"]").show(); 
+		$(obj).siblings("label").fadeIn("fast");
+	}else{
+		$("label[for$="+lastId+"]").hide(); 
+	} */
+	
+	$("input[id$="+lastId+"]").prop("value", $(obj).val());
+	$("input[id$="+lastId+"]").prop("title", $(obj).val());
+}
+
+
+// [공통] 이전 버튼
+function fn_prevTab(obj){
+	var aId = $(".apply_modal_tab").find(".tab_on").attr("id");
+	var tabNum = aId.charAt(aId.length-1) //현재 탭 번호 
+
+	if(tabNum == "2") {
+		$("#btnSave").addClass("dis_n");
+		$("#btnPrv").addClass("dis_n");
+		$("#btnNext").show();
+	}else if(tabNum == "3"){
+		$("#btnSave").addClass("dis_n");
+		$("#btnPrv").removeClass("dis_n");
+		$("#btnNext").show();
+	}else if(tabNum == "4"){
+		$("#btnSave").addClass("dis_n");
+		$("#btnPrv").removeClass("dis_n");
+		$("#btnNext").show();
+	}
+	
+	//현재 탭 색상 제거 및 내용 hide
+	$("#"+aId).removeClass("tab_on");
+	$("."+aId).hide();
+	
+	//다음 탭 색상 추가 및 내용 show
+	tabNum = parseInt(tabNum) - 1;
+	$("#modal_tab_btn_"+tabNum).addClass("tab_on");
+	$(".modal_tab_btn_"+tabNum).show();
+	
+	//탭 이동 시 포커스 변경
+	if (tabNum == 1) {$("#req_name").focus();}
+	else if(tabNum == 2) {$("#req_purpose").focus();}
+	else if(tabNum == 3) {$("#stat_nm").focus();}
+	else if(tabNum == 4) {$("#req_content").focus();}
+}
+
+// [공통]다음 버튼
+function fn_nextTab(obj){
+	var aId = $(".apply_modal_tab").find(".tab_on").attr("id");
+	var tabNum = aId.charAt(aId.length-1) //현재 탭 번호
+	
+	//필수입력사항 체크
+	fn_vaildTest(aId, tabNum);
+}
+
+//[공통] 탭버튼
+function fn_nextTabBtn(aId, tabNum){
+	for (var i = 0; i <= tabNum; i++) {
+		//필수입력사항 체크
+		var result =  fn_vaildTest(aId, i);
+		if(result == false){ break; }
+	}
+}
+
+// [공통-다음버튼/탭이동]필수입력값 유효성검사
+function fn_vaildTest(aId, tabNum) {
+	
+	if(tabNum == 0) {
+		$("#btnSave").addClass("dis_n");
+		$("#btnPrv").addClass("dis_n");
+		$("#btnNext").show();
+		
+	}else if(tabNum == 1) {
+		// 성명
+		if(isStringNullOrEmpty($("#req_name").val())) {
+			alert("성명 을(를) 입력 해주세요.");
+			$("#req_name").focus();
+			return false;
+		}
+		// 비밀번호
+		if(isStringNullOrEmpty($("#req_pw").val())) {
+			alert("비밀번호 을(를) 입력 해주세요.");
+			$("#req_pw").focus();
+			return false;
+		}
+		// 소속
+		if(isStringNullOrEmpty($("#req_org").val())) {
+			alert("소속 을(를) 입력 해주세요.");
+			$("#req_org").focus();
+			return false;
+		}
+		// 직위
+		if(isStringNullOrEmpty($("#req_position").val())) {
+			alert("직위 을(를) 입력 해주세요.");
+			$("#req_position").focus();
+			return false;
+		}
+		//이메일 도메인 입력/선택 확인
+		if($("#email_sel").val() == "") {
+			$("#req_email").val($("#req_email1").val() + "@" + $("#req_email2").val());
+		} else {
+			$("#req_email").val($("#req_email1").val() + "@" + $("#email_sel").val());	
+		}
+		// 이메일 유효성 확인
+		if($("#req_email").val() != "") {
+			if(!emailCheck($("#req_email").val())) {
+				$("#req_email1").focus();
+				return false;
+			}
+		}
+		
+		//핸드폰체크(입력값이 있을경우에만)
+		if ($("#phone0").val() == "" && $("#phone1").val() == "" && $("#phone2").val() == "") {
+			$("#req_type_etc").val("");
+		}else{
+			$("#req_type_etc").val($("#phone0").val() + "-" + $("#phone1").val() + "-" + $("#phone2").val());
+			if(telNumCheck($("#req_type_etc").val()) == false) {
+				$("#phone0").focus();
+				return false;
+			}
+		}
+		
+		var chk_list = $("#req_stat_val").val();
+		$("#req_stat_val").val(chk_list.substr(0, chk_list.length -1));
+		
+		$("#btnSave").addClass("dis_n");
+		$("#btnPrv").removeClass("dis_n");
+		$("#btnNext").show();
+		
+	}else if(tabNum == 2){
+		//이용목적
+		if(isStringNullOrEmpty($("#req_purpose").val())) {
+			alert("이용목적 을(를) 입력 해주세요.");
+			$("#req_purpose").focus();
+			return false;
+		}
+		//이용기간
+		if(isStringNullOrEmpty($("#src_st_dt").val()) || isStringNullOrEmpty($("#src_ed_dt").val())) {
+			alert("이용기간 을(를) 입력 해주세요.");
+			return false;
+		}else{	
+		
+			var stdtY = ($("#src_st_dt").val()).substr(0,4);
+			var stdtM = ($("#src_st_dt").val()).substr(4,2);
+			var stdtD = ($("#src_st_dt").val()).substr(6,2);
+			var eddtY = ($("#src_ed_dt").val()).substr(0,4);
+			var eddtM = ($("#src_ed_dt").val()).substr(4,2);
+			var eddtD = ($("#src_ed_dt").val()).substr(6,2);
+			
+			var stdt = new Date(stdtY, stdtM, stdtD);
+			var eddt = new Date(eddtY, eddtM, eddtD);
+			var betweenDay = (eddt.getTime() - stdt.getTime()) /1000/60/60/24;
+			
+			if(betweenDay > 365) {
+				alert("이용기간은 최대 1년이내로 작성해주세요.");
+				return false;
+			}
+		}
+
+		/* 2020.11.03 이용항목, 결과표형태 필수 해제
+		//이용항목
+		if(isStringNullOrEmpty($("#req_type").val())) {
+			alert("이용항목 을(를) 입력 해주세요.");
+			$("#req_type").focus();
+			return false;
+		} */
+
+		//결과표형태
+		//2020.12.15 결과표형태 필수 지정
+		//2021.03.08 입력 OR 첨부파일 하나만 작성해도 통과
+
+		if(isStringNullOrEmpty($("#req_content_detail").val()) && isStringNullOrWhiteSpace($("#file2").val()) && isStringNullOrWhiteSpace($("#fileDown2").attr("data-fileseq"))) {
+			alert("결과표 형태 을(를) 입력 해주세요.");
+			$("#req_content_detail").focus();
+			return false;
+		}
+		//자료관리책임자 소속 / 직위 / 신청자명
+		if(isStringNullOrEmpty($("#req_org1_1").val()) || isStringNullOrEmpty($("#req_position1_1").val()) || isStringNullOrEmpty($("#req_name1_1").val())) {
+			alert("자료관리책임자의 소속 · 직위 및 신청자명 을(를) 입력 해주세요.");
+			$("#req_org1_1").focus();
+			return false;
+		}
+		//자료관리책임자 동의여부
+		if($("#req_agree1").is(":checked") == false) {
+			alert("자료관리책임자는 공동책임사항에 동의해주세요.");
+			//alert("이용신청서의 자료관리책임자 공동책임사항에 동의해주세요.");
+			return false;
+		}
+		//자료이용자 입력정보, 동의여부 
+		var joinUser = $(".joinUser_2").length;
+		for (var i = 0; i < joinUser; i++) {
+			var id = parseInt($("input[id^='req_contentAgr']").eq(i).attr("id").replace("req_contentAgr", ""));
+			//소속 / 직위 / 신청자명 
+			if(isStringNullOrEmpty($("input[id=req_content_member_org"+id+"]").val()) || isStringNullOrEmpty($("input[id=req_content_member_position"+id+"]").val()) || isStringNullOrEmpty($("input[id=req_content_member"+id+"]").val())) {
+				alert("자료이용자의 소속 · 직위 및 이용자명 을(를) 입력 해주세요.");
+				$("#req_content_member_org"+i+"").focus();
+				return false;
+			}
+			//동의여부
+			if($("input[id=req_contentAgr"+id+"]").is(":checked") == false) {
+				alert("모든 자료이용자는 공동책임사항에 동의해주세요.");
+				return false;
+			}
+		}
+		
+		//개인정보 활용 동의여부
+		if($("#agree").is(":checked") == false) {
+			alert("개인정보 활용동의에 동의해주세요.");
+			return false;
+		}
+		//통계자료 이용자 준수사항 동의
+		if($("#agree1").is(":checked") == false) {
+			alert("통계자료 이용자 준수사항에 이행 서약에 동의해주세요.");
+			return false;
+		}
+
+		$("#btnSave").addClass("dis_n");
+		$("#btnPrv").removeClass("dis_n");
+		$("#btnNext").show();
+		
+	}else if(tabNum == 3){
+		//통계명
+		if(isStringNullOrEmpty($("#stat_nm").val())) {
+			alert("통계명 을(를) 입력 해주세요.");
+			$("#stat_nm").focus();
+			return false;
+		}
+		//이용목적
+		if(isStringNullOrEmpty($("#req_purpose3").val())) {
+			alert("이용목적 을(를) 입력 해주세요.");
+			$("#req_purpose3").focus();
+			return false;
+		}
+		//이용기간
+		if(isStringNullOrEmpty($("#src_st_dt3").val()) || isStringNullOrEmpty($("#src_ed_dt3").val())) {
+			alert("이용기간 을(를) 입력 해주세요.");
+			return false;
+		}else{
+			var stdtY = ($("#src_st_dt3").val()).substr(0,4);
+			var stdtM = ($("#src_st_dt3").val()).substr(4,2);
+			var stdtD = ($("#src_st_dt3").val()).substr(6,2);
+			var eddtY = ($("#src_ed_dt3").val()).substr(0,4);
+			var eddtM = ($("#src_ed_dt3").val()).substr(4,2);
+			var eddtD = ($("#src_ed_dt3").val()).substr(6,2);
+			
+			var stdt = new Date(stdtY, stdtM, stdtD);
+			var eddt = new Date(eddtY, eddtM, eddtD);
+			var betweenDay = (eddt.getTime() - stdt.getTime()) /1000/60/60/24;
+			
+			if(betweenDay > 365) {
+				alert("이용기간은 최대 1년이내로 작성해주세요.");
+				return false;
+			}
+		}
+		//자료관리책임자 소속 / 직위 / 신청자명
+		if(isStringNullOrEmpty($("#req_org3").val()) || isStringNullOrEmpty($("#req_position3").val()) || isStringNullOrEmpty($("#req_name4").val())) {
+			alert("자료관리책임자의 소속 · 직위 및 신청자명 을(를) 입력 해주세요.");
+			$("#req_org3").focus();
+			return false;
+		}
+		//자료관리책임자 동의여부
+		if($("#req_agree2").is(":checked") == false) {
+			alert("자료관리책임자는 공동책임사항에 동의해주세요.");
+			return false;
+		}
+		//서약자 입력정보, 동의여부 
+		var joinUser = $(".pldgUser_2").length;
+		for (var i = 0; i < joinUser; i++) {
+			var id = parseInt($("input[id^='pledgeAgr']").eq(i).attr("id").replace("pledgeAgr", ""));
+
+			//소속 / 직위 / 신청자명
+			if(isStringNullOrEmpty($("input[id=pldgUser_org"+id+"]").val()) || isStringNullOrEmpty($("input[id=pldgUser_position"+id+"]").val()) || isStringNullOrEmpty($("input[id=pldgUser_member"+id+"]").val())) {
+				alert("서약자의 소속 · 직위 및 이용자명 을(를) 입력 해주세요.");
+				$("#pldgUser_org"+id+"").focus();
+				return false;
+			}
+			//동의여부
+			if($("input[id=pledgeAgr"+id+"]").is(":checked") == false) {
+				alert("모든 자료이용자는 공동책임사항에 동의해주세요.");
+				return false;
+			}
+		}
+		
+		$("#btnSave").removeClass("dis_n");
+		$("#btnPrv").removeClass("dis_n");
+		$("#btnNext").hide();
+		focusControl($(".apply_modal_pop"));
+		$(this).addClass("currentBtn");
+	}
+	
+	//현재 탭 색상 제거 및 내용 hide
+	$("#"+aId).removeClass("tab_on");
+	$("#"+aId).removeAttr("title");
+	$("."+aId).hide();
+	
+	//다음 탭 색상 추가 및 내용 show
+
+	
+
+	tabNum = parseInt(tabNum) + 1;
+	$("#modal_tab_btn_"+tabNum).addClass("tab_on");
+	$("#modal_tab_btn_"+tabNum).attr("title", "선택됨");
+	
+	var tabId = "#modal_tab_btn_" + tabNum;
+	var selectedTabText = $(tabId).text();
+	$("#tab_title").parent().find(".visually-hidden").html(selectedTabText);
+	
+	$(".modal_tab_btn_"+tabNum).show();
+	
+	//탭 이동
+	for (var i = 1; i <= 4; i++) {
+		if(i == tabNum) {
+			$(".tab_btn_"+tabNum).addClass('tab_on');
+			$(".tab_btn_"+tabNum).attr("title", "선택됨");
+			$(".tab_btn_"+tabNum).show();
+			
+			//탭 이동 시 포커스 변경
+			if (tabNum == 1) {$("#req_name").focus();}
+			else if(tabNum == 2) {$("#req_purpose").focus();}
+			else if(tabNum == 3) {$("#stat_nm").focus();}
+			else if(tabNum == 4) {$("#req_content").focus();}
+		}else{
+			$(".tab_btn_"+i).removeClass('tab_on');
+			$(".tab_btn_"+i).removeAttr("title");
+			$(".modal_tab_btn_"+i).hide();
+		}
+	}
+	
+	$("[class^='text_box1']").on("blur", function() {
+		if (this.value !== '' && !validateDateInput(this)) {
+		    // 유효하지 않은 입력값이면 경고창을 띄우고 포커스를 해당 요소로 이동합니다.
+		    this.value = '';
+		    this.focus();
+		  }
+	});
+}
+
+function validateDateInput(inputElement) {
+	var inputDate = inputElement.value;
+	  if (!inputDate) {
+		  return false;
+	  }
+	  var dateRegex = /^(19|20)\d{2}(0?[1-9]|1[012])(0?[1-9]|[12][0-9]|3[01])$/;
+
+	  if (!dateRegex.test(inputDate)) {
+	    alert("올바른 날짜 형식이 아닙니다. YYYYMMDD 형식으로 입력해주세요.");
+	    inputElement.focus();
+	    return false;
+	  }
+
+	  var year = parseInt(inputDate.substring(0, 4));
+	  var month = parseInt(inputDate.substring(4, 6));
+	  var day = parseInt(inputDate.substring(6, 8));
+
+	  var dateObj = new Date(year, month - 1, day);
+
+	  if (dateObj.getFullYear() !== year || dateObj.getMonth() + 1 !== month || dateObj.getDate() !== day) {
+	    alert("올바른 날짜가 아닙니다. 다시 입력해주세요.");
+	    inputElement.focus();
+	    return false;
+	  }
+
+	  return true;
+}
+
+//[이용신청서] > 자료이용자, 서약자 추가(+버튼)
+function fn_addJoinUser(obj) {
+	var html = "";
+	var maxFileLen = parseInt("10");
+	var index = $(obj).attr("id").replace("plus_btn", "");
+	
+	var nexMaxFileLen = maxFileLen + parseInt(index);
+	var nexIdx = parseInt(index) + 1
+	
+	if($("input[id^='req_contentAgr']").length >= maxFileLen) {
+		alert("자료열람자는 최대 10명까지 추가 가능합니다.");
+		return;
+	}
+	
+	for (var i = nexIdx; i < nexMaxFileLen; i++) {
+		if($("#joinUser" + i).html() == undefined) {
+			//이용신청서
+			html += "<div class='pledge_wrap joinUser_2 flex_box' id='joinUser"+i+"'>";
+			html += "	<div class='flex_box flex_grow '>";
+			html += "		<p class='pledge_title'><span class='point_star' title='자료이용자(자료열람자 전원)'>*</span>자료이용자(자료열람자 전원)</p>";
+			html += "		<div class='plus_btn_wrap m_l_4'>";
+			html += "			<a href='javascript:void(0);' class='plus_btn' onclick='fn_delJoinUser(this); return false;' title='삭제'>";
+			html += "				<p class='plus_line_2 f_s_0'>삭제</p>";
+			html += "			</a>";
+			html += "		</div>";
+			html += "	</div>";
+			html += "	<div class='flex_box '>";
+			html += "		<div class='name_input'>";
+			html += "			<input type='text' id='req_content_member_org"+i+"' name='req_content_member_org"+i+"' class='w130 l_h_21 p_holder_red' title='소속' placeholder='소속' onfocus='fn_labelOff(this); return false;' onblur='fn_labelOn(this); return false;'>";
+			html += "		</div>";
+			html += "		<div class='name_input'>";
+			html += "			<input type='text' id='req_content_member_position"+i+"' name='req_content_member_position"+i+"' class='w100 l_h_21 p_holder_red' title='직위' placeholder='직위' onfocus='fn_labelOff(this); return false;' onblur='fn_labelOn(this); return false;'>";
+			html += "		</div>";
+			html += "		<div class='name_input'>";
+			html += "			<input type='text' id='req_content_member"+i+"' name='req_content_member"+i+"' class='w130 l_h_21 p_holder_red' title='자료이용자명' placeholder='자료이용자명' onfocus='fn_labelOff(this); return false;' onblur='fn_labelOn(this); return false;'>";
+			html += "		</div>";
+			html += "		<div class='agree_checkbox flex_box m_l_8'>";
+			html += "			<input class='micro_check' type='checkbox' id='req_contentAgr"+i+"' name='chkcontentAgr' class='m_l_5' title='자료이용자 동의체크'>";
+			html += "			<label for='req_contentAgr"+i+"'> 동의</label>";
+			html += "		</div>";
+			html += "</div>";
+			$("#joinUser" + (parseInt(i)-1)).after(html);
+			
+			//서약자
+			html = "";
+			html += "<div class='pledge_wrap pldgUser_2' id='pldgUser"+i+"'>";
+			html += "	<p class=' pledge_title'>○ 서약자</p>";
+			html += "	<div class='flex_box  m_r_17'>";
+			html += "		<div class='name_input'>";
+			html += "			<input type='text' id='pldgUser_org"+i+"' name=pldgUser_org"+i+"' class='w170 l_h_21' title='소속' readonly='readonly'>";
+			html += "		</div>";
+			html += "		<div class='name_input'>";
+			html += "			<input type='text' id='pldgUser_position"+i+"' name='pldgUser_position"+i+"' class='w150 l_h_21' title='직위' readonly='readonly'>";
+			html += "		</div>";
+			html += "		<div class='name_input'>";
+			html += "			<input type='text' id='pldgUser_member"+i+"' name='pldgUser_member"+i+"' class='w150 l_h_21' title='자료이용자명' readonly='readonly'>";
+			html += "		</div>";
+			html += "		<div class='agree_checkbox flex_box m_l_8'>";
+			html += "			<input class='micro_check' type='checkbox' id='pledgeAgr"+i+"' name='chkPledgeAgr' class='m_l_5' checked='checked' title='서약자 동의체크'>";
+			html += "			<label for='pledgeAgr"+i+"'> 동의</label>";
+			html += "		</div>";
+			html += "</div>";
+			$("#pldgUser" + (parseInt(i)-1)).after(html);
+			break;
+		}
+	}
+}
+
+function fn_delJoinUser(obj) {
+	 var id = $(obj).closest(".pledge_wrap").attr("id");
+	 var restr = id.substring(8);
+	 $("#joinUser"+restr).remove();
+	 $("#pldgUser"+restr).remove();
+}
+
+/* 이미지(자동등록방지) 새로고침 함수 */
+/* function fn_CaptchaReload(){
+	$("#kaptchaImg").attr("src", "/itstat/kaptcha.jpg?" + Math.floor(Math.random()*100));
+} */
+
+/* 이미지(자동등록방지) 새로고침 함수 */
+function fn_CaptchaReload(){
+	$("#catpcha").html("<img id='capchaImg' title='자동등록방지 이미지' src='/itstat/kor/contents/captchaImg.html?rand=" + Math.floor(Math.random()*100) + "' alt='자동등록방지 이미지' />");
+}
+
+/* 이미지(자동등록방지) 음성듣기 함수 */
+function fn_CaptchaAudio() {
+	var rand = Math.floor(Math.random()*100);
+	
+	$.ajax({
+		url : "/itstat/kor/contents/captchaAudio.html",
+		type : "POST",
+		dataType : "text",
+		data : "rand=" + rand,
+		async : false,
+		success : function(res){
+			var uAgent = navigator.userAgent;
+			var soundUrl = "/itstat/kor/contents/captchaAudio.html?rand="+rand+"";
+			
+			if(uAgent.indexOf('Trident')>-1 || uAgent.indexOf('MISE')>-1){	/*IE 경우 */
+				fn_winPlayer(soundUrl);
+			}else if(!!document.createElement('audio').canPlayType){ /*Chrome 경우 */
+				try {
+					new Audio(soundUrl).play();
+				} catch (e) {
+					fn_winPlayer(soundUrl);
+				}
+			}else{
+				window.open(soundUrl,'','width=1,height=1');
+			}
+		}
+	});
+}
+
+function fn_winPlayer(objurl) {
+	$("#audio_captcha").html("<bgsound src='"+ objurl +"'>");
+}
+
+</script>
+
+ <!-- [신청서 작성] -->
+<div class="apply_modal_wrap dis_n">
+	 <input type="hidden" id="req_use_st_dt" name="req_use_st_dt" value="">
+	 <input type="hidden" id="req_use_ed_dt" name="req_use_ed_dt" value="">
+	 <input type="hidden" id="req_type_etc" name="req_type_etc" value="">
+	 
+	<div class="apply_modal_pop" id="mdl_p">
+	    <div class="apply_modal_tab tab_box stretch">
+	        <a href="javascript:void(0);" id="modal_tab_btn_1" class="tab_btn tab_btn_1 tab_on" title="선택됨" onclick="fn_nextTabBtn(this.id, 0)">신청자 기본 정보</a>
+	        <a href="javascript:void(0);" id="modal_tab_btn_2" class="tab_btn tab_btn_2" onclick="fn_nextTabBtn(this.id, 1)">이용 신청서</a>
+	        <a href="javascript:void(0);" id="modal_tab_btn_3" class="tab_btn tab_btn_3" onclick="fn_nextTabBtn(this.id, 2)">자료이용 서약서</a>
+	        <a href="javascript:void(0);" id="modal_tab_btn_4" class="tab_btn tab_btn_4" onclick="fn_nextTabBtn(this.id, 3)">연구계획서</a>
+	    </div>
+		<h2 class="visually-hidden" id="tab_title">신청자 기본 정보</h2>
+	    <div class="apply_modal_content">
+	    
+<!-- mindl -->	    
+	   		<!-- [신청자기본정보] -->
+	        <div class="modal_tab_btn_1">
+	        	<!-- <p class="m_t_20 m_l_20 markStar p_col_red">필수 입력사항 입니다.</p> -->
+	            <table class="apply_table" id="modal1"><!-- m_t_0 > 이메일 입력 칸 안보여서 추가 -->
+	                <caption>신청자 기본 정보 입력표입니다. 성명, 비밀번호, 소속, 직위, 이메일, 직장번호를 입력하실 수 있으며, 필수 입력사항은 성명, 비밀번호, 소속, 직위, 이메일입니다.</caption>
+	                <colgroup>
+	                    <col class="w20pct">
+	                    <col class="w30pct">
+	                    <col class="w20pct">
+	                    <col class="w30pct">
+	                </colgroup>
+	                <tbody>
+	                	<tr class="statGridTr">
+    						<th class="title01"><label for="req_name"><span class="point_star">*</span>성명</label></th>
+    						<td class="statGridTd con_txt">
+	    						<input type="text" class="apply_input" id="req_name" name="req_name" title="성명" placeholder="성명">						
+    						</td>
+    						<th class="title01"><label for="req_pw"><span class="point_star">*</span>비밀번호</label></th>
+    						<td class="statGridTd con_txt">
+        						<input type="password" class="apply_input" id="req_pw" name="req_pw" title="비밀번호" placeholder="비밀번호">
+    						</td>
+						</tr>
+	                    <tr class="statGridTr">
+	                        <th class="title01"><label for="point_star"><span class="point_star">*</span>소속</label></th>
+	                        <td class="statGridTd con_txt">
+	                        	<input type="text" class="apply_input" id="req_org" name="req_org" title="소속" placeholder="소속">
+	                        </td>
+	                        <th class="title01"><label for="point_star"><span class="point_star">*</span>직위</label></th>
+	                        <td class="statGridTd con_txt">
+	                            <input type="text" class="apply_input" id="req_position" name="req_position" title="직위" placeholder="직위">
+	                        </td>
+	                    </tr>
+	                    <tr class="statGridTr">
+	                        <th class="title01" scope="row"><label for="point_star"><span class="point_star">*</span>이메일</label></th>
+	                        <td colspan="3" class="statGridTd email_td">
+	                            <input type="text" class="apply_input" id="req_email1" name="req_email1" title="이메일ID" placeholder="이메일ID">
+	                            <span>@</span>
+	                            <input type="text" class="apply_input" id="req_email2" name="req_email2" title="이메일도메인" placeholder="이메일도메인">
+	                            <select class="mail_site" id ="email_sel" name="email_sel" title="도메인선택">
+	                                <option value="">직접입력</option>
+									<option value="naver.com">naver.com</option>
+									<option value="nate.com">nate.com</option>
+									<option value="yahoo.co.kr">yahoo.co.kr</option>
+									<option value="gmail.com">gmail.com</option>
+									<option value="hanmail.net">hanmail.net</option>
+	                            </select>
+	                        </td>
+	                    </tr>
+	                    <tr class="statGridTr">
+	                    	<th class="title01" scope="row">직장번호</th>
+	                    	<td colspan="3" class="statGridTd con_txt">
+	                    		<input type="text" id="phone0" name="phone0" value="" maxlength="4" onkeyup="$(this).val(numOnlyChange($(this).val()))" class="w30pct apply_input" title="직장번호 앞자리" placeholder="앞자리">
+	                    		<span class="hyphen">-</span>
+	                    		<input type="text" id="phone1" name="phone1" value="" maxlength="4" onkeyup="$(this).val(numOnlyChange($(this).val()))" class="w30pct apply_input" title="직장번호 중간자리" placeholder="중간자리">
+	                    		<span class="hyphen">-</span>
+	                    		<input type="text" id="phone2" name="phone2" value="" maxlength="4" onkeyup="$(this).val(numOnlyChange($(this).val()))" class="w30pct apply_input" title="직장번호 끝자리" placeholder="끝자리">
+	                    	</td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	            <div class="apply_table_2">
+	                <div class="apply_table_2_inbox statGridTd_tA" tabindex="-1" >
+	                    <table>
+	                        <caption>마이크로데이터 선택 자료 테이블입니다. 변수명, 항목명을 보여줍니다.</caption>
+	                        <colgroup>
+	                            <col class="w15pct">
+	                            <col>
+	                        </colgroup>
+	                        <thead class="choice_data_head m_t_0">
+	                            <tr class="statGridTr">
+	                                <th colspan="2" class="title01 choice_td_1" scope="col">신청자료</th>
+	                            </tr>
+								<!-- 일단 주석, 고객의견 후 삭제_2020.10.20 	                            
+	                            <tr class="statGridTr">
+	                                <td colspan="1" class="title01 choice_td_3">변수명</td>
+	                                <td colspan="1" class="title01 choice_td_4">항목명</td>
+	                            </tr>
+								 -->
+	                        </thead>
+	                        <tbody class="choice_data_list"></tbody>
+	                    </table>
+	                </div>
+	            </div>
+	        </div>
+	        
+	        <!-- [이용신청서] -->
+	        <div class="modal_tab_btn_2 apply_con" >
+	            <!-- <p class="tab_btn_2_title" id="modal2">이용 신청서</p> -->
+	            <ul class="text_box">
+	                <li class="in_text text_point_input_1">
+	                    <p class="title_point"><span class="point_star">*</span>이용목적</p>
+	                    <div class="name_input">
+	                        <input type="text" class="write_input p_holder_red" id="req_purpose" name="req_purpose" title="연구 주제 등의 내용을 포함하여 구체적으로 작성 부탁드립니다." placeholder="">
+							<span class="txt_point m_l_5">연구 주제 등의 내용을 포함하여 구체적으로 작성 부탁드립니다.</span>
+	                    </div>
+	                </li>
+	                <li class="in_text m_b_5">
+	                    <p class="title_point"><span class="point_star">*</span>이용기간</p>
+	                    <div class="date_box flex_box">
+							<div class="date_search_box">
+								<div class="date">
+									<label for="src_st_dt"><span class="txt_blind">이용시작일</span></label>
+									<input type="text" class="text_box1 ico-calendar" id="src_st_dt" name="src_st_dt" value="" maxlength="8" aria-label="이용시작일" placeholder="YYYY/MM/DD"/>
+								</div>
+								<div class="wave s_in">~</div>
+								<div class="date">
+									<label for="src_ed_dt"><span class="txt_blind">이용종료일</span></label>
+									<input type="text" class="text_box1 ico-calendar" id="src_ed_dt" name="src_ed_dt" value="" maxlength="8" aria-label="이용종료일" placeholder="YYYY/MM/DD"/>
+								</div>
+							</div>
+	                    	<span class="txt_point m_l_5">최대 1년 이내로 작성</span>
+                        	<!-- <div class="box s_in">
+								<label for="src_st_dt"><span class="txt_blind">이용시작일</span></label>
+								<input type="text" class="text_box1" id="src_st_dt" name="src_st_dt" value="" maxlength="8" aria-label="이용시작일" placeholder="YYYYMMDD"/>
+							</div>
+							<div class="icon s_in" id="st_icon" ></div>
+							<div class="wave s_in">~</div>
+							<div class="box s_in">
+								<label for="src_ed_dt"><span class="txt_blind">이용종료일</span></label>
+								<input type="text" class="text_box1" id="src_ed_dt" name="src_ed_dt" value="" maxlength="8" aria-label="이용종료일" placeholder="YYYYMMDD"/>
+							</div>
+							<div class="icon s_in" id="ed_icon"></div> -->
+	                    </div>
+	                </li>
+	                
+	                <li class="in_text m_b_5">
+	                	<p class="title_point m_t_0"><span class="point_star">*</span>결과표 형태(내용이 많을 경우 별도 서식 기재 또는 별도파일 제출)</p>
+						<input type="text" class="write_input w100pct p_holder_red" id="req_content_detail" name="req_content_detail" title="최종 결과물의 형태로 집계표 형식 등을 구체적으로 작성해주시길 바랍니다.">
+						<span class="txt_point m_l_5">최종 결과물의 형태로 집계표 형식 등을 구체적으로 작성해주시길 바랍니다.</span>
+						<label for="file2"><span class="txt_blind">첨부파일</span></label>
+						<input class="w100pct m_t_8" type="file" id="file2" name="down" title="첨부파일" >
+	                </li>
+	            </ul>
+	            <p class="text_box m_t_20 m_b_20">
+	                <b>통계자료이용자 및 자료관리책임자는 통계법 및 자료제공침 위반 시 공동책임을 진다.</b>
+	            </p>
+	            
+	            <!--  자료관리책임자   -->
+	            <div class="text_box flex_box">
+	                <p class="flex_grow"><span class="point_star">*</span>자료관리책임자</p>
+	                <div class="flex_box">
+	                	<div class="name_input">
+	                        <input type="text" id="req_org1_1" name="req_org1_1" class="w130 l_h_21 p_holder_red" title="소속" placeholder="소속">
+	                    </div>
+	                    <div class="name_input">
+	                        <input type="text" id="req_position1_1" name="req_position1_1" class="w100 l_h_21 p_holder_red" title="직위" placeholder="직위">
+	                    </div>
+	                    <div class="name_input">
+	                        <input type="text" id="req_name1_1" name="req_name1_1" class="w130 l_h_21 p_holder_red" title="신청자명" placeholder="신청자명">
+	                    </div>
+	                    <div class="agree_checkbox flex_box m_l_8">
+	                        <input class='micro_check' type="checkbox" id="req_agree1" name="chkAgree" class="m_l_5" title="자료관리책임자 동의체크">
+	                        <label for="req_agree1">동의</label>
+	                    </div>
+	                </div>
+	            </div>
+	            
+	            <!--  자료이용자(자료열람자 전원)   -->
+	            <div class="pledge_wrap joinUser_2 flex_box" id="joinUser1" >
+					<div class="flex_box flex_grow">
+						<p class="pledge_title"><span class="point_star">*</span>자료이용자(자료열람자 전원)</p>
+						<div class="plus_btn_wrap m_l_4">
+							<a href="javascript:void(0);" class="plus_btn" id="plus_btn1" onclick="fn_addJoinUser(this); return false;" title="추가">
+								<p class="plus_line_1 f_s_0">bar</p>
+								<p class="plus_line_2 f_s_0">bar</p>
+							</a>
+						</div>
+					</div>
+	                <div class="flex_box">
+	                    <div class="name_input">
+	                        <input type="text" id="req_content_member_org1" name="req_content_member_org1" class="w130 l_h_21 p_holder_red" 
+	                        		title="소속" placeholder="소속" 
+	                        		onfocus='fn_labelOff(this); return false;' onblur='fn_labelOn(this); return false;'>
+	                    </div>
+	                    <div class="name_input">
+	                        <input type="text" id="req_content_member_position1" name="req_content_member_position1" class="w100 l_h_21 p_holder_red" 
+	                        		title="직위" placeholder="직위"
+	                        		onfocus='fn_labelOff(this); return false;' onblur='fn_labelOn(this); return false;'>
+	                    </div>
+	                    <div class="name_input">
+	                        <input type="text" id="req_content_member1" name="req_content_member1" class="w130 l_h_21 p_holder_red" 
+	                        		title="자료이용자명" placeholder="자료이용자명"
+	                        		onfocus='fn_labelOff(this); return false;' onblur='fn_labelOn(this); return false;'>
+	                    </div>
+	                    <div class="agree_checkbox flex_box m_l_8">
+	                        <input class='micro_check' type="checkbox" id="req_contentAgr1" name="chkcontentAgr" class="m_l_5" title="자료이용자 동의체크">
+	                        <label for="req_contentAgr1">동의</label>
+	                    </div>
+	                </div>
+	            </div>
+	           
+	            <ul class="none_text_box">
+	                <li>
+	                    <p class="mini_title">▣ 개인정보 수집·이용·제공 고지 및 동의(개인정보 수집(개인정보보호법 제15조))</p>
+	                </li>
+	                <li><span class="mini_text_num">①</span><span class="mini_text">수집·이용 목적 : 마이크로데이터 활용 현황 통계 작성 및 향후 연락을 위해 활용합니다.</span></li>
+	                <li><span class="mini_text_num">②</span><span class="mini_text">수집 개인정보 항목(필수 수집항목): 성명, 소속명(직장명(학교), 부서(학과), 지역), 연락처(휴대폰, email)</span></li>
+	                <li><span class="mini_text_num">③</span><span class="mini_text">개인정보 보유 및 이용기간: 수집일 이후 10년간 보유하며 보유기간 만료 시 파기합니다.</span></li>
+	                <li><span class="mini_text_num">④</span><span class="mini_text">동의거부 권리 및 관련 불이익: 개인정보 수집에 동의하지 않을 수 있으나, 이 경우 자료를 제공하지 않을 수 있습니다.</span></li>
+	                <li class="flex_box m_t_30 m_b_30">
+	                    <p class="mini_title flex_grow">● 개인정보 수집·이용</p>
+	                    <div class="agree_checkbox flex_box">
+	                        <label for="agree">개인정보 활용동의(필수)</label>
+	                        <input class="micro_check m_l_4" type="checkbox" id="agree" title="개인정보 활용 동의체크">
+	                    </div>
+	                </li>
+	                <li class="m_b_20">
+	                    <p class="mini_title m_b_4">▣ 통계자료 이용자 준수사항을 이행할 것을 서약하여 신청서를 제출합니다.</p>
+	                    <div class="apply_input_wrap">
+	                        <div class="name_input">
+	                            <input type="text" id="req_name3" class="l_h_21 p_holder_red" title="신청자명" placeholder="신청자명">
+	                        </div>
+	                        <div class="agree_checkbox flex_box m_l_8">
+								<label for="agree1">동의</label>
+	                            <input class="micro_check m_l_4" type="checkbox" id="agree1" title="통계자료 이용자 준수사항을 이행할 것을 서약하여 신청서를 제출합니다. 동의체크">
+	                        </div>
+	                    </div>
+	                </li>
+	                <li class="m_b_20">
+	                    <span class="mini_title">정보통신정책연구원장<span class="in_mini">귀하</span></span>
+	                    <span class="mini_title f_r">
+							
+							2026.04.27
+	                    </span>
+	                </li>
+	            </ul>
+	        </div>
+	        
+	        <!-- [자료이용서약서]  -->
+	        <div class="modal_tab_btn_3 apply_con" tabindex="-1" id="modal3">
+	            <ul class="text_box">
+	                <li class="m_b_10">
+	                    <p class="title_point">○ 통계명</p>
+	                    <div class="name_input">
+	                        <input type="text" class="write_input w100pct" id="stat_nm" name="stat_nm" value="" title="통계명" readonly="readonly">
+	                    </div>
+	                </li>
+	                <li class="m_b_10">
+	                    <p class="title_point">○ 이용목적</p>
+	                    <div class="name_input">
+	                        
+	                        <input type="text" class="write_input w100pct" id="req_purpose3" name="req_purpose3" title="이용목적" readonly="readonly">
+	                    </div>
+	                </li>
+	                <li class="m_b_20">
+	                    <p class="title_point">○ 이용기간</p>
+	                    <div class="date_box flex_box">
+							<div class="date_search_box">
+								<div class="date">
+									<label class="f_s_0" for="src_st_dt3"><span class="txt_blind">이용시작일</span></label>
+									<input type="text" class="text_box1 ico-calendar" id="src_st_dt3" name="src_st_dt3" value="" maxlength="10" readonly title="이용시작일"/>
+								</div>
+								<div class="wave s_in">~</div>
+								<div class="date">
+									<label class="f_s_0" for="src_ed_dt3"><span class="txt_blind">이용종료일</span></label>
+									<input type="text" class="text_box1 ico-calendar" id="src_ed_dt3" name="src_ed_dt3" value="" maxlength="10" readonly title="이용종료일"/>
+								</div>
+							</div>
+							<span class="txt_point">최대 1년 이내로 작성</span>
+						</div>
+	                </li>
+	                <li class="pledge_text_style m_b_20">&nbsp;&nbsp;본인은 통계 목적으로 활용하기 위해 마이크로데이터를 이용함에 있어 통계법의 비밀보호 및 정보보호 관련 규정과 정보통신정책연구원의 정보통신·방송통계 마이크로데이터 수집·관리 및 제공에 관한 지침(이하 자료제공지침)을 준수합니다. 이에 따라 본인은 아래의 '마이크로데이터 이용자의 준수사항'을 이행하며, 제공받은 자료의 처리과정에서 생성된 자료의 폐기 등을 포함하여 자료관리 전반에 철저를 기하겠습니다. 만약 자료가 외부에 유출되었을 때에는 정보유출로 인해 발생한 문제의 민·형사상의 책임을 본인이 지는데 이의 없음을 엄숙히 서약합니다.
+	                </li>
+	                <li>
+	                    <ul class="compliance">
+	                        <li class="t_a_c m_b_10 f_w_600 f_s_20">&lt;마이크로데이터 이용자의 준수사항(자료제공지침 제 15조 제 2항)&gt;</li>
+	                        <li class="m_b_5">1. 이용자는 통계목적 이외에 제공받은 마이크로데이터의 사용하여서는 아니된다.</li>
+	                        <li class="m_b_5">2. 이용자는 신청서에 기재된 범위에서 이용을 한정하고, 제공받은 자료를 신청서에 기재되지 않은 제3자에게 양도, 대여하거나 열람하도록 할 수 없다.</li>
+	                        <li class="m_b_5">3. 이용자는 자료이용에 있어서 특정의 개인·법인·단체 등의 식별을 하는 연구를 행할 수 없고, 개별 자료에 의거 알게 된 사항에 대해서 누설하여서는 아니된다.</li>
+	                        <li class="m_b_5">4. 이용자는 제공자료의 이용이 끝난 후 즉시 파기한다.</li>
+	                        <li class="m_b_5">5. 이용자는 올바른 분석기법 사용 및 통계적 오차를 적정수준으로 유지하도록 노력한다.</li>
+	                        <li class="m_b_5">6. 이용자는 자료 이용 후 연구계획서에 기재된 연구기간 경과 3개월 이내에 정보통신·방송통계정보시스템 등을 통해 연구의 결과를 자료이관기관과 공유하는 것을 원칙으로 한다.</li>
+	                    </ul>
+	                </li>
+	                <li>
+	                    <p class="title_point m_b_4">○ 자료관리책임자</p>
+	                    <div class="flex_box">
+		                	<div class="name_input">
+		                        <input type="text" id="req_org3" name="req_org3" class="w170 l_h_21" title="소속" placeholder="소속" readonly="readonly">
+		                    </div>
+		                    <div class="name_input">
+		                        <input type="text" id="req_position3" name="req_position3" class="w150 l_h_21" title="직위" placeholder="직위" readonly="readonly">
+		                    </div>
+		                    <div class="name_input">
+		                        <input type="text" id="req_name4" name="req_name4" class="w150 l_h_21" title="신청자명" placeholder="신청자명" readonly="readonly">
+		                    </div>
+		                    <div class="agree_checkbox flex_box m_l_8">
+		                        <input class='micro_check' type="checkbox" id="req_agree2" name="chkAgree" class="m_l_5" checked="checked" title="자료관리책임자 동의체크">
+		                        <label for="req_agree2">동의</label>
+		                    </div>
+		                </div>
+	                </li>
+	            </ul>
+	            <div class="pledge_wrap pldgUser_2" id="pldgUser1">
+	                <p class="pledge_title m_b_4">○ 서약자</p>
+	                <div class="flex_box m_r_17">
+	                    <div class="name_input">
+	                        <input type="text" id="pldgUser_org1" name="pldgUser_org1" class="w170 l_h_21" title="소속" placeholder="소속" readonly="readonly">
+	                    </div>
+	                    <div class="name_input">
+	                        <input type="text" id="pldgUser_position1" name="pldgUser_position1" class="w150 l_h_21" title="직위" placeholder="직위" readonly="readonly">
+	                    </div>
+	                    <div class="name_input">
+	                        <input type="text" id="pldgUser_member1" class="w150 l_h_21" title="자료이용자명" placeholder="자료이용자명" readonly="readonly">
+	                    </div>
+	                    <div class="agree_checkbox flex_box m_l_8">
+	                        <input class='micro_check' type="checkbox" id="pledgeAgr1" name='chkPledgeAgr' class="m_l_5" checked="checked" title="자료이용자 동의체크">
+	                        <label for="pledgeAgr1">동의</label>
+	                    </div>
+	                </div>
+	            </div>
+	            <p class="mini_title m_t_20 m_b_20">정보통신정책연구원장<span class="in_mini">귀하</span></p>
+	        </div>
+
+			<!-- [연구계획서] -->
+	        <div class="modal_tab_btn_4 apply_con p_b_15px">
+	            <p class="tab_btn_2_title b_d_b_0" id="modal4"><span class='point_star'>*</span>연구계획서
+	            	<a href="javascript:void(0);" class="btn btn_primary btn_sm f_r" id="btn_downSample">연구계획서 샘플 다운</a>
+	            </p>
+	            
+	           <div class="text_box name_input m_t_10 m_b_8">
+	                <textarea class="p_holder_red" id="req_content" name="req_content" title="마이크로데이터를 이용하여 수행하고자 하는 연구내용을 구체적으로 작성하시기 바랍니다.(연구목적, 방법, 모형에 대한 간단한 설명 등)" placeholder="마이크로데이터를 이용하여 수행하고자 하는 연구내용을 구체적으로 작성하시기 바랍니다.&#13;&#10;(연구목적, 방법, 모형에 대한 간단한 설명 등)"></textarea>
+	            </div>
+	            
+	            <!-- 첨부파일 추가(최대 5개) -->
+	            <div class="file text_box w100pct m_b_8">
+                    <label class="m_r_10" for="file3">첨부파일</label>
+                    <input class="w80pct" type="file" id="file3" name="down" title="파일선택" >
+                    <div class="plus_del ">
+						<div class="plus">
+							<label for="btn_AddFile3"><span class="txt_blind">추가</span></label>
+							<input type="button" value="추가" class="btn btn_sm btn_bordered" id="btn_AddFile3" data-fileSeq=""  title="추가"/></div>
+					</div>
+                </div>
+	            
+	            <!-- 2022.08.29 자동등록방지 변경 -->
+				<div class="text_box w100pct m_t_10">
+					<label class="mStar" for="catpcha">자동등록방지</label>
+					<div class="kaptcha_check flex_box">
+						<div id="catpcha"></div>
+						<div id="audiocatpch" style="display: none;"></div>
+						       		
+						<div class="flex_box">
+							<a href="javascript:void(0);" class="reload_captcha" id="reload_captcha" name="reload_captcha" onclick="fn_CaptchaReload();">새로고침</a>
+							<a href="javascript:void(0);" class="audio_captcha" id="audio_captcha" name="audio_captcha" onclick="fn_CaptchaAudio();">음성듣기</a>
+							<input type="text" id="answer_captcha" name="answer_captcha" value="" title="자동등록방지 문자 을(를) 입력 해주세요." placeholder="자동등록방지 문자 을(를) 입력 해주세요.">
+						</div>
+					</div>
+				</div>  
+		
+	            
+	                
+	        </div>
+	    </div>
+
+		<!-- [공통버튼] -->
+	    <div class="save_btn">
+	        <button type="button" class="btn btn_bordered_b" id="btnCancel2">취소</button>
+	        <button type="button" class="btn btn_bordered dis_n" title="이전" id="btnPrv" onclick="fn_prevTab(this); return false;">이전</button>
+	        <button type="button" class="btn btn_primary" title="다음" id="btnNext" onclick="fn_nextTab(this); return false;">다음</button>
+	        <button type="button" class="btn btn_primary dis_n" title="저장" id="btnSave">저장</button>
+	    </div>
+	</div>
+</div>
+
+
+</div>
+
+
+
+										</div>
+									
+								
+							</form>
+	    				</div>
+	    			</div>
+		  		</div>
+			</div>
+
+	  		<!-- footer : banner, copyright -->
+			<footer id="footer">
+				
+
+
+
+
+<!-- security -->
+
+
+
+
+
+
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics 운영반영
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D7YHNMM9M1"></script>
+-->
+
+<!-- AceCounter Log Gathering Script V.8.0.AMZ2019080601-->
+<script>
+	var _AceGID=(function(){var Inf=['gtp3.acecounter.com','8080','AH2A45088986642','AW','0','NaPm,Ncisy','ALL','0']; var _CI=(!_AceGID)?[]:_AceGID.val;var _N=0;var _T=new Image(0,0);if(_CI.join('.').indexOf(Inf[3])<0){ _T.src ="https://"+ Inf[0] +'/?cookie'; _CI.push(Inf);  _N=_CI.length; } return {o: _N,val:_CI}; })();
+	var _AceCounter=(function(){var G=_AceGID;var _sc=document.createElement('script');var _sm=document.getElementsByTagName('script')[0];if(G.o!=0){var _A=G.val[G.o-1];var _G=(_A[0]).substr(0,_A[0].indexOf('.'));var _C=(_A[7]!='0')?(_A[2]):_A[3];var _U=(_A[5]).replace(/\,/g,'_');_sc.src='https:'+'//cr.acecounter.com/Web/AceCounter_'+_C+'.js?gc='+_A[2]+'&py='+_A[4]+'&gd='+_G+'&gp='+_A[1]+'&up='+_U+'&rd='+(new Date().getTime());_sm.parentNode.insertBefore(_sc,_sm);return _sc.src;}})();
+</script>
+
+
+<script>
+	function windowOpen(url) {
+		window.open(url, "_blank");
+	}
+</script>
+
+<div class="center">
+
+	<div class="footer_top">
+		<ul class="footer_menu">
+			<li><a href="/itstat/kor/privacy/privacy.html?menuId=2006104&rootId=2006000">개인정보처리방침</a></li>
+			<li>
+				<a href="javascript:;" onclick="javascript: windowOpen('https://www.kisdi.re.kr/content.do?key=m2102243307344');" title="새창열림">
+					저작권정책
+				</a>
+		</ul>
+		<div class="f_r_site">
+			<button type="button" class="r_site_title">관련사이트</button>
+			<ul class="sub_l_ul" style="display: none;">
+				
+					<li>
+						<a href="javascript:;" onclick="javascript: windowOpen('https://www.msit.go.kr/web/main/main.do');" title="새창열림">
+							과학기술정보통신부
+						</a>
+					</li>
+				
+					<li>
+						<a href="javascript:;" onclick="javascript: windowOpen('https://stat.kisdi.re.kr');" title="새창열림">
+							KISDISTAT
+						</a>
+					</li>
+				
+					<li>
+						<a href="javascript:;" onclick="javascript: windowOpen('https://www.iapc.or.kr/');" title="새창열림">
+							스마트쉼센터
+						</a>
+					</li>
+				
+					<li>
+						<a href="javascript:;" onclick="javascript: windowOpen('https://www.index.go.kr/enara');" title="새창열림">
+							e-나라지표
+						</a>
+					</li>
+				
+					<li>
+						<a href="javascript:;" onclick="javascript: windowOpen('http://ecos.bok.or.kr/');" title="새창열림">
+							ECOS 한국은행 경제통계시스템
+						</a>
+					</li>
+				
+					<li>
+						<a href="javascript:;" onclick="javascript: windowOpen('http://kosis.kr/index/index.do');" title="새창열림">
+							KOSIS 국가통계포털
+						</a>
+					</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="footer_bottom">
+		<p class="footer_txt">
+			<span>[27872] 충청북도 진천군 덕산읍 정통로 18</span>
+		    <span>대표전화 : 043-531-4114</span>
+			<span class="footer_copy">Copyright 2022.ITSTAT All Rights Reserved.</span>
+		</p>
+		<div class="footer_logos">
+			<a href="https://www.msit.go.kr/index.do" target="_blank" title="새창열림">
+				<img src="/itstat/img/main/img_footer_logo_msit.svg" alt="과학기술정보통신부" />
+			</a>
+			<a href="https://www.kisdi.re.kr/index.do" target="_blank" title="새창열림">
+				<img src="/itstat/img/main/img_footer_logo_kisdi.svg" alt="정보통신정책연구원" />
+			</a>
+			<!-- <a href="https://www.kogl.or.kr/info/license.do#01-tab" target="_blank" class="open_mark" title="새창열림">
+				<img src="/itstat/img/main/img_opentype01.png" alt="공공누리 제 1유형 인증마크">
+			</a> -->
+<!-- 			<a href="http://www.webwatch.or.kr/Situation/WA_Situation.html?MenuCD=110" target="_blank" title="웹접근성 인증페이지 바로가기" class="web_accessibility_mark f_s_0"> -->
+<!--  -->
+<!-- 			</a> -->
+		</div><!--footer_logo-end-->
+	</div><!--footer_left-end-->
+
+
+
+
+    <!--center_end-->
+</div>
+			</footer>
+
+			<!-- mobile footer -->
+			
+		</div>
+	</body>
+</html>

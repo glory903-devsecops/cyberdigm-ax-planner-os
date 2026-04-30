@@ -1,0 +1,1 @@
+CREATE VIEW example_view AS SELECT 1;

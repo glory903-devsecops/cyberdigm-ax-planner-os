@@ -1,0 +1,18 @@
+{
+  "status": "init",
+  "scope": "codebase",
+  "type": "frontend",
+  "localEndpoint": "http://localhost:3000/cmtx-ax-planner-os/",
+  "serverPort": 53336,
+  "executionArgs": {
+    "projectName": "cmtx-ax-planner-os",
+    "projectPath": "/Users/glory1994/Library/CloudStorage/GoogleDrive-glory.lee903@gmail.com/내 드라이브/99.Develop/cmtx-ax-planner-os",
+    "testIds": [],
+    "additionalInstruction": "Ensure all tests access the application via http://localhost:3000/cmtx-ax-planner-os/. The landing page redirects to /cmtx-ax-planner-os/gr-hub/. Test the admin login, individual item clickability on the dashboard, and the automation target registration flow.",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-7NjWyvWwmm8tAk2EOdjilY9H30jLc64qrMxvkVREmN8p_FLprSCbzgvceeFYWu21Ja4jvOwI2PwOQrFH-ybWkMq4JqYnRO_Y-zfOb8UjDS3NWSm2R11ai859htR_iFkKuCc"
+    }
+  },
+  "proxy": "http://d9fe9cba-b759-4aa4-9f38-5332873577df:pNDKcHBfBofve28ZcTeyKiU9bEHPBDEk@tun.testsprite.com:8080"
+}
