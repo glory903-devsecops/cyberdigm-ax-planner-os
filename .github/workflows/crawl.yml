@@ -33,8 +33,8 @@ jobs:
 
       - name: 🕷️ 크롤러 실행
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_URL: ${{ secrets.supabase_url }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.supabase_service_role_key }}
         run: |
           cd crawler
           python run_all.py
