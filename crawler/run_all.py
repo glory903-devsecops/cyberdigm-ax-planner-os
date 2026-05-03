@@ -19,15 +19,20 @@ from supabase import create_client, Client
 load_dotenv()
 
 # ── Supabase 클라이언트 초기화 ─────────────────────────
-SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
-SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "").strip()
+# 기존 대문자 환경변수와 새 소문자 환경변수 모두 지원
+SUPABASE_KEY = (os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("supabase_service_role_key") or "").strip()
 
 supabase_client: Optional[Client] = None
 if SUPABASE_URL and SUPABASE_KEY:
-    supabase_client = create_client(SUPABASE_URL, SUPABASE_KEY)
-    print(f"✅ Supabase 연결: {SUPABASE_URL}")
+    try:
+        supabase_client = create_client(SUPABASE_URL, SUPABASE_KEY)
+        print(f"✅ Supabase 연결 성공: {SUPABASE_URL}")
+    except Exception as e:
+        print(f"❌ Supabase 연결 실패: {e}")
+        print("   키 형식이 올바른지 확인하세요 (eyJ... 또는 sb_secret_...)")
 else:
-    print("⚠️  Supabase 미연결 → 콘솔 출력 모드")
+    print("⚠️  Supabase 미연결 (URL 또는 KEY 누락) → 콘솔 출력 모드")
 
 # ── sites.yaml 로드 ────────────────────────────────────
 SITES_YAML = os.path.join(os.path.dirname(__file__), "sites.yaml")
