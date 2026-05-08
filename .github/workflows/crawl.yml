@@ -28,6 +28,7 @@ jobs:
 
       - name: 🌐 Playwright Chromium 브라우저 및 시스템 의존성 설치
         run: |
+          sudo apt-get update
           python -m playwright install --with-deps chromium
 
       - name: 🕷️ 크롤러 실행
