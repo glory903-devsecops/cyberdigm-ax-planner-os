@@ -12,10 +12,10 @@ jobs:
 
     steps:
       - name: 📦 코드 체크아웃
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: 🐍 Python 3.11 설정
-        uses: actions/setup-python@f67e515f73d1228493b000100407d602d50ad542
+        uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v5
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -38,6 +38,15 @@ jobs:
         run: |
           cd crawler
           python run_all.py
+
+      - name: 🤖 AI 인사이트 생성
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          cd crawler
+          python generate_insights.py
 
       - name: 📊 실행 결과 요약
         if: always()
