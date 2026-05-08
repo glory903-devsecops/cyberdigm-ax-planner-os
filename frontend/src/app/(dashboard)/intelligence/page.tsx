@@ -36,12 +36,12 @@ export default function IntelligencePage() {
   return (
     <PageTransition>
       <PageHeader 
-        title="산업 인텔리전스"
-        subtitle="반도체 부품 공정 및 글로벌 원자재 리스크 관제 시스템"
+        title="경쟁사 인텔리전스"
+        subtitle="글로벌 경쟁사 기술 동향 및 문서 관리 시장 레이더"
         icon={<BarChart3 className="w-6 h-6" />}
         actions={
           <button className="px-5 py-2.5 bg-cmtx-blue text-white rounded-xl text-xs font-black shadow-xl shadow-cmtx-blue/20 hover:bg-cmtx-blue/90 transition-all">
-            인텔리전스 보고서 (2026.04)
+            AX 전략 보고서 (2026.05)
           </button>
         }
       />

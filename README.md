@@ -15,9 +15,9 @@
 
 <br/>
 
-> **Cyberdigm's Data-Driven Strategic Operation Platform for GR, Competitor Intelligence, and AX Planning**
+> **Cyberdigm's AI-Powered Strategic Command Center: Specialized in Competitor Decision Intelligence**
 >
-> Cyberdigm AX Planner OS는 사이버다임의 대외협력(GR), 경쟁사 인텔리전스, 그리고 사내 AI Transformation(AX) 기획 업무를 통합적으로 관리하는 엔터프라이즈 운영 플랫폼입니다. 20여 년간 축적된 **사이버다임의 문서중앙화(Document Centrality) 및 콘텐츠 관리(ECM) 노하우**를 바탕으로, 단순한 데이터 수집을 넘어 지능형 분석을 통한 전략적 의사결정을 지원합니다.
+> Cyberdigm AX Planner OS는 **AI 기반의 경쟁사 분석 및 의사결정 지원**을 주 목적으로 하는 엔터프라이즈 운영 플랫폼입니다. 실시간으로 수집된 경쟁사 시그널을 AI가 분석하여 경영진의 전략적 판단을 돕고, 시장 변화에 선제적으로 대응할 수 있는 인사이트를 제공합니다.
 
 ---
 
@@ -124,15 +124,30 @@ python3 run_all.py
 ```
 > 특정 사이트만 실행하려면 `python3 run_all.py bizinfo` 와 같이 파라미터를 추가합니다.
 
-### 4. 타겟 사이트 및 키워드 관리 (Target Management)
-크롤링 대상 사이트와 키워드는 다음 두 가지 방법으로 관리할 수 있습니다.
+### 4. 크롤링 운영 및 확장 가이드 (Crawling Plan)
 
-1. **정적 관리 (`crawler/sites.yaml`)**:
-   - `sites` 목록에서 새로운 사이트를 추가하거나 `enabled: true/false`로 제어합니다.
-   - `google_search` 모듈의 경우 `search_keywords` 리스트를 수정하여 추적할 키워드를 변경합니다.
-2. **동적 관리 (Supabase `crawling_targets` 테이블)**:
-   - Supabase 대시보드에서 `crawling_targets` 테이블에 데이터를 추가하면 크롤러 실행 시 자동으로 로드됩니다.
-   - `competitors` 테이블에 경쟁사를 추가하면 `google_search` 및 `competitor_news` 크롤러가 해당 기업을 자동으로 추적합니다.
+Cyberdigm AX Planner OS의 핵심은 실시간으로 업데이트되는 고품질 데이터입니다.
+
+#### 📅 운영 스케줄
+- **실행 주기**: 매일 오전 09:00 (KST) 자동 실행
+- **실행 도구**: GitHub Actions (`crawl.yml`)
+- **데이터 보존**: Supabase PostgreSQL (Upsert 로직을 통해 중복 방지)
+
+#### 🎯 현재 수집 대상 사이트 (Target Sites)
+| 모듈 | 사이트/플랫폼 | 수집 데이터 | 상태 |
+| :--- | :--- | :--- | :--- |
+| **GR Hub** | 기업마당(bizinfo) | 정부 지원사업, 정책 공고 | 활성 |
+| | IRIS, KEIT, TIPA 등 | 범부처 R&D 및 기술개발 과제 | 활성 |
+| | K-Startup, NTIS | 스타트업 지원 및 국가과학기술 정보 | 활성 |
+| **Intel** | 보안뉴스(Boan News) | 보안 업계 동향 및 경쟁사 뉴스 | 활성 |
+| | ZDNet, 전자신문 | IT 산업 전반 및 신기술 트렌드 | 활성 |
+| | **Google News** | 키워드('문서관리' 등) + 경쟁사 검색 | 활성 |
+
+#### 🛠️ 크롤링 대상 및 키워드 커스텀 방법
+1. **사이트 추가/제거**: `crawler/sites.yaml` 파일에서 `enabled: true/false`로 즉시 제어 가능합니다.
+2. **구글 검색 키워드**: `sites.yaml` 내 `google_search` 섹션의 `search_keywords` 리스트를 수정하십시오.
+3. **경쟁사 추적**: Supabase `competitors` 테이블에 새로운 경쟁사 이름을 추가하면, 다음 스케줄 실행 시 해당 기업에 대한 구글 검색 및 뉴스 수집이 자동으로 시작됩니다.
+4. **신규 크롤러 개발**: `crawler/crawlers/template.py`를 복사하여 `crawl_page` 메서드만 구현하면 새로운 사이트를 손쉽게 추가할 수 있습니다.
 
 ---
 
