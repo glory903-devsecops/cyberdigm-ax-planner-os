@@ -1,23 +1,23 @@
-# CMTX AX Planner OS
+# Cyberdigm AX Planner OS
 
 <!-- 주요 기술 스택 뱃지 (버튼 형태) -->
 [![Next.js](https://img.shields.io/badge/Next.js_14-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Python](https://img.shields.io/badge/Python_3.9-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python_3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev/)
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
 [![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/features/actions)
 
 <!-- 데모 사이트 버튼 (새 창 열림) -->
-<a href="https://glory903-devsecops.github.io/cmtx-ax-planner-os" target="_blank">
+<a href="https://glory903-devsecops.github.io/cyberdigm-ax-planner-os" target="_blank">
   <img src="https://img.shields.io/badge/🚀%20데모%20사이트%20바로가기-1D4ED8?style=for-the-badge" alt="Demo Site">
 </a>
 
 <br/>
 
-> **Data-Driven Strategic Operation Platform for GR, Industry Research, and AX Planning**
+> **Cyberdigm's Data-Driven Strategic Operation Platform for GR, Competitor Intelligence, and AX Planning**
 >
-> CMTX AX Planner OS는 대외협력(GR), 산업 리서치, 그리고 사내 AI Transformation(AX) 기획 업무를 통합적으로 관리하는 엔터프라이즈 운영 플랫폼입니다. 실시간 데이터 크롤링과 지능형 분석을 통해 중장기 의사결정을 지원합니다.
+> Cyberdigm AX Planner OS는 사이버다임의 대외협력(GR), 경쟁사 인텔리전스, 그리고 사내 AI Transformation(AX) 기획 업무를 통합적으로 관리하는 엔터프라이즈 운영 플랫폼입니다. 실시간 데이터 크롤링과 지능형 분석을 통해 전략적 의사결정을 지원합니다.
 
 ---
 
@@ -38,6 +38,9 @@
 > 공고 클릭 시 상세 정보를 확인하고, '공식 공고 페이지' 버튼을 통해 외부 원본 사이트로 안전하게 이동(우회 접속)합니다.
 ![Detail View](./docs/images/demo_detail_view.png)
 
+### 4. 경쟁사 인텔리전스 (Competitor Intelligence)
+> 글로벌 티어 사별 신기술 점유율(Radar Chart)을 시각화하고, 경쟁사 관련 실시간 뉴스 시그널을 자동으로 수집하여 대시보드에 표시합니다.
+
 ---
 
 ## 🏗️ 기능 및 기술 아키텍처 설계
@@ -47,7 +50,7 @@ CMTX AX Planner OS는 사용자 경험을 극대화하는 **Frontend**와 안정
 ### 1. 시스템 아키텍처 (System Architecture)
 - **Frontend (Next.js 14)**:
   - App Router 기반의 빠른 페이지 라우팅.
-  - Tailwind CSS를 활용한 CMTX 브랜드 아이덴티티(Navy & Blue) 반영.
+  - Tailwind CSS를 활용한 사이버다임(Cyberdigm) 브랜드 아이덴티티(Navy & Blue) 반영.
   - Supabase Client를 통한 실시간 데이터 Fetching 및 Mock 데이터 Fallback 구조 적용.
 - **RPA Crawler (Python Playwright)**:
   - `BaseCrawler` 상속 구조를 통한 높은 확장성 (새로운 사이트 추가 용이).
@@ -59,7 +62,8 @@ CMTX AX Planner OS는 사용자 경험을 극대화하는 **Frontend**와 안정
 
 ### 2. 핵심 비즈니스 모듈
 - **GR (Government Relations)**: 정부과제, R&D 공고 자동 수집 및 마감일(D-Day) 모니터링.
-- **Industry Research**: 산업 동향 센싱 및 리스크 관리 (추후 AI 결합 예정).
+- **Competitor Intelligence**: 경쟁사 신기술 동향, 시장 점유율 레이더 및 실시간 뉴스 모니터링.
+- **Google Keyword Monitoring**: 구글 검색 기반 경쟁사 및 산업 키워드(예: '문서관리 솔루션') 트래킹.
 - **AX Planning**: 사내 업무 마찰점(Friction) 분석 및 AI 도입 기회 발굴.
 
 ---
@@ -111,6 +115,16 @@ python3 run_all.py
 ```
 > 특정 사이트만 실행하려면 `python3 run_all.py bizinfo` 와 같이 파라미터를 추가합니다.
 
+### 4. 타겟 사이트 및 키워드 관리 (Target Management)
+크롤링 대상 사이트와 키워드는 다음 두 가지 방법으로 관리할 수 있습니다.
+
+1. **정적 관리 (`crawler/sites.yaml`)**:
+   - `sites` 목록에서 새로운 사이트를 추가하거나 `enabled: true/false`로 제어합니다.
+   - `google_search` 모듈의 경우 `search_keywords` 리스트를 수정하여 추적할 키워드를 변경합니다.
+2. **동적 관리 (Supabase `crawling_targets` 테이블)**:
+   - Supabase 대시보드에서 `crawling_targets` 테이블에 데이터를 추가하면 크롤러 실행 시 자동으로 로드됩니다.
+   - `competitors` 테이블에 경쟁사를 추가하면 `google_search` 및 `competitor_news` 크롤러가 해당 기업을 자동으로 추적합니다.
+
 ---
 
 ## 🛠️ 나만의 환경 구축하기 (Custom DB & Actions Setup)
@@ -134,6 +148,10 @@ python3 run_all.py
 
 ---
 
-## 🛡️ 유지보수 및 품질 관리 (QA)
-- `97.Antigravity/global_qa_standard.md`: 전체 프로젝트 관통 품질 보증 가이드.
-- `crawler/qa_checklist.md`: 크롤러 확장을 위한 세부 체크리스트.
+## 🔍 경쟁사 분석 추천 사이트
+현재 플랫폼에 통합되었거나 추가가 권장되는 주요 채널입니다.
+
+- **보안뉴스 (Boan News)**: 정보보안 및 문서보안 관련 업계 소식 (활성화됨)
+- **전자신문 (ETNews)** / **ZDNet Korea**: 국내 IT 및 소프트웨어 산업 전반 (활성화됨)
+- **블로터 (Bloter)** / **디지털데일리**: 기업용 솔루션 및 테크 트렌드 (추가 권장)
+- **Google News**: 경쟁사명 + "문서관리 솔루션", "전자문서" 키워드 기반 실시간 모니터링 (활성화됨)

@@ -1,0 +1,15 @@
+{
+  "status": "init",
+  "executionArgs": {
+    "projectName": "cyberdigm-ax-planner-os",
+    "projectPath": "/Users/glory1994/Library/CloudStorage/GoogleDrive-glory.lee903@gmail.com/내 드라이브/99.Develop/cyberdigm-ax-planner-os/frontend",
+    "testIds": [
+      "TC004_See_live_competitor_signal_updates.py"
+    ],
+    "additionalInstruction": "Verify that competitor signals for '삼성전자' are correctly fetched and displayed on the intelligence page. Use TC004_See_live_competitor_signal_updates.py as a reference.",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-7NjWyvWwmm8tAk2EOdjilY9H30jLc64qrMxvkVREmN8p_FLprSCbzgvceeFYWu21Ja4jvOwI2PwOQrFH-ybWkMq4JqYnRO_Y-zfOb8UjDS3NWSm2R11ai859htR_iFkKuCc"
+    }
+  }
+}

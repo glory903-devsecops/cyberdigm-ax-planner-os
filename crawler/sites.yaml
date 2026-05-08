@@ -218,7 +218,7 @@ sites:
 
   - id: etnews
     name: 전자신문
-    enabled: false
+    enabled: true
     crawler: etnews
     url: "https://www.etnews.com/news/section.html?id1=01"
     login_required: false
@@ -228,10 +228,30 @@ sites:
 
   - id: zdnet
     name: ZDNet Korea
-    enabled: false
+    enabled: true
     crawler: zdnet
     url: "https://zdnet.co.kr/news/?lstcode=0000"
     login_required: false
     frequency: daily
     max_pages: 3
+    keywords: *keywords
+  - id: competitor_news
+    name: 경쟁사 뉴스 모니터링
+    enabled: true
+    crawler: competitor_news
+    url: "https://www.boannews.com"
+    login_required: false
+    frequency: daily
+    max_pages: 1
+    keywords: *keywords
+
+  - id: google_search
+    name: 구글 키워드 검색
+    enabled: true
+    crawler: google_search
+    url: "https://www.google.com"
+    search_keywords: ["문서관리 솔루션", "전자문서", "문서중앙화", "AI 문서관리", "사이버다임"]
+    login_required: false
+    frequency: daily
+    max_pages: 1
     keywords: *keywords

@@ -4,8 +4,8 @@
  * 프론트엔드 어디서든 이 함수를 사용하면 됩니다.
  */
 import { supabase, isSupabaseConfigured } from './supabase';
-import { GRANTS, POLICY_ITEMS, GR_TREND_SIGNALS } from './mock-data';
-import type { Grant, PolicyItem, GRTrendSignal } from './mock-data';
+import { GRANTS, POLICY_ITEMS, GR_TREND_SIGNALS, SIGNALS } from './mock-data';
+import type { Grant, PolicyItem, GRTrendSignal, Signal } from './mock-data';
 
 // Supabase에서 오는 grants 행을 프론트 Grant 타입으로 변환
 function toGrant(row: any): Grant {
@@ -145,4 +145,97 @@ export async function addCrawlingTarget(target: Omit<AutomationTarget, 'id'>): P
 export async function fetchTrendSignals(): Promise<{ data: GRTrendSignal[]; isLive: boolean }> {
   // TODO: Supabase gr_trend_signals 테이블 연동 (Phase 3)
   return { data: GR_TREND_SIGNALS, isLive: false };
+}
+
+export interface Competitor {
+  id: string;
+  name: string;
+  product: string;
+  strength: string;
+  weakness: string;
+  market_share: string;
+  radar_x: number;
+  radar_y: number;
+}
+
+export interface CompetitorSignal {
+  id: string;
+  competitor_id: string;
+  title: string;
+  type: string;
+  impact: string;
+  summary: string;
+  source_url: string;
+  crawled_at: string;
+  competitor_name?: string;
+}
+
+/**
+ * 경쟁사 목록 가져오기
+ */
+export async function fetchCompetitors(): Promise<{ data: Competitor[]; isLive: boolean }> {
+  if (isSupabaseConfigured && supabase) {
+    try {
+      const { data, error } = await supabase
+        .from('competitors')
+        .select('*')
+        .order('name', { ascending: true });
+
+      if (!error && data && data.length > 0) {
+        return { data, isLive: true };
+      }
+    } catch (e) {
+      console.warn('[data-service] Competitors 조회 실패:', e);
+    }
+  }
+  
+  // Mock Fallback
+  const mockCompetitors: Competitor[] = [
+    { id: '1', name: 'S-Corp (Japan)', product: 'Plasma Coating', strength: 'High Durability', weakness: 'High Price', market_share: '22%', radar_x: 0.8, radar_y: 0.7 },
+    { id: '2', name: 'T-Parts (Taiwan)', product: 'Quartz Chamber', strength: 'Global Logistics', weakness: 'Quality Variance', market_share: '18%', radar_x: 0.3, radar_y: 0.4 },
+    { id: '3', name: 'G-Semi (USA)', product: 'High-NA EUV Parts', strength: 'Tech Leader', weakness: 'IP Restriction', market_share: '12%', radar_x: 0.6, radar_y: 0.9 },
+  ];
+  return { data: mockCompetitors, isLive: false };
+}
+
+/**
+ * 경쟁사 시그널 가져오기
+ */
+export async function fetchCompetitorSignals(): Promise<{ data: CompetitorSignal[]; isLive: boolean }> {
+  if (isSupabaseConfigured && supabase) {
+    try {
+      const { data, error } = await supabase
+        .from('competitor_signals')
+        .select('*, competitors(name)')
+        .order('crawled_at', { ascending: false })
+        .limit(10);
+
+      if (!error && data && data.length > 0) {
+        const mapped = data.map((row: any) => ({
+          ...row,
+          competitor_name: row.competitors?.name
+        }));
+        return { data: mapped, isLive: true };
+      }
+    } catch (e) {
+      console.warn('[data-service] Competitor Signals 조회 실패:', e);
+    }
+  }
+
+  // Mock Fallback (기존 SIGNALS 중 경쟁사 카테고리 활용)
+  const mockSignals: CompetitorSignal[] = SIGNALS
+    .filter(s => s.category === "경쟁사")
+    .map(s => ({
+      id: s.id.toString(),
+      competitor_id: '1',
+      title: s.title,
+      type: 'News',
+      impact: s.impact,
+      summary: s.summary || '',
+      source_url: '#',
+      crawled_at: new Date().toISOString(),
+      competitor_name: 'S-Corp (Japan)'
+    }));
+    
+  return { data: mockSignals, isLive: false };
 }

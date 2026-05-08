@@ -4,8 +4,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/common/Badge";
 import { Signal } from "@/lib/mock-data";
-import { AlertCircle, TrendingUp, Globe, ArrowUpRight, Zap } from "lucide-react";
+import { AlertCircle, TrendingUp, Globe, ArrowUpRight, Zap, Target, Layers } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Competitor, CompetitorSignal } from "@/lib/data-service";
 
 export function SignalItem({ signal, onClick }: { signal: Signal; onClick?: () => void }) {
   const statusMap: Record<Signal["status"], any> = {
@@ -55,6 +56,37 @@ export function SignalItem({ signal, onClick }: { signal: Signal; onClick?: () =
   );
 }
 
+export function CompetitorSignalItem({ signal, onClick }: { signal: CompetitorSignal; onClick?: () => void }) {
+  const impactMap: Record<string, any> = {
+    High: "critical",
+    Medium: "warning",
+    Low: "medium",
+  };
+
+  return (
+    <motion.div 
+      onClick={onClick}
+      initial={{ opacity: 0, y: 5 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ x: 4 }}
+      className="p-3 bg-white border border-slate-100 rounded-xl hover:border-cmtx-blue/30 hover:shadow-sm transition-all group cursor-pointer"
+    >
+      <div className="flex items-start gap-3">
+        <div className="mt-1 w-2 h-2 rounded-full bg-cmtx-blue shrink-0 shadow-[0_0_8px_rgba(30,58,138,0.3)]" />
+        <div className="space-y-1 min-w-0">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-tighter">{signal.competitor_name}</span>
+            <Badge variant={impactMap[signal.impact] || "medium"} className="text-[8px] px-1 py-0">{signal.impact}</Badge>
+          </div>
+          <p className="text-xs font-bold text-cmtx-navy group-hover:text-cmtx-blue transition-colors truncate">
+            {signal.title}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export function SectorHeatmap() {
   const sectors = [
     { name: "반도체 핵심 부품", value: 85, trend: "+12%", color: "bg-cmtx-blue" },
@@ -85,25 +117,63 @@ export function SectorHeatmap() {
   );
 }
 
-export function CompetitorRadar() {
+export function CompetitorRadar({ competitors = [] }: { competitors?: Competitor[] }) {
   return (
-    <div className="relative h-44 flex items-center justify-center">
-      {/* Radar Circles */}
-      <div className="absolute w-40 h-40 border border-slate-200 rounded-full animate-pulse" />
-      <div className="absolute w-28 h-28 border border-slate-200 rounded-full" />
-      <div className="absolute w-14 h-14 border border-slate-200 rounded-full" />
+    <div className="relative h-56 flex items-center justify-center bg-slate-50/50 rounded-2xl border border-slate-100/50 overflow-hidden">
+      {/* Radar Background Grids */}
+      <div className="absolute w-[80%] h-[80%] border border-slate-200/60 rounded-full" />
+      <div className="absolute w-[60%] h-[60%] border border-slate-200/40 rounded-full" />
+      <div className="absolute w-[40%] h-[40%] border border-slate-200/30 rounded-full" />
+      <div className="absolute w-[20%] h-[20%] border border-slate-200/20 rounded-full" />
       
-      {/* Radar Points */}
-      <motion.div 
-        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        className="absolute top-10 right-14 w-2 h-2 bg-rose-500 rounded-full shadow-[0_0_10px_rgba(244,63,94,0.5)]" 
-      />
-      <div className="absolute bottom-12 left-10 w-1.5 h-1.5 bg-cmtx-blue rounded-full" />
-      <div className="absolute top-20 left-20 w-2 h-2 bg-emerald-500 rounded-full" />
+      {/* Axis Lines */}
+      <div className="absolute w-full h-[1px] bg-slate-200/20" />
+      <div className="absolute w-[1px] h-full bg-slate-200/20" />
+      
+      {/* Radar Points (Dynamic) */}
+      {competitors.map((comp, i) => (
+        <motion.div 
+          key={comp.id}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: i * 0.1 }}
+          className="absolute group"
+          style={{ 
+            left: `${comp.radar_x * 80 + 10}%`, 
+            top: `${comp.radar_y * 80 + 10}%` 
+          }}
+        >
+          <motion.div 
+            animate={{ scale: [1, 1.3, 1], opacity: [0.6, 1, 0.6] }}
+            transition={{ repeat: Infinity, duration: 3, delay: i * 0.5 }}
+            className={cn(
+              "w-4 h-4 rounded-full flex items-center justify-center cursor-pointer shadow-lg",
+              i === 0 ? "bg-rose-500 shadow-rose-500/20" : i === 1 ? "bg-cmtx-blue shadow-cmtx-blue/20" : "bg-emerald-500 shadow-emerald-500/20"
+            )}
+          >
+            <Target className="w-2.5 h-2.5 text-white" />
+          </motion.div>
+          
+          {/* Label on Hover */}
+          <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 bg-cmtx-navy text-white text-[9px] font-black rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-20 pointer-events-none">
+            {comp.name} ({comp.market_share})
+          </div>
+        </motion.div>
+      ))}
 
-      <div className="absolute bottom-2 right-2 text-[9px] font-bold text-slate-400 uppercase tracking-widest">
-        활성 트래킹: 12개 자산
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-3">
+        <div className="flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+          <span className="text-[8px] font-bold text-slate-400">High Risk</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-cmtx-blue" />
+          <span className="text-[8px] font-bold text-slate-400">Stable</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          <span className="text-[8px] font-bold text-slate-400">Opportunity</span>
+        </div>
       </div>
     </div>
   );
@@ -156,3 +226,45 @@ export function TrendHero() {
   );
 }
 
+export function CompetitorComparison({ competitors = [] }: { competitors?: Competitor[] }) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-left border-collapse">
+        <thead>
+          <tr className="border-b border-slate-100">
+            <th className="py-4 px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">경쟁사</th>
+            <th className="py-4 px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">주력 제품</th>
+            <th className="py-4 px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-emerald-600">강점 (Strength)</th>
+            <th className="py-4 px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-rose-600">약점 (Weakness)</th>
+            <th className="py-4 px-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">점유율</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-slate-50">
+          {competitors.map((comp) => (
+            <motion.tr 
+              key={comp.id}
+              whileHover={{ backgroundColor: "rgba(248, 250, 252, 0.5)" }}
+              className="group transition-colors"
+            >
+              <td className="py-4 px-4">
+                <p className="text-sm font-black text-cmtx-navy group-hover:text-cmtx-blue transition-colors">{comp.name}</p>
+              </td>
+              <td className="py-4 px-4">
+                <Badge variant="outline" className="text-[10px] font-bold">{comp.product}</Badge>
+              </td>
+              <td className="py-4 px-4">
+                <p className="text-xs font-bold text-emerald-700 leading-relaxed max-w-[200px]">{comp.strength}</p>
+              </td>
+              <td className="py-4 px-4">
+                <p className="text-xs font-bold text-rose-700 leading-relaxed max-w-[200px]">{comp.weakness}</p>
+              </td>
+              <td className="py-4 px-4 text-right">
+                <span className="text-xs font-black italic text-slate-500">{comp.market_share}</span>
+              </td>
+            </motion.tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}

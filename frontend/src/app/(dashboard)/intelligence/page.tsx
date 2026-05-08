@@ -4,13 +4,34 @@ import React, { useState } from "react";
 import { BarChart3, Zap, Info, ShieldAlert, ZapIcon } from "lucide-react";
 import { PageHeader } from "@/components/common/PageHeader";
 import { SectionCard } from "@/components/common/SectionCard";
-import { SignalItem, TrendHero, SectorHeatmap, CompetitorRadar } from "@/components/features/IntelligenceComponents";
+import { SignalItem, TrendHero, SectorHeatmap, CompetitorRadar, CompetitorSignalItem, CompetitorComparison } from "@/components/features/IntelligenceComponents";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { DetailPanel, DetailSection, RelatedLinkItem } from "@/components/common/DetailPanel";
 import { SIGNALS, Signal } from "@/lib/mock-data";
+import { fetchCompetitors, fetchCompetitorSignals, Competitor, CompetitorSignal } from "@/lib/data-service";
 
 export default function IntelligencePage() {
   const [selectedSignal, setSelectedSignal] = useState<Signal | null>(null);
+  const [competitors, setCompetitors] = useState<Competitor[]>([]);
+  const [compSignals, setCompSignals] = useState<CompetitorSignal[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  React.useEffect(() => {
+    async function loadIntelligence() {
+      setIsLoading(true);
+      try {
+        const [cRes, csRes] = await Promise.all([
+          fetchCompetitors(),
+          fetchCompetitorSignals()
+        ]);
+        setCompetitors(cRes.data);
+        setCompSignals(csRes.data);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadIntelligence();
+  }, []);
 
   return (
     <PageTransition>
@@ -50,12 +71,38 @@ export default function IntelligencePage() {
         </SectionCard>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2">
+          <SectionCard title="경쟁사 레이더 (Competitor Radar)" subtitle="글로벌 티어 사별 신기술 및 점유율 트래킹">
+            <CompetitorRadar competitors={competitors} />
+          </SectionCard>
+        </div>
+        <div>
+          <SectionCard title="경쟁사 활동 로그" icon={<ZapIcon className="w-4 h-4" />}>
+            <div className="space-y-3">
+              {compSignals.length > 0 ? (
+                compSignals.map((s) => (
+                  <CompetitorSignalItem key={s.id} signal={s} />
+                ))
+              ) : (
+                <div className="py-10 text-center">
+                  <p className="text-xs text-slate-400 font-bold">감지된 경쟁사 활동이 없습니다.</p>
+                </div>
+              )}
+            </div>
+          </SectionCard>
+        </div>
+      </div>
+
+      <div className="mt-8">
+        <SectionCard title="경쟁사 상세 분석 (Competitor Matrix)" subtitle="주요 플레이어별 강점 및 약점 대조표">
+          <CompetitorComparison competitors={competitors} />
+        </SectionCard>
+      </div>
+
+      <div className="mt-8">
         <SectionCard title="섹터 분석 (Sector Analysis)" subtitle="반도체 소부장 부문별 시그널 밀집도">
            <SectorHeatmap />
-        </SectionCard>
-        <SectionCard title="경쟁사 레이더 (Competitor Radar)" subtitle="글로벌 티어 사별 신기술 및 점유율 트래킹">
-           <CompetitorRadar />
         </SectionCard>
       </div>
 

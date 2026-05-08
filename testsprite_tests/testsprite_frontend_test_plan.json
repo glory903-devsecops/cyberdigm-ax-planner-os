@@ -1,486 +1,76 @@
 [
   {
     "id": "TC001",
-    "title": "Enable admin mode with valid local key",
-    "description": "Verifies a user can authenticate using a valid local admin key and sees an admin mode indicator in the sidebar.",
-    "category": "Admin Authentication (Local)",
+    "title": "Review competitor radar and comparison views",
+    "description": "A guest can open the competitor intelligence page and view both the radar chart and comparison matrix.",
+    "category": "Competitor Intelligence",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /"
-      },
-      {
-        "type": "action",
-        "description": "Click the admin login control in the sidebar"
-      },
-      {
-        "type": "action",
-        "description": "Fill {{LOGIN_PASSWORD}} into the access key field"
-      },
-      {
-        "type": "action",
-        "description": "Submit the authentication"
+        "description": "Navigate to /intelligence"
       },
       {
         "type": "assertion",
-        "description": "Verify an admin mode indicator is visible in the sidebar"
+        "description": "Verify the competitor radar chart is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the comparison matrix is displayed"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC002",
-    "title": "Admin status remains consistent across core routes",
-    "description": "Verifies admin mode UI remains enabled and consistent when navigating across dashboard routes within the same session.",
-    "category": "Admin Authentication (Local)",
+    "title": "Open the dashboard overview as a guest",
+    "description": "A guest can load the dashboard overview and discover the main intelligence sections from the landing page.",
+    "category": "Dashboard Overview",
     "steps": [
       {
         "type": "action",
         "description": "Navigate to /"
       },
       {
-        "type": "action",
-        "description": "Click the admin login control in the sidebar"
-      },
-      {
-        "type": "action",
-        "description": "Fill {{LOGIN_PASSWORD}} into the access key field"
-      },
-      {
-        "type": "action",
-        "description": "Submit the authentication"
-      },
-      {
-        "type": "action",
-        "description": "Click the navigation link to open the GR Hub"
-      },
-      {
-        "type": "action",
-        "description": "Click the navigation link to open the Automation Center"
-      },
-      {
-        "type": "action",
-        "description": "Click the navigation link to open the AX Planning page"
+        "type": "assertion",
+        "description": "Verify the dashboard overview is displayed"
       },
       {
         "type": "assertion",
-        "description": "Verify an admin mode indicator is visible in the sidebar"
+        "description": "Verify the available intelligence sections are displayed"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC003",
-    "title": "Create crawling target as admin and see it after page reload",
-    "description": "Verifies an admin can register a crawling target and it remains visible after reloading the page.",
-    "category": "Crawling Target Management (Automation Center)",
+    "title": "Open a grant item and review its detail content",
+    "description": "A guest can browse the GR hub, open a grant item, and see the item detail with its source link and AI summary.",
+    "category": "GR Hub",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /"
+        "description": "Navigate to /gr"
       },
       {
         "type": "action",
-        "description": "Click the admin login control in the sidebar"
-      },
-      {
-        "type": "action",
-        "description": "Fill {{LOGIN_PASSWORD}} into the access key field"
-      },
-      {
-        "type": "action",
-        "description": "Submit the authentication"
-      },
-      {
-        "type": "action",
-        "description": "Click the navigation link to open the Automation Center"
-      },
-      {
-        "type": "action",
-        "description": "Start new target registration"
-      },
-      {
-        "type": "action",
-        "description": "Fill Admin Target A into the target name field"
-      },
-      {
-        "type": "action",
-        "description": "Fill a valid URL into the target URL field"
-      },
-      {
-        "type": "action",
-        "description": "Fill semiconductor, fab, equipment into the seed keywords field"
-      },
-      {
-        "type": "action",
-        "description": "Select a valid target category"
-      },
-      {
-        "type": "action",
-        "description": "Submit registration"
-      },
-      {
-        "type": "action",
-        "description": "Press F5 to reload the page"
+        "description": "Open a grant item from the hub list"
       },
       {
         "type": "assertion",
-        "description": "Verify the registered crawling target is displayed in the targets list"
+        "description": "Verify the grant detail view is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the AI summary and source link are displayed"
       }
     ],
     "priority": "High"
   },
   {
     "id": "TC004",
-    "title": "Create a new AX project plan and see it listed",
-    "description": "Verifies a user can create a new AX project plan with a title and details, save it, and see the newly created plan appear in the planning list.",
-    "category": "AX Project Planning Center",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /ax-planning"
-      },
-      {
-        "type": "action",
-        "description": "Click the control to start a new plan"
-      },
-      {
-        "type": "action",
-        "description": "Fill a unique plan title into the plan title field"
-      },
-      {
-        "type": "action",
-        "description": "Fill basic plan details into the plan details field"
-      },
-      {
-        "type": "action",
-        "description": "Submit the plan save action"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a success confirmation is visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the new plan appears in the plans list"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC005",
-    "title": "Open GR Hub detail panel to view source link and AI summary",
-    "description": "Verifies selecting a GR Hub item opens a sliding detail panel that includes the original source link and an AI summary.",
-    "category": "Interactive Dashboard (GR Hub)",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /gr-hub"
-      },
-      {
-        "type": "action",
-        "description": "Select an item from the grants or policies list"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the detail panel is displayed with an original source link and an AI summary"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC006",
-    "title": "Create crawling target as guest and see simulation notice",
-    "description": "Verifies a guest can register a crawling target and sees a simulation notice indicating the target is session-only.",
-    "category": "Crawling Target Management (Automation Center)",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /automation"
-      },
-      {
-        "type": "action",
-        "description": "Start new target registration"
-      },
-      {
-        "type": "action",
-        "description": "Fill Guest Target A into the target name field"
-      },
-      {
-        "type": "action",
-        "description": "Fill a valid URL into the target URL field"
-      },
-      {
-        "type": "action",
-        "description": "Fill grants, policy into the seed keywords field"
-      },
-      {
-        "type": "action",
-        "description": "Select a valid target category"
-      },
-      {
-        "type": "action",
-        "description": "Submit registration"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a simulation notice is visible indicating the target is not persisted"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC007",
-    "title": "Open an existing AX plan and return to the planning dashboard",
-    "description": "Verifies a user can open a plan from the AX planning list, view its details, and return to the planning dashboard successfully.",
-    "category": "AX Project Planning Center",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /ax-planning"
-      },
-      {
-        "type": "action",
-        "description": "Click the control to start a new plan"
-      },
-      {
-        "type": "action",
-        "description": "Fill a unique plan title into the plan title field"
-      },
-      {
-        "type": "action",
-        "description": "Fill basic plan details into the plan details field"
-      },
-      {
-        "type": "action",
-        "description": "Submit the plan save action"
-      },
-      {
-        "type": "action",
-        "description": "Click the newly created plan in the plans list to open it"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the plan detail view is displayed"
-      },
-      {
-        "type": "action",
-        "description": "Click the control to return to the planning dashboard"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the planning dashboard with the plans list is displayed"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC008",
-    "title": "Guest target is not persisted after reload",
-    "description": "Verifies a crawling target registered in guest mode does not persist after reloading the Automation Center.",
-    "category": "Crawling Target Management (Automation Center)",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /automation"
-      },
-      {
-        "type": "action",
-        "description": "Start new target registration"
-      },
-      {
-        "type": "action",
-        "description": "Fill Guest Target Ephemeral into the target name field"
-      },
-      {
-        "type": "action",
-        "description": "Fill a valid URL into the target URL field"
-      },
-      {
-        "type": "action",
-        "description": "Fill temporary, session into the seed keywords field"
-      },
-      {
-        "type": "action",
-        "description": "Select a valid target category"
-      },
-      {
-        "type": "action",
-        "description": "Submit registration"
-      },
-      {
-        "type": "action",
-        "description": "Press F5 to reload the page"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the previously registered guest target is not displayed in the targets list"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC009",
-    "title": "Close GR Hub detail panel and return to list",
-    "description": "Verifies the user can close the GR Hub detail panel and return to the list view for continued browsing.",
-    "category": "Interactive Dashboard (GR Hub)",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /gr-hub"
-      },
-      {
-        "type": "action",
-        "description": "Select an item from the grants or policies list"
-      },
-      {
-        "type": "action",
-        "description": "Close the detail panel"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the user is returned to the GR Hub list view with items available to select"
-      }
-    ],
-    "priority": "High"
-  },
-  {
-    "id": "TC010",
-    "title": "Sequentially inspect multiple GR Hub items without stale panel content",
-    "description": "Verifies opening and closing detail panels for multiple items in sequence works and the panel updates to the newly selected item.",
-    "category": "Interactive Dashboard (GR Hub)",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /gr-hub"
-      },
-      {
-        "type": "action",
-        "description": "Select an item from the grants or policies list"
-      },
-      {
-        "type": "action",
-        "description": "Close the detail panel"
-      },
-      {
-        "type": "action",
-        "description": "Select a different item from the list"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the detail panel is displayed for the newly selected item with an original source link and an AI summary"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC011",
-    "title": "Prevent saving a plan when required fields are empty",
-    "description": "Verifies the plan cannot be saved when required inputs are missing and the UI shows an in-form validation error.",
-    "category": "AX Project Planning Center",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /ax-planning"
-      },
-      {
-        "type": "action",
-        "description": "Click the control to start a new plan"
-      },
-      {
-        "type": "action",
-        "description": "Clear the plan title field if it has a value"
-      },
-      {
-        "type": "action",
-        "description": "Submit the plan save action"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a validation error is visible"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the user remains in the plan creation view"
-      }
-    ],
-    "priority": "Medium"
-  },
-  {
-    "id": "TC012",
-    "title": "Validate missing URL on crawling target registration",
-    "description": "Verifies the registration form blocks submission when the target URL is empty and shows a validation error.",
-    "category": "Crawling Target Management (Automation Center)",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /automation"
-      },
-      {
-        "type": "action",
-        "description": "Start new target registration"
-      },
-      {
-        "type": "action",
-        "description": "Fill Missing URL Target into the target name field"
-      },
-      {
-        "type": "action",
-        "description": "Fill keywords into the seed keywords field"
-      },
-      {
-        "type": "action",
-        "description": "Select a valid target category"
-      },
-      {
-        "type": "action",
-        "description": "Submit registration"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify a URL validation error is visible"
-      }
-    ],
-    "priority": "Low"
-  },
-  {
-    "id": "TC013",
-    "title": "Discard plan creation and return to dashboard without saving",
-    "description": "Verifies a user can exit the new plan flow without saving and returns to the planning dashboard without adding a new plan.",
-    "category": "AX Project Planning Center",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Navigate to /ax-planning"
-      },
-      {
-        "type": "action",
-        "description": "Click the control to start a new plan"
-      },
-      {
-        "type": "action",
-        "description": "Fill a unique plan title into the plan title field"
-      },
-      {
-        "type": "action",
-        "description": "Click the control to cancel or close plan creation"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the planning dashboard with the plans list is displayed"
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the unsaved plan does not appear in the plans list"
-      }
-    ],
-    "priority": "Low"
-  },
-  {
-    "id": "TC014",
-    "title": "Reject invalid or empty admin key",
-    "description": "Verifies submitting an incorrect or empty admin key shows a validation message and does not enable admin mode.",
-    "category": "Admin Authentication (Local)",
+    "title": "Browse competitor intelligence from the dashboard",
+    "description": "A guest can move from the dashboard overview into competitor intelligence without losing access to the core analysis views.",
+    "category": "Competitor Intelligence",
     "steps": [
       {
         "type": "action",
@@ -488,99 +78,142 @@
       },
       {
         "type": "action",
-        "description": "Click the admin login control in the sidebar"
-      },
-      {
-        "type": "action",
-        "description": "Fill invalid-key into the access key field"
-      },
-      {
-        "type": "action",
-        "description": "Submit the authentication"
+        "description": "Click the link to view competitor intelligence"
       },
       {
         "type": "assertion",
-        "description": "Verify an access key validation error is visible"
+        "description": "Verify the competitor radar chart is displayed"
       },
       {
         "type": "assertion",
-        "description": "Verify an admin mode indicator is not visible in the sidebar"
+        "description": "Verify the comparison matrix is displayed"
       }
     ],
-    "priority": "Low"
+    "priority": "High"
   },
   {
-    "id": "TC015",
-    "title": "Handle long plan title and details without breaking save flow",
-    "description": "Verifies a user can enter long text in plan title/details, save the plan, and the UI remains usable with the plan listed afterward.",
-    "category": "AX Project Planning Center",
+    "id": "TC005",
+    "title": "Observe live competitor signal updates",
+    "description": "A guest can view competitor intelligence and confirm that live signal data is presented in the interface.",
+    "category": "Competitor Intelligence",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /ax-planning"
-      },
-      {
-        "type": "action",
-        "description": "Click the control to start a new plan"
-      },
-      {
-        "type": "action",
-        "description": "Fill a long unique plan title into the plan title field"
-      },
-      {
-        "type": "action",
-        "description": "Fill long plan details into the plan details field"
-      },
-      {
-        "type": "action",
-        "description": "Submit the plan save action"
+        "description": "Navigate to /intelligence"
       },
       {
         "type": "assertion",
-        "description": "Verify a success confirmation is visible"
+        "description": "Verify live signal updates are displayed"
       },
       {
         "type": "assertion",
-        "description": "Verify the new plan appears in the plans list"
+        "description": "Verify competitor signal data is displayed"
       }
     ],
-    "priority": "Low"
+    "priority": "High"
   },
   {
-    "id": "TC016",
-    "title": "Prevent duplicate save from rapid repeated submit",
-    "description": "Verifies rapidly submitting the save action does not create multiple duplicate plan entries and results in a single saved plan in the list.",
-    "category": "AX Project Planning Center",
+    "id": "TC006",
+    "title": "Compare multiple competitors in the intelligence view",
+    "description": "A guest can use the intelligence page to compare several competitors and review the resulting market signal differences.",
+    "category": "Competitor Intelligence",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to /ax-planning"
+        "description": "Navigate to /intelligence"
       },
       {
         "type": "action",
-        "description": "Click the control to start a new plan"
-      },
-      {
-        "type": "action",
-        "description": "Fill a unique plan title into the plan title field"
-      },
-      {
-        "type": "action",
-        "description": "Fill basic plan details into the plan details field"
-      },
-      {
-        "type": "action",
-        "description": "Submit the plan save action"
-      },
-      {
-        "type": "action",
-        "description": "Immediately submit the plan save action again"
+        "description": "Select multiple competitors for comparison"
       },
       {
         "type": "assertion",
-        "description": "Verify the new plan appears only once in the plans list"
+        "description": "Verify the comparison matrix is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify multiple competitors are represented"
       }
     ],
-    "priority": "Low"
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Return to the GR hub list after viewing an item",
+    "description": "A guest can move from a grant detail back to the hub list and continue browsing items.",
+    "category": "GR Hub",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /gr"
+      },
+      {
+        "type": "action",
+        "description": "Open a grant item from the hub list"
+      },
+      {
+        "type": "action",
+        "description": "Return to the grant hub list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the grant hub list is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify grant items are available for browsing"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Move between intelligence and GR without losing context",
+    "description": "A guest can navigate from competitor intelligence to the GR hub and back, confirming both sections remain accessible from the premium dashboard experience.",
+    "category": "Dashboard Overview",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view competitor intelligence"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view the GR hub"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the GR hub is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the intelligence sections remain accessible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC009",
+    "title": "Review the GR hub as an administrator",
+    "description": "An administrator can access the GR hub and browse grant content while the app reflects the admin access state without blocking read-only use.",
+    "category": "GR Hub",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /gr"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the GR hub is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the current access state is reflected"
+      }
+    ],
+    "priority": "Medium"
   }
 ]

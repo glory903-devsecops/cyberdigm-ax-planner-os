@@ -60,7 +60,7 @@ if supabase_client:
                 })
         print(f"📡 DB에서 {len(db_sites)}개의 활성 타겟을 로드했습니다.")
     except Exception as e:
-        print(f"⚠️ DB 타겟 로드 실패: {e}")
+        print(f"⚠️ DB 타겟 로드 실패 (기본 YAML 설정으로 진행): {e}")
 
 # ── CLI 필터 (특정 사이트만 실행) ──────────────────────
 target_id = sys.argv[1] if len(sys.argv) > 1 else None
