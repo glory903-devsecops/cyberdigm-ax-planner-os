@@ -7,7 +7,7 @@ on:
 
 jobs:
   crawl:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: 기업마당 지원사업 크롤링
 
     steps:
