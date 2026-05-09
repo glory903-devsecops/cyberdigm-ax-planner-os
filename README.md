@@ -28,15 +28,12 @@
 
 ### 1. 종합 대시보드 (Main Cockpit)
 > 3대 도메인(GR, 산업, AX)의 핵심 KPI와 현황이 한눈에 들어오는 콕핏 화면입니다.
-![Main Dashboard](./docs/images/demo_main_dashboard.png)
 
 ### 2. GR Hub - 지원사업 파이프라인
 > Supabase DB와 실시간 연동되어 수집된 정부 R&D 공고(기업마당, IRIS 등)를 확인하고 관리합니다.
-![GR Hub Grants](./docs/images/demo_gr_hub_grants.png)
 
 ### 3. 정부 사업 상세 및 원본 연결
 > 공고 클릭 시 상세 정보를 확인하고, '공식 공고 페이지' 버튼을 통해 외부 원본 사이트로 안전하게 이동(우회 접속)합니다.
-![Detail View](./docs/images/demo_detail_view.png)
 
 ### 4. 경쟁사 인텔리전스 (Competitor Intelligence)
 > 글로벌 티어 사별 신기술 점유율(Radar Chart)을 시각화하고, 경쟁사 관련 실시간 뉴스 시그널을 자동으로 수집하여 대시보드에 표시합니다.
