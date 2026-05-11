@@ -89,10 +89,10 @@ export function CompetitorSignalItem({ signal, onClick }: { signal: CompetitorSi
 
 export function SectorHeatmap() {
   const sectors = [
-    { name: "반도체 핵심 부품", value: 85, trend: "+12%", color: "bg-cmtx-blue" },
-    { name: "글로벌 원자재", value: 65, trend: "+5%", color: "bg-emerald-500" },
-    { name: "글로벌 물류망", value: 45, trend: "-2%", color: "bg-amber-500" },
-    { name: "각국 규제 및 정책", value: 92, trend: "+24%", color: "bg-rose-500" },
+    { name: "문서 보안 규제 및 정책", value: 85, trend: "+12%", color: "bg-cmtx-blue" },
+    { name: "비정형 데이터 관리 효율", value: 65, trend: "+5%", color: "bg-emerald-500" },
+    { name: "AX 기반 협업 솔루션", value: 45, trend: "+8%", color: "bg-amber-500" },
+    { name: "데이터 주권 및 거버넌스", value: 92, trend: "+24%", color: "bg-rose-500" },
   ];
 
   return (
@@ -187,16 +187,16 @@ export function TrendHero() {
       <div className="relative z-10 space-y-6 h-full flex flex-col justify-between">
         <div className="space-y-4">
           <Badge variant="strategic" className="bg-cmtx-blue/30 border-white/10 text-white">
-            <Zap className="w-3 h-3 mr-1" /> AX 기반 반도체 산업 레이더
+            <Zap className="w-3 h-3 mr-1" /> AI 기반 문서 지능(AX) 레이더
           </Badge>
           <div className="space-y-2">
             <h3 className="text-3xl font-black leading-tight tracking-tighter">
-              차세대 High-NA EUV <br/>
-              <span className="text-cmtx-blue-light italic">글로벌 공급망 재편</span>
+              생성형 AI 결합 <br/>
+              <span className="text-cmtx-blue-light italic">차세대 ECM 시장 혁신</span>
             </h3>
             <p className="text-slate-400 text-sm max-w-md leading-relaxed font-medium">
-              ASML의 차세대 EUV 장비 도입이 가속화됨에 따라, 챔버용 특수 소모성 부품의 내열 성능 기준이 전년 대비 40% 상향되었습니다. 
-              기술 장벽을 이용한 시장 선점이 필요한 전략적 골든 타임입니다.
+              기업 내 방대한 비정형 문서를 AI가 스스로 학습하고 요약하는 AX 기술이 도입됨에 따라, 문서 관리 효율성이 전년 대비 60% 상향되었습니다. 
+              지능형 문서 중앙화를 통한 경쟁 우위 확보가 필요한 전략적 골든 타임입니다.
             </p>
           </div>
         </div>

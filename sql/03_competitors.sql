@@ -56,7 +56,7 @@ GRANT SELECT ON TABLE public.crawling_targets TO authenticated;
 -- 5. 샘플 데이터 삽입
 INSERT INTO public.competitors (name, product, strength, weakness, market_share, radar_x, radar_y)
 VALUES 
-('S-Corp (Japan)', 'Plasma Coating', 'High Durability', 'High Price', '22%', 0.8, 0.7),
-('T-Parts (Taiwan)', 'Quartz Chamber', 'Global Logistics', 'Quality Variance', '18%', 0.3, 0.4),
-('G-Semi (USA)', 'High-NA EUV Parts', 'Tech Leader', 'IP Restriction', '12%', 0.6, 0.9)
+('더존비즈온', 'Amaranth 10', '전사적 자원관리(ERP) 연계성', '중소기업 중심의 이미지', '35%', 0.9, 0.8),
+('파수 (Fasoo)', 'FED', 'DRM 원천기술 및 보안 시장 선점', '클라우드 전환 속도', '25%', 0.8, 0.7),
+('지란지교시큐리티', '다큐원', '중소/중견기업 타겟팅 및 가격 경쟁력', '엔터프라이즈 하이엔드 시장 레퍼런스', '15%', 0.6, 0.5)
 ON CONFLICT (name) DO NOTHING;
